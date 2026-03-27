@@ -1,11 +1,4 @@
-class MovableObject {
-    x = 120;
-    y = 280;
-    img;
-    height = 150;
-    width = 100;
-    imageCache = {};
-    currentImage = 0;
+class MovableObject extends DrawableObject {
     speed = 0.15;
     otherDirection = false;
     speedY = 0;
@@ -30,27 +23,6 @@ class MovableObject {
     }
 
 
-    loadImage(path){
-        this.img = new Image();
-        this.img.src = path;
-    }
-
-
-    draw(ctx){
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    }
-
-    drawFrame(ctx){
-
-        if(this instanceof Character || this instanceof Chicken){
-            ctx.beginPath();
-            ctx.lineWidth = "5";
-            ctx.strokeStyle = "blue";
-            ctx.rect(this.x, this.y, this.width, this.height);
-            ctx.stroke();
-        }
-    }
-
     // character.isColliding(chicken)
     isColliding(mo){
         return this.x + this.width > mo.x &&
@@ -69,6 +41,7 @@ class MovableObject {
         }
     }
 
+
     isHurt(){
         let timepassed = new Date().getTime() - this.lastHit; //difference in ms
         timepassed = timepassed / 1000; // difference in sec
@@ -81,15 +54,6 @@ class MovableObject {
     }
 
 
-    loadImages(arr){
-        arr.forEach(path => {
-            let img = new Image();
-            img.src = path;
-            this.imageCache[path] = img;
-        });
-    }
-
-
     playAnimation(images){
         let i = this.currentImage % images.length;//i=0,1,2,3,4,5,0,0...
                 let path = images[i];
@@ -97,15 +61,18 @@ class MovableObject {
                 this.currentImage++;
     }
 
+
     moveRight(){
         this.x += this.speed;
         
     }
 
+
     moveLeft(){
             this.x -= this.speed;
             
     }
+
 
     jump(){
         this.speedY = 30;
