@@ -18,6 +18,17 @@ class World{
         this.draw();
         this.setWorld();
         this.run();
+
+        this.startAnimations();
+    }
+
+
+     startAnimations(){
+        this.level.enemies.forEach(enemy => {
+            if (enemy.animate){
+                enemy.animate();
+            }
+        });
     }
 
     
@@ -77,7 +88,7 @@ class World{
         
 
 
-        //Draw wird wiede aufgerufen
+        //Draw wird wieder aufgerufen
         let self = this;
         requestAnimationFrame(function(){
             self.draw();
