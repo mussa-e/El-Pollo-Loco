@@ -3,10 +3,19 @@ let world;
 let keyboard = new Keyboard();
 
 
+function startGame(){
+    document.getElementById("start-screen").style.display = "none";
+    document.getElementById("canvas").style.display = "block";
+    init();
+}
+
+
 function init(){
     canvas = document.getElementById("canvas");
     world = new World(canvas, keyboard);
 }
+
+
 
 
 window.addEventListener("keydown", (e) => {
@@ -29,6 +38,10 @@ window.addEventListener("keydown", (e) => {
 
     if (e.keyCode == 32){
         keyboard.SPACE = true;
+    }
+
+    if (e.keyCode == 68){
+        keyboard.D = true;
     }
     
 });
@@ -53,5 +66,9 @@ window.addEventListener("keyup", (e) => {
 
     if (e.keyCode == 32){
         keyboard.SPACE = false;
+    }
+
+    if (e.keyCode == 68){
+        keyboard.D = false;
     }
 });
