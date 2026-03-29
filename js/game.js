@@ -17,40 +17,17 @@ let colors = {
 };
     
 
-function showStartScreen(){
-    canvas = document.getElementById("canvas");
-    ctx = canvas.getContext("2d");
-    drawStartScreen();
-    canvas.addEventListener("click", startGame);
-}
 
-
-function drawStartScreen(){
-    ctx.fillStyle = colors[3];
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.fillStyle = colors[0];
-    ctx.font = "40px Rye";
-    ctx.textAlign = "center";
-    ctx.fillText("el pollo loco", canvas.width / 2, 150);
-
-    ctx.font = "24px Rye";
-    ctx.fillText("Click to Start", canvas.width / 2, 250);
-}
-
-
-function startGame(){
-    if (gameStarted) return; // verhindert mehrfaches Starten
-    gameStarted = true;
-
-    canvas.removeEventListener("click", startGame);
-
-    init();
-}
 
 
 function init(){
+
     canvas = document.getElementById("canvas");
+    // ctx = canvas.getContext("2d");
+
+    canvas.classList.remove("d-none");
+    startScreen = document.getElementById("start-screen");
+    startScreen.classList.add("d-none");
     world = new World(canvas, keyboard);
 }
 

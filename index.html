@@ -6,8 +6,6 @@
     
     
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Rye&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
     <title>Document</title>
 
     <script src="models/drawable-object.class.js"></script>
@@ -30,10 +28,29 @@
     <script src="js/game.js"></script>
 
 </head>
-<body onload="showStartScreen()"></body>
+<body></body>
     
+<div id="start-screen" class="start-screen">
+    <h1>el polo loco</h1>
 
-    <canvas id="canvas" width="720" height="480">
+    <button id="start-btn" class="start-btn" onclick="init()">
+        Click here to Start
+    </button>
+
+    <div id="controls" class="controls">
+        <h2>Controls</h2>
+        <p>← : Move Left</p>
+        <p>→ : Move Right</p>
+        <p>SPACE : Jump</p>
+        <p>D : Throw Bottle</p>
+    </div>
+
+</div>
+
+
+
+
+    <canvas id="canvas" width="720" height="480" class="d-none">
         
     </canvas>
 
