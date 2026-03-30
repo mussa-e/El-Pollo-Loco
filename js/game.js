@@ -29,6 +29,58 @@ function init(){
     startScreen = document.getElementById("start-screen");
     startScreen.classList.add("d-none");
     world = new World(canvas, keyboard);
+
+    canvas.addEventListener("click", (event) => {
+    handleCanvasClick(event);
+});
+}
+
+
+function handleCanvasClick(event) {
+    const rect = canvas.getBoundingClientRect();
+
+    const x = (event.clientX - rect.left) * (canvas.width / rect.width);
+    const y = (event.clientY - rect.top) * (canvas.height / rect.height);
+
+    checkFullscreenClick(x, y);
+    checkSpeakerClick(x, y);
+}
+
+
+function checkFullscreenClick(x, y) {
+    let fs = world.fullScreen;
+
+    if (
+        x >= fs.x &&
+        x <= fs.x + fs.width &&
+        y >= fs.y &&
+        y <= fs.y + fs.height
+    ) {
+        toggleFullscreen();
+    }
+}
+
+
+function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+        canvas.requestFullscreen();
+    } else {
+        document.exitFullscreen();
+    }
+}
+
+
+function checkSpeakerClick(x, y) {
+    let sp = world.speaker;
+
+    if (
+        x >= sp.x &&
+        x <= sp.x + sp.width &&
+        y >= sp.y &&
+        y <= sp.y + sp.height
+    ) {
+        sp.toggleSound();
+    }
 }
 
 
@@ -86,3 +138,5 @@ window.addEventListener("keyup", (e) => {
         keyboard.D = false;
     }
 });
+
+

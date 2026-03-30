@@ -9,6 +9,8 @@ class World{
     statusBarCoin = new StatusBarCoin();
     statusBarBottle = new StatusBarBottle();
     throwableObjects = [];
+    fullScreen = new Fullscreen();
+    speaker = new Speaker();
 
 
     constructor(canvas, keyboard){
@@ -76,6 +78,8 @@ class World{
         this.addToMap(this.statusBarHealth);
         this.addToMap(this.statusBarBottle);
         this.addToMap(this.statusBarCoin);
+        this.addToMap(this.fullScreen);
+        this.addToMap(this.speaker);
         this.ctx.translate(this.camera_x, 0);
 
         
