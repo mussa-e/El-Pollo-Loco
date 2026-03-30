@@ -11,6 +11,32 @@ class World{
     throwableObjects = [];
     fullScreen = new Fullscreen();
     speaker = new Speaker();
+    coins = [
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin()
+    ];
+    bottles= [
+        new Bottle(),
+        new Bottle(),
+        new Bottle(),
+        new Bottle(),
+        new Bottle(),
+        new Bottle(),
+        new Bottle(),
+        new Bottle()
+    ]
+    audioCoin = new Audio("audio/collect-points.mp3");
+    audioBottle = new Audio("audio/pick.mp3");
+    
+    
 
 
     constructor(canvas, keyboard){
@@ -37,6 +63,7 @@ class World{
 
     setWorld(){
         this.character.world = this;
+        
     }
 
     run(){
@@ -44,16 +71,28 @@ class World{
             
             this.checkCollisions();
             this.checkThrowObjects();
+            this.checkCollisionsCoins();
+            this.checkCollisionsBottles();
         },200);
     }
 
 
     checkThrowObjects(){
-        if(this.keyboard.D){
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
-            this.throwableObjects.push(bottle);
-        }
+    if(this.keyboard.D && this.statusBarBottle.percentage > 0){
+
+        let bottle = new ThrowableObject(
+            this.character.x + 100, 
+            this.character.y + 100
+        );
+
+        this.throwableObjects.push(bottle);
+
+        // Flasche "verbrauchen"
+        this.statusBarBottle.setPercentage(
+            this.statusBarBottle.percentage - 20
+        );
     }
+}
 
 
     checkCollisions(){
@@ -61,6 +100,30 @@ class World{
                 if(this.character.isColliding(enemy)) {
                     this.character.hit();
                     this.statusBarHealth.setPercentage(this.character.energy);
+                }
+            })
+    }
+    
+
+    checkCollisionsCoins(){
+        this.coins.forEach((coin) => {
+                if(this.character.isColliding(coin)) {
+                    coin.x = -100; // Move the coin off-screen
+                    this.audioCoin.play();
+                    this.statusBarCoin.setPercentage(this.statusBarCoin.percentage + 10);
+                    
+                    
+                }
+            })
+    }
+
+    checkCollisionsBottles(){
+        this.bottles.forEach((bottle) => {
+                if(this.character.isColliding(bottle)&& this.statusBarBottle.percentage < 100) {
+                    bottle.x = -100; // Move the bottle off-screen
+                    this.audioBottle.play();
+                    this.statusBarBottle.setPercentage(this.statusBarBottle.percentage + 20);
+                    
                 }
             })
     }
@@ -87,6 +150,9 @@ class World{
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.throwableObjects);
+        this.addObjectsToMap(this.coins);
+        this.addObjectsToMap(this.bottles);
+        
 
         this.ctx.translate(-this.camera_x, 0);
         
