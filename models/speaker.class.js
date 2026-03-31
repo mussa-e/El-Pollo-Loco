@@ -3,7 +3,7 @@ class Speaker extends DrawableObject {
     IMAGES_OFF = ["img/0_icons/volume_off.png"];
 
     isMuted = true;
-    audio = new Audio("audio/ukulele.mp3");
+    audio = new Audio("audio/banjodoline.mp3");
 
     constructor() {
         super();
@@ -25,6 +25,7 @@ class Speaker extends DrawableObject {
         } else {
             this.loadImage(this.IMAGES_ON);
             this.audio.play();
+            this.audio.volume = 0.4;
         }
     }
 }

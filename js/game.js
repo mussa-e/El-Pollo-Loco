@@ -23,11 +23,11 @@ let colors = {
 function init(){
 
     canvas = document.getElementById("canvas");
-    // ctx = canvas.getContext("2d");
-
     canvas.classList.remove("d-none");
+
     startScreen = document.getElementById("start-screen");
     startScreen.classList.add("d-none");
+    
     world = new World(canvas, keyboard);
 
     canvas.addEventListener("click", (event) => {

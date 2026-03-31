@@ -16,6 +16,7 @@ class MovableObject extends DrawableObject {
             
         },1000/25);
     }
+    
 
 
     isAboveGround(){

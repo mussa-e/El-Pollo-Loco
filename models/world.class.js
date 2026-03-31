@@ -11,30 +11,11 @@ class World{
     throwableObjects = [];
     fullScreen = new Fullscreen();
     speaker = new Speaker();
-    coins = [
-        new Coin(),
-        new Coin(),
-        new Coin(),
-        new Coin(),
-        new Coin(),
-        new Coin(),
-        new Coin(),
-        new Coin(),
-        new Coin(),
-        new Coin()
-    ];
-    bottles= [
-        new Bottle(),
-        new Bottle(),
-        new Bottle(),
-        new Bottle(),
-        new Bottle(),
-        new Bottle(),
-        new Bottle(),
-        new Bottle()
-    ]
     audioCoin = new Audio("audio/collect-points.mp3");
     audioBottle = new Audio("audio/pick.mp3");
+    audioBottleHit = new Audio("audio/chicken1.mp3");
+
+    thrownBottle;
     
     
 
@@ -73,6 +54,7 @@ class World{
             this.checkThrowObjects();
             this.checkCollisionsCoins();
             this.checkCollisionsBottles();
+            this.checkCollisionsThrownBottle();//AA
         },200);
     }
 
@@ -80,12 +62,12 @@ class World{
     checkThrowObjects(){
     if(this.keyboard.D && this.statusBarBottle.percentage > 0){
 
-        let bottle = new ThrowableObject(
+        this.thrownBottle = new ThrowableObject(
             this.character.x + 100, 
             this.character.y + 100
         );
 
-        this.throwableObjects.push(bottle);
+        this.throwableObjects.push(this.thrownBottle);
 
         // Flasche "verbrauchen"
         this.statusBarBottle.setPercentage(
@@ -106,9 +88,9 @@ class World{
     
 
     checkCollisionsCoins(){
-        this.coins.forEach((coin) => {
+        this.level.coins.forEach((coin) => {
                 if(this.character.isColliding(coin)) {
-                    coin.x = -100; // Move the coin off-screen
+                    coin.x = -500; // Move the coin off-screen
                     this.audioCoin.play();
                     this.statusBarCoin.setPercentage(this.statusBarCoin.percentage + 10);
                     
@@ -118,15 +100,36 @@ class World{
     }
 
     checkCollisionsBottles(){
-        this.bottles.forEach((bottle) => {
+        this.level.bottles.forEach((bottle) => {
                 if(this.character.isColliding(bottle)&& this.statusBarBottle.percentage < 100) {
-                    bottle.x = -100; // Move the bottle off-screen
+                    bottle.x = -500; // Move the bottle off-screen
                     this.audioBottle.play();
                     this.statusBarBottle.setPercentage(this.statusBarBottle.percentage + 20);
                     
                 }
             })
     }
+
+
+    checkCollisionsThrownBottle(){
+    if (!this.thrownBottle) return;
+
+    this.level.enemies.forEach((enemy) => {
+        if(this.thrownBottle.isColliding(enemy)) {
+            console.log("Enemy hit!");
+            this.audioBottleHit.play();
+            
+            setInterval(()=> {
+            this.thrownBottle.playAnimation(this.thrownBottle.IMAGES_SPLASH);
+        }, 80)
+        }
+        
+    });
+}
+
+    
+
+
 
 
     draw(){
@@ -150,8 +153,8 @@ class World{
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.throwableObjects);
-        this.addObjectsToMap(this.coins);
-        this.addObjectsToMap(this.bottles);
+        this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottles);
         
 
         this.ctx.translate(-this.camera_x, 0);
