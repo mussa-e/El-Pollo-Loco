@@ -55,7 +55,10 @@ class World{
             this.checkCollisionsCoins();
             this.checkCollisionsBottles();
             this.checkCollisionsThrownBottle();//AA
+            this.level.enemies = this.level.enemies.filter(e => !e.isDeadFlag);
         },200);
+
+        
     }
 
 
@@ -111,22 +114,28 @@ class World{
     }
 
 
+    
     checkCollisionsThrownBottle(){
     if (!this.thrownBottle) return;
 
     this.level.enemies.forEach((enemy) => {
         if(this.thrownBottle.isColliding(enemy)) {
-            console.log("Enemy hit!");
             this.audioBottleHit.play();
-            
-            setInterval(()=> {
-            this.thrownBottle.playAnimation(this.thrownBottle.IMAGES_SPLASH);
-        }, 80)
-        }
-        
-    });
-}
 
+            this.thrownBottle.stopThrow();   // Bewegung stoppen
+            this.thrownBottle.splash();   // Splash starten
+
+            enemy.takeHit();
+
+            this.thrownBottle.markedForDeletion = true;
+
+            
+        }
+    });
+    }
+
+
+    
     
 
 

@@ -30,17 +30,36 @@ class ThrowableObject extends MovableObject {
     }
 
 
+    
     throw(){
-        
-        setInterval(()=> {
-            this.playAnimation(this.IMAGES_THROW);
-        }, 80)
-        
-            this.speedY = 30;
-            this.applyGravity();
-            setInterval(()=>{
-                this.x += 10;
-            }, 25);
+    this.throwInterval = setInterval(()=> {
+        this.playAnimation(this.IMAGES_THROW);
+    }, 80);
+    
+    this.speedY = 30;
+    this.applyGravity();
+
+    this.moveInterval = setInterval(()=>{
+        this.x += 10;
+    }, 25);
+}
+
+stopThrow(){
+    clearInterval(this.throwInterval);
+    clearInterval(this.moveInterval);
+}
+
+splash(){
+    let i = 0;
+    let splashInterval = setInterval(() => {
+        this.img = this.imageCache[this.IMAGES_SPLASH[i]];
+        i++;
+
+        if (i >= this.IMAGES_SPLASH.length) {
+            clearInterval(splashInterval);
+            
+        }
+    }, 80);
 }
 
 
