@@ -13,8 +13,6 @@ class World{
     speaker = new Speaker();
     audioCoin = new Audio("audio/collect-points.mp3");
     audioBottle = new Audio("audio/pick.mp3");
-    audioBottleHit = new Audio("audio/chicken1.mp3");
-
     thrownBottle;
     
     
@@ -43,9 +41,12 @@ class World{
     
 
     setWorld(){
-        this.character.world = this;
-        
-    }
+    this.character.world = this;
+
+    this.level.enemies.forEach(enemy => {
+        enemy.world = this;
+    });
+}
 
     run(){
         setInterval(()=>{
@@ -120,7 +121,6 @@ class World{
 
     this.level.enemies.forEach((enemy) => {
         if(this.thrownBottle.isColliding(enemy)) {
-            this.audioBottleHit.play();
 
             this.thrownBottle.stopThrow();   // Bewegung stoppen
             this.thrownBottle.splash();   // Splash starten
@@ -155,6 +155,7 @@ class World{
         this.addToMap(this.statusBarCoin);
         this.addToMap(this.fullScreen);
         this.addToMap(this.speaker);
+        
         this.ctx.translate(this.camera_x, 0);
 
         
@@ -169,6 +170,7 @@ class World{
         this.ctx.translate(-this.camera_x, 0);
         
 
+        this.drawControls();
 
         //Draw wird wieder aufgerufen
         let self = this;
@@ -210,6 +212,28 @@ class World{
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
+
+
+    drawControls() {
+    this.ctx.font = "16px Rye";
+    this.ctx.fillStyle = "black";
+    // this.ctx.strokeStyle = "black";
+    // this.ctx.lineWidth = 3;
+
+    const lines = [
+        "Left / Right = Arrow keys",
+        "Jump = Space",
+        "Throw Salsa Bottle = D"
+    ];
+
+    lines.forEach((line, index) => {
+        let x = 280;
+        let y = 30 + index * 30;
+
+        // this.ctx.strokeText(line, x, y);
+        this.ctx.fillText(line, x, y);
+    });
+}
 
 
 }
