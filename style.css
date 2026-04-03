@@ -74,7 +74,7 @@ canvas {
 
 .legal {
     position: absolute;
-    bottom: 25px;
+    bottom: 10px;
     display: flex;
     gap: 20px;
 }

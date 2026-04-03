@@ -13,15 +13,6 @@ class Endboss extends MovableObject{
             "img/4_enemie_boss_chicken/1_walk/G2.png",
             "img/4_enemie_boss_chicken/1_walk/G3.png",
             "img/4_enemie_boss_chicken/1_walk/G4.png",
-
-            "img/4_enemie_boss_chicken/2_alert/G5.png",
-            "img/4_enemie_boss_chicken/2_alert/G6.png",
-            "img/4_enemie_boss_chicken/2_alert/G7.png",
-            "img/4_enemie_boss_chicken/2_alert/G8.png",
-            "img/4_enemie_boss_chicken/2_alert/G9.png",
-            "img/4_enemie_boss_chicken/2_alert/G10.png",
-            "img/4_enemie_boss_chicken/2_alert/G11.png",
-            "img/4_enemie_boss_chicken/2_alert/G12.png",
             
             "img/4_enemie_boss_chicken/3_attack/G13.png",
             "img/4_enemie_boss_chicken/3_attack/G14.png",
@@ -32,6 +23,17 @@ class Endboss extends MovableObject{
             "img/4_enemie_boss_chicken/3_attack/G19.png",
             "img/4_enemie_boss_chicken/3_attack/G20.png",
             
+    ];
+
+    IMAGES_ALERT = [
+        "img/4_enemie_boss_chicken/2_alert/G5.png",
+            "img/4_enemie_boss_chicken/2_alert/G6.png",
+            "img/4_enemie_boss_chicken/2_alert/G7.png",
+            "img/4_enemie_boss_chicken/2_alert/G8.png",
+            "img/4_enemie_boss_chicken/2_alert/G9.png",
+            "img/4_enemie_boss_chicken/2_alert/G10.png",
+            "img/4_enemie_boss_chicken/2_alert/G11.png",
+            "img/4_enemie_boss_chicken/2_alert/G12.png",
     ];
 
     IMAGES_HURT = [
@@ -50,22 +52,24 @@ class Endboss extends MovableObject{
     constructor(){
         super().loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
+        this.loadImages(this.IMAGES_ALERT);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
 
 
         this.x = 2200;
         this.speed = 0.15 + Math.random() * 0.5;
-        this.animate();
+        // this.animate();
 
         this.isDead = false;
+        this.isActivated = false;
     }
 
     
     animate(){
 
     this.moveInterval = setInterval(()=> {
-        if(!this.isDead){
+        if(!this.isDead ){
             this.moveLeft();
             
             
@@ -130,6 +134,21 @@ class Endboss extends MovableObject{
         // setTimeout(() => {
         //     this.isDeadFlag = true;
         // }, this.IMAGES_DEAD.length * 800); // passt zur Animation
+        }
+
+
+        playAnimationOnce(images, intervalTime = 150){
+            let i = 0;
+
+            let interval = setInterval(() => {
+                if(i < images.length){
+                    let path = images[i];
+                    this.img = this.imageCache[path];
+                    i++;
+                } else {
+                    clearInterval(interval); // STOP nach einmal durchlaufen
+                }
+            }, intervalTime);
         }
         
     }

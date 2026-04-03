@@ -31,12 +31,12 @@ class World{
 
 
      startAnimations(){
-        this.level.enemies.forEach(enemy => {
-            if (enemy.animate){
-                enemy.animate();
-            }
-        });
-    }
+    this.level.enemies.forEach(enemy => {
+        if (enemy.animate && !(enemy instanceof Endboss)){
+            enemy.animate();
+        }
+    });
+}
 
     
 
@@ -45,6 +45,10 @@ class World{
 
     this.level.enemies.forEach(enemy => {
         enemy.world = this;
+    });
+
+    this.throwableObjects.forEach(object => {
+        object.world = this;
     });
 }
 
@@ -55,11 +59,32 @@ class World{
             this.checkThrowObjects();
             this.checkCollisionsCoins();
             this.checkCollisionsBottles();
-            this.checkCollisionsThrownBottle();//AA
+            this.checkCollisionsThrownBottle();
+            this.checkEndbossActivation();
             this.level.enemies = this.level.enemies.filter(e => !e.isDeadFlag);
         },200);
 
         
+    }
+
+
+    checkEndbossActivation(){
+    this.level.enemies.forEach(enemy => {
+        if(enemy instanceof Endboss && !enemy.isActivated){
+            
+            if(this.character.x > enemy.x - 550){ 
+                
+                enemy.isActivated = true;
+                enemy.playAnimationOnce(enemy.IMAGES_ALERT);
+                console.log("Endboss alert");
+
+                setTimeout(() => {
+                    enemy.animate();
+                }, enemy.IMAGES_ALERT.length * 150);
+                console.log("Endboss activated");
+            }
+        }
+    });
     }
 
 
@@ -72,6 +97,8 @@ class World{
         );
 
         this.throwableObjects.push(this.thrownBottle);
+
+        this.character.lastActionTime = new Date().getTime();
 
         // Flasche "verbrauchen"
         this.statusBarBottle.setPercentage(

@@ -32,7 +32,20 @@ function init(){
 
     canvas.addEventListener("click", (event) => {
     handleCanvasClick(event);
-});
+    });
+
+    canvas.addEventListener("mousemove", (e) => {
+    const rect = canvas.getBoundingClientRect(),
+          x = (e.clientX - rect.left) * (canvas.width / rect.width),
+          y = (e.clientY - rect.top) * (canvas.height / rect.height);
+    canvas.style.cursor = (isMouseOver(world.speaker, x, y) || isMouseOver(world.fullScreen, x, y)) 
+                          ? "pointer" 
+                          : "default";
+    });
+
+    function isMouseOver(obj, x, y) {
+        return x >= obj.x && x <= obj.x + obj.width && y >= obj.y && y <= obj.y + obj.height;
+}
 }
 
 
