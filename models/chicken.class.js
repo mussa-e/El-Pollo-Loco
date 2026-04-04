@@ -3,6 +3,7 @@ class Chicken extends MovableObject{
     width = 70;
     y = 335;
     audioBottleHit = new Audio("audio/chicken3.mp3");
+    soundWanted = false;
 
     IMAGES_WALKING = [
             "img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",
@@ -43,7 +44,10 @@ class Chicken extends MovableObject{
 
 
     takeHit(){
-    this.audioBottleHit.play();
+        if (this.soundWanted == true){
+            this.audioBottleHit.play();
+        }
+    
     this.die();
     console.log("Chicken hit");
     }

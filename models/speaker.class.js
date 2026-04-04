@@ -22,10 +22,23 @@ class Speaker extends DrawableObject {
         if (this.isMuted) {
             this.loadImage(this.IMAGES_OFF);
             this.audio.pause();
+            world.character.soundWanted = false;
+            world.soundWanted = false;
+            world.character.audioSnoring.pause();
+            
+            world.level.enemies.forEach(enemy => {
+                enemy.soundWanted = false;
+            });
         } else {
             this.loadImage(this.IMAGES_ON);
             this.audio.play();
             this.audio.volume = 0.4;
+            world.character.soundWanted = true;
+            world.soundWanted = true;
+
+            world.level.enemies.forEach(enemy => {
+                enemy.soundWanted = true;
+            });
         }
     }
 }

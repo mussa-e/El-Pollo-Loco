@@ -5,6 +5,7 @@ class Character extends MovableObject {
     lastActionTime = new Date().getTime();
     audioJump = new Audio("audio/jump3.mp3");
     audioSnoring = new Audio("audio/snoring.mp3");
+    soundWanted = false;
 
 
     IMAGES_STANDING = [
@@ -105,7 +106,10 @@ class Character extends MovableObject {
 
             if(this.world.keyboard.SPACE && !this.isAboveGround()){
                 this.jump();
-                this.audioJump.play();
+                if(this.soundWanted == true){
+                    this.audioJump.play();
+                }
+                
                 this.lastActionTime = new Date().getTime();
                 
             }
@@ -139,12 +143,16 @@ class Character extends MovableObject {
 
                 this.playAnimation(this.IMAGES_WALKING);
                 this.audioSnoring.pause();
+                
             }
             
 
             else if (timepassed > 8){
                 this.playAnimation(this.IMAGES_LONG_IDLE);
-                this.audioSnoring.play();
+                if(this.soundWanted == true){
+                    this.audioSnoring.play();
+                }
+                
             }
 
             else if (timepassed > 3){

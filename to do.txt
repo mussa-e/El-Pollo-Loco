@@ -1,0 +1,14 @@
+-wurf richtung
+
+-sounds
+
+-springen auf enemy
+
+-Character erleidet schaden gameover
+-gameover screen
+
+-Endboss besiegen winscreen
+
+-Restart
+
+-responsiv

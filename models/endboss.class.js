@@ -5,6 +5,14 @@ class Endboss extends MovableObject{
     hits = 0;
     maxHits = 10;
     audioBottleHit = new Audio("audio/chicken1.mp3");
+    soundWanted = false;
+    
+    offset = {
+    top: 50,
+    left: 30,
+    right: 30,
+    bottom: 20
+    };
     
     
 
@@ -92,7 +100,9 @@ class Endboss extends MovableObject{
 
     takeHit(){
     this.hits++;
-    this.audioBottleHit.play();
+    if (this.soundWanted == true){
+            this.audioBottleHit.play();
+        }
 
     let i = 0;
         this.hurtInterval = setInterval(() => {
@@ -106,7 +116,7 @@ class Endboss extends MovableObject{
         }, 500); 
 
 
-    if(this.hits >= 6){
+    if(this.hits >= 4){
         this.die();
     }
     console.log("Endboss hit");
