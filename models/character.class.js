@@ -5,7 +5,12 @@ class Character extends MovableObject {
     lastActionTime = new Date().getTime();
     audioJump = new Audio("audio/jump3.mp3");
     audioSnoring = new Audio("audio/snoring.mp3");
+    audioLose = new Audio("audio/losing-horn.mp3");
+    audioHurt = new Audio("audio/manhurt1.mp3");
+    audioDied = new Audio("audio/manhurt3.mp3");
+    
     soundWanted = false;
+    hasPlayedLoseSound = false;
 
 
     IMAGES_STANDING = [
@@ -126,6 +131,7 @@ class Character extends MovableObject {
             if(this.isDead()){
                 this.playAnimation(this.IMAGES_DEAD);
                 this.audioSnoring.pause();
+                this.characterDied();
             }
             
             else if(this.isHurt()){
@@ -147,10 +153,11 @@ class Character extends MovableObject {
             }
             
 
-            else if (timepassed > 8){
+            else if (timepassed > 10){
                 this.playAnimation(this.IMAGES_LONG_IDLE);
                 if(this.soundWanted == true){
                     this.audioSnoring.play();
+                    this.audioSnoring.volume = 0.3;
                 }
                 
             }
@@ -166,5 +173,40 @@ class Character extends MovableObject {
             }
         }, 50)
     }
+
+
+    characterDied(){
+        let canvas = document.getElementById("canvas");
+        let loseScreen = document.getElementById("lose-screen");
+
+        
+        
+
+        if (this.hasPlayedLoseSound) return; 
+
+        this.hasPlayedLoseSound = true; 
+
+        if(this.soundWanted == true){
+            this.audioDied.play();
+            this.audioDied.volume = 0.3;
+        }
+
+        setTimeout(() => {
+        loseScreen.classList.remove("d-none");
+        canvas.classList.add("d-none");
+
+        this.y = 3000;
+
+        this.world.speaker.audioBG.pause();
+
+        if(this.soundWanted == true){
+            this.audioLose.play();
+            this.audioLose.volume = 0.3;
+            
+        }
+        }, 2000);
+    }
+
+
 
 }

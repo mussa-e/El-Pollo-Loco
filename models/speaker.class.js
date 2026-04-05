@@ -3,7 +3,7 @@ class Speaker extends DrawableObject {
     IMAGES_OFF = ["img/0_icons/volume_off.png"];
 
     isMuted = true;
-    audio = new Audio("audio/banjodoline.mp3");
+    audioBG = new Audio("audio/banjodoline.mp3");
 
     constructor() {
         super();
@@ -13,7 +13,7 @@ class Speaker extends DrawableObject {
         this.width = 35;
         this.height = 35;
 
-        this.audio.loop = true;
+        this.audioBG.loop = true;
     }
 
     toggleSound() {
@@ -21,7 +21,7 @@ class Speaker extends DrawableObject {
 
         if (this.isMuted) {
             this.loadImage(this.IMAGES_OFF);
-            this.audio.pause();
+            this.audioBG.pause();
             world.character.soundWanted = false;
             world.soundWanted = false;
             world.character.audioSnoring.pause();
@@ -31,8 +31,8 @@ class Speaker extends DrawableObject {
             });
         } else {
             this.loadImage(this.IMAGES_ON);
-            this.audio.play();
-            this.audio.volume = 0.4;
+            this.audioBG.play();
+            this.audioBG.volume = 0.2;
             world.character.soundWanted = true;
             world.soundWanted = true;
 

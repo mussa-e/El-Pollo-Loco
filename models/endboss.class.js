@@ -5,6 +5,8 @@ class Endboss extends MovableObject{
     hits = 0;
     maxHits = 10;
     audioBottleHit = new Audio("audio/chicken1.mp3");
+    audioAlert = new Audio("audio/highnoon.mp3");
+    audioWin = new Audio("audio/orchestral-win.mp3")
     soundWanted = false;
     
     offset = {
@@ -118,6 +120,7 @@ class Endboss extends MovableObject{
 
     if(this.hits >= 4){
         this.die();
+        this.world.character.audioSnoring.pause();
     }
     console.log("Endboss hit");
     }
@@ -128,17 +131,20 @@ class Endboss extends MovableObject{
         
         clearInterval(this.animationInterval);
 
-        // Spielt die Death-Animation
         let i = 0;
         this.deathInterval = setInterval(() => {
             if(i < this.IMAGES_DEAD.length){
                 this.img = this.imageCache[this.IMAGES_DEAD[i]];
                 i++;
-                this.y = 140; // Endboss sinkt etwas ab, um den Tod zu verdeutlichen
+                this.y = 140; 
             } else {
                 clearInterval(this.deathInterval);
             }
         }, 800); 
+
+        
+        this.showWinScreen();
+        
 
         // Danach entfernen
         // setTimeout(() => {
@@ -156,9 +162,37 @@ class Endboss extends MovableObject{
                     this.img = this.imageCache[path];
                     i++;
                 } else {
-                    clearInterval(interval); // STOP nach einmal durchlaufen
+                    clearInterval(interval); 
                 }
             }, intervalTime);
         }
+
+
+        showWinScreen(){
+            let canvas = document.getElementById("canvas");
+            let winScreen = document.getElementById("win-screen");
+
+            this.world.character.soundWanted = false;
+        
+            setTimeout(() => {
+
+            winScreen.classList.remove("d-none");
+            canvas.classList.add("d-none");
+
+            this.world.speaker.audioBG.pause();
+            
+
+            
+
+            if(this.soundWanted == true){
+                this.audioWin.play();
+                this.audioWin.volume = 0.3;
+            }
+            }, 2000);
+
+
+            
+        
+            }
         
     }

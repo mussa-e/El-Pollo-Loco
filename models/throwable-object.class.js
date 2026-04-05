@@ -35,6 +35,7 @@ class ThrowableObject extends MovableObject {
 
             this.throwInterval = setInterval(()=> {
             this.playAnimation(this.IMAGES_THROW);
+            
         }, 80);
         
         

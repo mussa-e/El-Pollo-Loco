@@ -80,6 +80,11 @@ class World{
                 enemy.isActivated = true;
                 enemy.playAnimationOnce(enemy.IMAGES_ALERT);
                 console.log("Endboss alert");
+                if(enemy.soundWanted == true){
+                    enemy.audioAlert.play();
+                    enemy.audioAlert.volume = 0.3;
+                }
+                
 
                 setTimeout(() => {
                     enemy.animate();
@@ -130,6 +135,9 @@ checkThrowObjects(){
         this.statusBarBottle.setPercentage(
             this.statusBarBottle.percentage - 20
         );
+
+        this.character.lastActionTime = new Date().getTime();
+        this.character.playAnimation(this.character.IMAGES_STANDING);
     }
 }
 
@@ -139,6 +147,10 @@ checkThrowObjects(){
                 if(this.character.isColliding(enemy)) {
                     this.character.hit();
                     this.statusBarHealth.setPercentage(this.character.energy);
+
+                    if(this.soundWanted == true){
+                        this.character.audioHurt.play();
+                    }
                 }
             })
     }
