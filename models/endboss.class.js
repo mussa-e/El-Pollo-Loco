@@ -68,8 +68,8 @@ class Endboss extends MovableObject{
 
 
         this.x = 2200;
-        this.speed = 0.15 + Math.random() * 0.5;
-        // this.animate();
+        // this.speed = 0.4 + Math.random() * 0.5;
+        this.speed = 1.8;
 
         this.isDead = false;
         this.isActivated = false;
@@ -122,7 +122,6 @@ class Endboss extends MovableObject{
         this.die();
         this.world.character.audioSnoring.pause();
     }
-    console.log("Endboss hit");
     }
 
     
@@ -142,9 +141,7 @@ class Endboss extends MovableObject{
             }
         }, 800); 
 
-        
         this.showWinScreen();
-        
 
         // Danach entfernen
         // setTimeout(() => {
@@ -175,23 +172,20 @@ class Endboss extends MovableObject{
             this.world.character.soundWanted = false;
         
             setTimeout(() => {
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            }
 
             winScreen.classList.remove("d-none");
             canvas.classList.add("d-none");
 
             this.world.speaker.audioBG.pause();
             
-
-            
-
             if(this.soundWanted == true){
                 this.audioWin.play();
                 this.audioWin.volume = 0.3;
             }
             }, 2000);
-
-
-            
         
             }
         

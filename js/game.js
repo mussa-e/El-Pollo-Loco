@@ -15,6 +15,8 @@ let colors = {
   7: "rgb(67,145,41)",
   8: "rgb(234,142,68)"
 };
+
+let gameOver = false;
     
 
 
@@ -98,6 +100,8 @@ function checkSpeakerClick(x, y) {
 
 
 window.addEventListener("keydown", (e) => {
+
+    if (gameOver) return;
 
     if (e.keyCode == 39){
         keyboard.RIGHT = true;

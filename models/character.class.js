@@ -176,11 +176,14 @@ class Character extends MovableObject {
 
 
     characterDied(){
+        gameOver = true;
+
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        }
+
         let canvas = document.getElementById("canvas");
         let loseScreen = document.getElementById("lose-screen");
-
-        
-        
 
         if (this.hasPlayedLoseSound) return; 
 

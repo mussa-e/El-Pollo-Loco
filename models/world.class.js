@@ -142,17 +142,36 @@ checkThrowObjects(){
 }
 
 
-    checkCollisions(){
-        this.level.enemies.forEach((enemy) => {
-                if(this.character.isColliding(enemy)) {
-                    this.character.hit();
-                    this.statusBarHealth.setPercentage(this.character.energy);
+    // checkCollisions(){
+    //     this.level.enemies.forEach((enemy) => {
+    //             if(this.character.isColliding(enemy)) {
+    //                 this.character.hit();
+    //                 this.statusBarHealth.setPercentage(this.character.energy);
 
-                    if(this.soundWanted == true){
-                        this.character.audioHurt.play();
-                    }
-                }
-            })
+    //                 if(this.soundWanted == true){
+    //                     this.character.audioHurt.play();
+    //                 }
+    //             }
+    //         })
+    // }
+    checkCollisions(){
+    this.level.enemies.forEach((enemy) => {
+
+        if (!enemy.isDead && this.character.isCollidingFromAbove(enemy)) {
+            enemy.takeHit();
+            enemy.isDeadFlag = true;
+
+            this.character.speedY = 15;
+
+        } else if (this.character.isColliding(enemy)) {
+            this.character.hit();
+            this.statusBarHealth.setPercentage(this.character.energy);
+
+            if(this.soundWanted == true){
+                this.character.audioHurt.play();
+            }
+        }
+    });
     }
     
 
@@ -164,11 +183,10 @@ checkThrowObjects(){
                         this.audioCoin.play();
                     }
                     this.statusBarCoin.setPercentage(this.statusBarCoin.percentage + 10);
-                    
-                    
                 }
             })
     }
+
 
     checkCollisionsBottles(){
         this.level.bottles.forEach((bottle) => {
@@ -178,7 +196,6 @@ checkThrowObjects(){
                         this.audioBottle.play();
                     }
                     this.statusBarBottle.setPercentage(this.statusBarBottle.percentage + 20);
-                    
                 }
             })
     }
@@ -320,7 +337,6 @@ checkCollisionsThrownBottle(){
         let x = 280;
         let y = 30 + index * 30;
 
-        // this.ctx.strokeText(line, x, y);
         this.ctx.fillText(line, x, y);
     });
 }
