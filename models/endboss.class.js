@@ -68,7 +68,6 @@ class Endboss extends MovableObject{
 
 
         this.x = 2200;
-        // this.speed = 0.4 + Math.random() * 0.5;
         this.speed = 1.8;
 
         this.isDead = false;

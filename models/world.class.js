@@ -66,9 +66,8 @@ class World{
             this.checkEndbossActivation();
             this.level.enemies = this.level.enemies.filter(e => !e.isDeadFlag);
         },50);//old 200
-
-        
     }
+    
 
 
     checkEndbossActivation(){

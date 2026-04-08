@@ -42,13 +42,18 @@ class MovableObject extends DrawableObject {
     }
 
 
+    // isCollidingFromAbove(mo) {
+    // return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+    //        this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+    //        this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+    //        this.y < mo.y && // wichtig: Character ist über dem Gegner
+    //        this.speedY < 0; // fällt nach unten
+    // }
     isCollidingFromAbove(mo) {
-    return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
-           this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
-           this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
-           this.y < mo.y && // wichtig: Character ist über dem Gegner
-           this.speedY < 0; // fällt nach unten
-    }
+    return this.isColliding(mo) &&
+           this.speedY < 0 &&
+           this.y + this.height - this.offset.bottom <= mo.y + mo.offset.top + 10;
+}
 
 
     hit(){
