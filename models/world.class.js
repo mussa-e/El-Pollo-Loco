@@ -1,6 +1,6 @@
 class World{
     character = new Character();
-    level = level1;
+    level = createLevel1();
     canvas;
     ctx;
     keyboard;
@@ -17,6 +17,8 @@ class World{
     lastThrowTime = 0;
     throwCooldown = 500;
     soundWanted = false;
+
+    intervals = [];
     
     
 
@@ -25,6 +27,9 @@ class World{
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
         this.keyboard = keyboard;
+
+        this.level = createLevel1();
+
         this.draw();
         this.setWorld();
         this.run();
@@ -56,17 +61,30 @@ class World{
 }
 
     run(){
-        setInterval(()=>{
-            
-            this.checkCollisions();
-            this.checkThrowObjects();
-            this.checkCollisionsCoins();
-            this.checkCollisionsBottles();
-            this.checkCollisionsThrownBottle();
-            this.checkEndbossActivation();
-            this.level.enemies = this.level.enemies.filter(e => !e.isDeadFlag);
-        },50);//old 200
+    let runInterval = setInterval(() => {
+        this.checkCollisions();
+        this.checkThrowObjects();
+        this.checkCollisionsCoins();
+        this.checkCollisionsBottles();
+        this.checkCollisionsThrownBottle();
+        this.checkEndbossActivation();
+        this.level.enemies = this.level.enemies.filter(e => !e.isDeadFlag);
+    }, 50);
+
+    this.intervals.push(runInterval);
     }
+
+    stop() {
+    this.intervals.forEach(i => clearInterval(i));
+
+    this.character.stop();
+
+    this.level.enemies.forEach(enemy => {
+        if (enemy.stop) {
+            enemy.stop();
+        }
+    });
+}
     
 
 
@@ -141,28 +159,40 @@ checkThrowObjects(){
 }
 
 
+    
     // checkCollisions(){
-    //     this.level.enemies.forEach((enemy) => {
-    //             if(this.character.isColliding(enemy)) {
-    //                 this.character.hit();
-    //                 this.statusBarHealth.setPercentage(this.character.energy);
+    // this.level.enemies.forEach((enemy) => {
 
-    //                 if(this.soundWanted == true){
-    //                     this.character.audioHurt.play();
-    //                 }
-    //             }
-    //         })
+    //     if (!enemy.isDead && this.character.isCollidingFromAbove(enemy)) {
+    //         enemy.takeHit();
+    //         enemy.isDeadFlag = true;
+
+    //         this.character.speedY = 15;
+
+    //     } else if (this.character.isColliding(enemy)) {
+    //         this.character.hit();
+    //         this.statusBarHealth.setPercentage(this.character.energy);
+
+    //         if(this.soundWanted == true){
+    //             this.character.audioHurt.play();
+    //         }
+    //     }
+    // });
     // }
     checkCollisions(){
+
+    let stompedEnemy = this.level.enemies.some(enemy => 
+        !enemy.isDead && this.character.isCollidingFromAbove(enemy)
+    );
+
     this.level.enemies.forEach((enemy) => {
 
         if (!enemy.isDead && this.character.isCollidingFromAbove(enemy)) {
             enemy.takeHit();
             enemy.isDeadFlag = true;
-
             this.character.speedY = 15;
-
-        } else if (this.character.isColliding(enemy)) {
+        } 
+        else if (!stompedEnemy && this.character.isColliding(enemy)) {
             this.character.hit();
             this.statusBarHealth.setPercentage(this.character.energy);
 
@@ -171,7 +201,7 @@ checkThrowObjects(){
             }
         }
     });
-    }
+}
     
 
     checkCollisionsCoins(){

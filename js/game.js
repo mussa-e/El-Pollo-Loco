@@ -4,51 +4,39 @@ let keyboard = new Keyboard();
 let ctx;
 let gameStarted = false;
 
-let colors = {
-  0: "rgb(253,229,142)",
-  1: "rgb(85,182,212)",
-  2: "rgb(176,212,227)",
-  3: "rgb(160,34,10)",
-  4: "rgb(232,68,129)",
-  5: "rgb(199,103,88)",
-  6: "rgb(245,177,92)",
-  7: "rgb(67,145,41)",
-  8: "rgb(234,142,68)"
-};
-
 let gameOver = false;
+
+let gameState = "menu"; 
     
 
 
 
 
-function init(){
 
-    canvas = document.getElementById("canvas");
-    canvas.classList.remove("d-none");
+function init(){ 
+    gameState = "playing";
 
-    startScreen = document.getElementById("start-screen");
-    startScreen.classList.add("d-none");
+    canvas = document.getElementById("canvas"); 
+    canvas.classList.remove("d-none"); 
+
+    startScreen = document.getElementById("start-screen"); 
+    startScreen.classList.add("d-none"); 
+
+    world = new World(canvas, keyboard); 
+
     
-    world = new World(canvas, keyboard);
-
-    canvas.addEventListener("click", (event) => {
-    handleCanvasClick(event);
-    });
-
-    canvas.addEventListener("mousemove", (e) => {
-    const rect = canvas.getBoundingClientRect(),
-          x = (e.clientX - rect.left) * (canvas.width / rect.width),
-          y = (e.clientY - rect.top) * (canvas.height / rect.height);
-    canvas.style.cursor = (isMouseOver(world.speaker, x, y) || isMouseOver(world.fullScreen, x, y)) 
-                          ? "pointer" 
-                          : "default";
-    });
-
-    function isMouseOver(obj, x, y) {
-        return x >= obj.x && x <= obj.x + obj.width && y >= obj.y && y <= obj.y + obj.height;
-}
-}
+    canvas.addEventListener("mousemove", (e) => { 
+        const rect = canvas.getBoundingClientRect(), 
+        x = (e.clientX - rect.left) * (canvas.width / rect.width), 
+        y = (e.clientY - rect.top) * (canvas.height / rect.height); 
+        canvas.style.cursor = (isMouseOver(world.speaker, x, y) 
+        || isMouseOver(world.fullScreen, x, y)) ? "pointer" : "default"; 
+    }); 
+    
+    function isMouseOver(obj, x, y) { 
+        return x >= obj.x && x <= obj.x + obj.width 
+        && y >= obj.y && y <= obj.y + obj.height; } 
+    }
 
 
 function handleCanvasClick(event) {
@@ -57,8 +45,33 @@ function handleCanvasClick(event) {
     const x = (event.clientX - rect.left) * (canvas.width / rect.width);
     const y = (event.clientY - rect.top) * (canvas.height / rect.height);
 
-    checkFullscreenClick(x, y);
-    checkSpeakerClick(x, y);
+    let fs = world.fullScreen;
+    let sp = world.speaker;
+
+    // 🔥 FULLSCREEN DIREKT HIER
+    if (
+        x >= fs.x &&
+        x <= fs.x + fs.width &&
+        y >= fs.y &&
+        y <= fs.y + fs.height
+    ) {
+        if (!document.fullscreenElement) {
+            canvas.requestFullscreen().catch(err => console.log(err));
+        } else {
+            document.exitFullscreen();
+        }
+        return; // wichtig!
+    }
+
+    // 🔊 SPEAKER
+    if (
+        x >= sp.x &&
+        x <= sp.x + sp.width &&
+        y >= sp.y &&
+        y <= sp.y + sp.height
+    ) {
+        sp.toggleSound();
+    }
 }
 
 
@@ -158,7 +171,36 @@ window.addEventListener("keyup", (e) => {
 
 
 function restartGame() {
-    location.reload();
+    // location.reload();
 
-    
+    resetGame();
+    showMenu();
 }
+
+
+function resetGame() {
+    gameOver = false;
+
+    if (world) {
+        world.stop(); 
+    }
+
+    world = null;
+
+    document.getElementById("canvas").classList.add("d-none");
+    document.getElementById("lose-screen").classList.add("d-none");
+    document.getElementById("win-screen").classList.add("d-none");
+}
+
+
+function showMenu() {
+    gameState = "menu";
+    document.getElementById("start-screen").classList.remove("d-none");
+}
+
+
+canvas = document.getElementById("canvas");
+canvas.addEventListener("click", (event) => {
+    handleCanvasClick(event);
+});
+

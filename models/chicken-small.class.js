@@ -29,18 +29,18 @@ class ChickenSmall extends MovableObject{
     
     animate(){
 
-    this.moveInterval = setInterval(()=> {
-        if(!this.isDead){
-            this.moveLeft();
-        }
-    }, 1000/60);
-        
-    this.animationInterval = setInterval(()=> {
-        if(!this.isDead){
-            this.playAnimation(this.IMAGES_WALKING);
-        }
-    }, 150);
-}
+        this.moveInterval = setInterval(()=> {
+            if(!this.isDead){
+                this.moveLeft();
+            }
+        }, 1000/60);
+            
+        this.animationInterval = setInterval(()=> {
+            if(!this.isDead){
+                this.playAnimation(this.IMAGES_WALKING);
+            }
+        }, 150);
+    }
 
 
     takeHit(){
@@ -49,7 +49,6 @@ class ChickenSmall extends MovableObject{
         }
     
         this.die();
-        console.log("Chicken small hit");
     }
 
     
@@ -73,5 +72,14 @@ die(){
         this.isDeadFlag = true;
     }, 1000);
 }
+
+
+stop() {
+    clearInterval(this.moveInterval);
+    clearInterval(this.animationInterval);
+}
+
     
 } 
+
+

@@ -49,7 +49,6 @@ class Chicken extends MovableObject{
         }
     
     this.die();
-    console.log("Chicken hit");
     }
 
     
@@ -72,5 +71,13 @@ class Chicken extends MovableObject{
         this.isDeadFlag = true; //entfernt das Objekt nach 1 Sekunde aus dem Spiel
     }, 1000);
 }
+
+
+stop() {
+    clearInterval(this.moveInterval);
+    clearInterval(this.animationInterval);
+}
+
+
     
 } 

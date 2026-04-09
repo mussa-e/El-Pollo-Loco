@@ -31,7 +31,7 @@ class Speaker extends DrawableObject {
             });
         } else {
             this.loadImage(this.IMAGES_ON);
-            this.audioBG.play();
+            this.audioBG.play().catch(() => {});
             this.audioBG.volume = 0.2;
             world.character.soundWanted = true;
             world.soundWanted = true;

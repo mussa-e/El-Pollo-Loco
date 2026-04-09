@@ -89,9 +89,6 @@ class Endboss extends MovableObject{
     this.animationInterval = setInterval(()=> {
         if(!this.isDead){
             this.playAnimation(this.IMAGES_WALKING);
-            
-            
-            
         }
     }, 150);
 
@@ -165,6 +162,8 @@ class Endboss extends MovableObject{
 
 
         showWinScreen(){
+            gameState = "win";
+
             let canvas = document.getElementById("canvas");
             let winScreen = document.getElementById("win-screen");
 
@@ -187,5 +186,12 @@ class Endboss extends MovableObject{
             }, 2000);
         
             }
+        
+
+
+        stop() {
+            clearInterval(this.moveInterval);
+            clearInterval(this.animationInterval);
+        }
         
     }

@@ -12,6 +12,8 @@ class Character extends MovableObject {
     soundWanted = false;
     hasPlayedLoseSound = false;
 
+    intervals = [];
+
 
     IMAGES_STANDING = [
     "img/2_character_pepe/2_walk/W-21.png"
@@ -96,7 +98,7 @@ class Character extends MovableObject {
 
     animate(){
 
-        setInterval(()=> {
+        let moveInterval = setInterval(()=> {
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x){
                 this.moveRight();
                 this.otherDirection = false;
@@ -121,11 +123,12 @@ class Character extends MovableObject {
 
 
             this.world.camera_x = -this.x + 100;
-        }, 1000/60)
+        }, 1000/60);
+        this.intervals.push(moveInterval);
 
 
 
-        setInterval(()=> {
+        let animationInterval = setInterval(()=> {
             let timepassed = (new Date().getTime() - this.lastActionTime) / 1000;
 
             if(this.isDead()){
@@ -171,12 +174,20 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_STANDING);
                 this.audioSnoring.pause();
             }
-        }, 50)
+        }, 50);
+        this.intervals.push(animationInterval);
+    }
+
+
+    stop() {
+        this.intervals.forEach(i => clearInterval(i));
+        clearInterval(this.gravityInterval);
     }
 
 
     characterDied(){
         gameOver = true;
+        gameState = "gameover";
 
         if (document.fullscreenElement) {
             document.exitFullscreen();

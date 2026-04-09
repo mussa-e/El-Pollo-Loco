@@ -3,19 +3,36 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     speedY = 0;
     accerelation = 2.5;
-    energy = 100;
+    energy = 1000;//old value: 100
     lastHit = 0;
+    lastY = 0;
 
 
-    applyGravity(){
-        setInterval(()=>{
-            if(this.isAboveGround() || this.speedY > 0){
-                this.y -= this.speedY;
-                this.speedY -= this.accerelation;
-            } 
+    // applyGravity(){
+    //     setInterval(()=>{
+    //         if(this.isAboveGround() || this.speedY > 0){
+    //             this.y -= this.speedY;
+    //             this.speedY -= this.accerelation;
+    //         } 
             
-        },1000/25);
+    //     },1000/25);
+    // }
+     applyGravity(){
+        this.gravityInterval = setInterval(() => {
+        this.lastY = this.y;
+
+        if(this.isAboveGround() || this.speedY > 0){
+            this.y -= this.speedY;
+            this.speedY -= this.accerelation;
+        } 
+    }, 1000/25);
     }
+
+
+    stop() {
+    clearInterval(this.gravityInterval);
+}
+    
     
 
 
@@ -49,10 +66,15 @@ class MovableObject extends DrawableObject {
     //        this.y < mo.y && // wichtig: Character ist über dem Gegner
     //        this.speedY < 0; // fällt nach unten
     // }
+    // isCollidingFromAbove(mo) {
+    // return this.isColliding(mo) &&
+    //        this.speedY < 0 &&
+    //        this.y + this.height - this.offset.bottom <= mo.y + mo.offset.top + 10;
+    // }
     isCollidingFromAbove(mo) {
     return this.isColliding(mo) &&
            this.speedY < 0 &&
-           this.y + this.height - this.offset.bottom <= mo.y + mo.offset.top + 10;
+           this.lastY + this.height <= mo.y + 10;
 }
 
 
