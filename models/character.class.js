@@ -8,10 +8,8 @@ class Character extends MovableObject {
     audioLose = new Audio("audio/losing-horn.mp3");
     audioHurt = new Audio("audio/manhurt1.mp3");
     audioDied = new Audio("audio/manhurt3.mp3");
-    
     soundWanted = false;
     hasPlayedLoseSound = false;
-
     intervals = [];
 
 

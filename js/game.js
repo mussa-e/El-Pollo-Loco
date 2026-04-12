@@ -3,15 +3,9 @@ let world;
 let keyboard = new Keyboard();
 let ctx;
 let gameStarted = false;
-
 let gameOver = false;
-
 let gameState = "menu"; 
     
-
-
-
-
 
 function init(){ 
     gameState = "playing";
