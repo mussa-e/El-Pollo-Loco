@@ -193,6 +193,7 @@ class Character extends MovableObject {
 
         let canvas = document.getElementById("canvas");
         let loseScreen = document.getElementById("lose-screen");
+        let gameContainer = document.getElementById("game-container");
 
         if (this.hasPlayedLoseSound) return; 
 
@@ -206,6 +207,7 @@ class Character extends MovableObject {
         setTimeout(() => {
         loseScreen.classList.remove("d-none");
         canvas.classList.add("d-none");
+        gameContainer.classList.add("d-none");
 
         this.y = 3000;
 

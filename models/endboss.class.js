@@ -166,6 +166,7 @@ class Endboss extends MovableObject{
 
             let canvas = document.getElementById("canvas");
             let winScreen = document.getElementById("win-screen");
+            let gameContainer = document.getElementById("game-container");
 
             this.world.character.soundWanted = false;
         
@@ -176,6 +177,7 @@ class Endboss extends MovableObject{
 
             winScreen.classList.remove("d-none");
             canvas.classList.add("d-none");
+            gameContainer.classList.add("d-none");
 
             this.world.speaker.audioBG.pause();
             

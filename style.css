@@ -21,20 +21,6 @@ canvas {
     display: block;
 }
 
-/* Smartphone */
-@media only screen and (max-width: 720px) {
-    canvas {
-        width: 100%;
-    }
-}
-
-/* Smartphone */
-@media only screen and (max-height: 480px) {
-    canvas {
-        height: 100vh;
-    }
-}
-
 
 @font-face {
   font-family: 'Rye';
@@ -175,6 +161,114 @@ canvas {
 .restart-icon{
     width: 24px;
     height: 24px;
+}
+
+
+
+.panel-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between; 
+    align-items: flex-end;               
+    box-sizing: border-box;
+}
+
+.game-container {
+    position: relative;
+    width: 720px;
+    height: 480px;
+}
+
+.btn-wrapper{
+    display: flex;
+    gap: 8px;
+    padding: 8px;
+    height: 30px;
+}
+
+.btn-wrapper button{
+    border: none;
+    border-radius: 50px;
+    display: flex;
+    background-color: rgb(71 60 31);
+    align-items: center;
+}
+
+.btn-wrapper button img{
+    width: 20px;
+    height: 20px;
+}
+
+.mobile-advice {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(28, 25, 25, 0.9);
+    height: 100vh;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.mobile-advice-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.mobile-advice img {
+    width: 40px;
+    height: 40px;
+}
+
+.mobile-advice p {
+    color: rgba(204, 204, 204, 1);
+    font-family: 'Rye', serif;
+    padding: 20px;
+}
+
+
+
+@media only screen and (max-width: 720px) {
+    .mobile-advice {
+        display: flex !important;
+    }
+
+    .game-container {
+        display: none;
+    }
+}
+
+
+
+@media only screen and (max-width: 720px) {
+    .game-container {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 720 / 480;
+    }
+
+    canvas {
+        width: 100%;
+        height: 100%;
+    }
+
+    .panel-wrapper {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+@media (min-width: 721px) {
+    .panel-wrapper {
+        display: none;
+    }
 }
 
 
