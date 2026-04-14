@@ -196,3 +196,4 @@ canvas.addEventListener("click", (event) => {
     handleCanvasClick(event);
 });
 
+
