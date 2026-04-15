@@ -176,6 +176,7 @@ canvas {
     align-items: flex-end;               
     box-sizing: border-box;
     display: none;
+    pointer-events: none;
 }
 
 .game-container {
@@ -200,6 +201,7 @@ canvas {
     display: flex;
     background-color: rgb(71 60 31);
     align-items: center;
+    pointer-events: auto;
 }
 
 .btn-wrapper button img{
@@ -255,9 +257,7 @@ canvas {
     .mobile-advice {
         display: none !important;
     }
-}
 
-@media only screen and (max-width: 1024px) and (orientation: landscape) {
     .panel-wrapper {
         display: flex;
     }

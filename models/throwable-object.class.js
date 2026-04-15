@@ -1,5 +1,8 @@
 class ThrowableObject extends MovableObject {
 
+    
+    soundBottleBreak = new Audio("audio/bottle-breaking.mp3");
+    hasPlayedSound = false;
     world;
 
     IMAGES_THROW = [
@@ -26,20 +29,17 @@ class ThrowableObject extends MovableObject {
         this.height = 60;
         this.width = 50;
         this.throw();
-        
     }
 
 
     
     throw(){
+        this.hasPlayedSound = true;
 
             this.throwInterval = setInterval(()=> {
             this.playAnimation(this.IMAGES_THROW);
-            
         }, 80);
         
-        
-    
         this.speedY = 30;
         this.applyGravity();
 
@@ -55,6 +55,11 @@ stopThrow(){
 }
 
 splash(){
+    if(world.soundWanted == true && this.hasPlayedSound == true){
+        this.soundBottleBreak.play();
+        this.hasPlayedSound = false;
+    }
+
     let i = 0;
     let splashInterval = setInterval(() => {
         this.img = this.imageCache[this.IMAGES_SPLASH[i]];

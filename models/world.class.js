@@ -157,7 +157,7 @@ checkThrowObjects(){
             this.character.hit();
             this.statusBarHealth.setPercentage(this.character.energy);
 
-            if(this.soundWanted == true){
+            if(this.soundWanted == true && !this.character.isDead()){
                 this.character.audioHurt.play();
             }
         }
