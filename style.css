@@ -136,17 +136,24 @@ canvas {
     margin: 10px 0;
 }
 
-.restart-btn{
+.endscreen-btn-wrapper {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
     position: absolute;
     top: 170px;
     left: 50%;
     transform: translateX(-50%);
+}
+
+.back-to-menu-btn, .restart-btn{
+    
     font-family: rye;
     background-color: rgb(160,34,10);
     color: rgb(253,229,142);
     border: 3px double rgb(253,229,142);
     padding: 0 16px;
-    font-size: 18px;
+    font-size: 16px;
     border-radius: 12px;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
@@ -154,11 +161,11 @@ canvas {
     display: flex;
     gap: 10px;
 }
-.restart-btn:hover {
+.back-to-menu-btn:hover, .restart-btn:hover {
     background-color: rgb(183, 6, 6);
 }
 
-.restart-icon{
+.back-to-menu-icon, .restart-icon {
     width: 24px;
     height: 24px;
 }

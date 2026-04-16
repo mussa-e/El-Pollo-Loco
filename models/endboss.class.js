@@ -35,6 +35,7 @@ class Endboss extends MovableObject{
             
     ];
 
+
     IMAGES_ALERT = [
         "img/4_enemie_boss_chicken/2_alert/G5.png",
             "img/4_enemie_boss_chicken/2_alert/G6.png",
@@ -46,11 +47,12 @@ class Endboss extends MovableObject{
             "img/4_enemie_boss_chicken/2_alert/G12.png",
     ];
 
+
     IMAGES_HURT = [
         "img/4_enemie_boss_chicken/4_hurt/G21.png",
         "img/4_enemie_boss_chicken/4_hurt/G22.png",
         "img/4_enemie_boss_chicken/4_hurt/G23.png",
-    ]
+    ];
 
 
     IMAGES_DEAD = [
@@ -65,59 +67,52 @@ class Endboss extends MovableObject{
         this.loadImages(this.IMAGES_ALERT);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
-
-
         this.x = 2200;
         this.speed = 1.8;
-
         this.isDead = false;
         this.isActivated = false;
     }
 
     
     animate(){
-
-    this.moveInterval = setInterval(()=> {
-        if(!this.isDead ){
-            this.moveLeft();
-            
-            
-        }
-    }, 1000/60);
-
-        
-    this.animationInterval = setInterval(()=> {
-        if(!this.isDead){
-            this.playAnimation(this.IMAGES_WALKING);
-        }
-    }, 150);
-
-    
-}
+        this.moveInterval = setInterval(()=> {
+            if(!this.isDead ){
+                this.moveLeft();
+                
+                
+            }
+        }, 1000/60);
+  
+        this.animationInterval = setInterval(()=> {
+            if(!this.isDead){
+                this.playAnimation(this.IMAGES_WALKING);
+            }
+        }, 150); 
+    }
 
 
     takeHit(){
-    this.hits++;
-    if (this.soundWanted == true){
-            this.audioBottleHit.play();
-        }
-
-    let i = 0;
-        this.hurtInterval = setInterval(() => {
-            if(i < this.IMAGES_HURT.length){
-                this.img = this.imageCache[this.IMAGES_HURT[i]];
-                i++;
-                
-            } else {
-                clearInterval(this.hurtIntervalInterval);
+        this.hits++;
+        if (this.soundWanted == true){
+                this.audioBottleHit.play();
             }
-        }, 500); 
+
+        let i = 0;
+            this.hurtInterval = setInterval(() => {
+                if(i < this.IMAGES_HURT.length){
+                    this.img = this.imageCache[this.IMAGES_HURT[i]];
+                    i++;
+                    
+                } else {
+                    clearInterval(this.hurtIntervalInterval);
+                }
+            }, 500); 
 
 
-    if(this.hits >= 4){
-        this.die();
-        this.world.character.audioSnoring.pause();
-    }
+        if(this.hits >= 4){
+            this.die();
+            this.world.character.audioSnoring.pause();
+        }
     }
 
     
@@ -138,39 +133,34 @@ class Endboss extends MovableObject{
         }, 800); 
 
         this.showWinScreen();
-
-        // Danach entfernen
-        // setTimeout(() => {
-        //     this.isDeadFlag = true;
-        // }, this.IMAGES_DEAD.length * 800); // passt zur Animation
-        }
+    }
 
 
-        playAnimationOnce(images, intervalTime = 150){
-            let i = 0;
+    playAnimationOnce(images, intervalTime = 150){
+         let i = 0;
 
-            let interval = setInterval(() => {
-                if(i < images.length){
-                    let path = images[i];
-                    this.img = this.imageCache[path];
-                    i++;
-                } else {
-                    clearInterval(interval); 
-                }
-            }, intervalTime);
-        }
+        let interval = setInterval(() => {
+            if(i < images.length){
+                let path = images[i];
+                this.img = this.imageCache[path];
+                i++;
+            } else {
+                clearInterval(interval); 
+            }
+        }, intervalTime);
+    }
 
 
-        showWinScreen(){
-            gameState = "win";
+    showWinScreen(){
+        gameState = "win";
 
-            let canvas = document.getElementById("canvas");
-            let winScreen = document.getElementById("win-screen");
-            let gameContainer = document.getElementById("game-container");
+        let canvas = document.getElementById("canvas");
+        let winScreen = document.getElementById("win-screen");
+        let gameContainer = document.getElementById("game-container");
 
-            this.world.character.soundWanted = false;
+        this.world.character.soundWanted = false;
         
-            setTimeout(() => {
+        setTimeout(() => {
             if (document.fullscreenElement) {
                 document.exitFullscreen();
             }
@@ -185,15 +175,14 @@ class Endboss extends MovableObject{
                 this.audioWin.play();
                 this.audioWin.volume = 0.3;
             }
-            }, 2000);
-        
-            }
-        
-
-
-        stop() {
-            clearInterval(this.moveInterval);
-            clearInterval(this.animationInterval);
-        }
-        
+        }, 2000);
     }
+        
+
+
+    stop() {
+        clearInterval(this.moveInterval);
+        clearInterval(this.animationInterval);
+    }
+        
+}

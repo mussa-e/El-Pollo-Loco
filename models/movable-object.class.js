@@ -3,29 +3,27 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     speedY = 0;
     accerelation = 2.5;
-    energy = 1000;// old 100
+    energy = 100;// old 100
     lastHit = 0;
     lastY = 0;
 
 
      applyGravity(){
-        this.gravityInterval = setInterval(() => {
-        this.lastY = this.y;
+            this.gravityInterval = setInterval(() => {
+            this.lastY = this.y;
 
-        if(this.isAboveGround() || this.speedY > 0){
-            this.y -= this.speedY;
-            this.speedY -= this.accerelation;
-        } 
-    }, 1000/25);
+            if(this.isAboveGround() || this.speedY > 0){
+                this.y -= this.speedY;
+                this.speedY -= this.accerelation;
+            } 
+        }, 1000/25);
     }
 
 
     stop() {
-    clearInterval(this.gravityInterval);
-}
+        clearInterval(this.gravityInterval);
+    }
     
-    
-
 
     isAboveGround(){
         if(this instanceof ThrowableObject){
@@ -37,18 +35,18 @@ class MovableObject extends DrawableObject {
 
 
     isColliding(mo){
-    return  this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
-            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
-            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
-            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
+        return  this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+                this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+                this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+                this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
     }
 
 
     isCollidingFromAbove(mo) {
-    return this.isColliding(mo) &&
-           this.speedY < 0 &&
-           this.lastY + this.height <= mo.y + 10;
-}
+        return this.isColliding(mo) &&
+            this.speedY < 0 &&
+            this.lastY + this.height <= mo.y + 10;
+    }
 
 
     hit(){
@@ -83,18 +81,18 @@ class MovableObject extends DrawableObject {
 
 
     moveRight(){
-        this.x += this.speed;
-        
+        this.x += this.speed;   
     }
 
 
     moveLeft(){
-            this.x -= this.speed;
-            
+            this.x -= this.speed; 
     }
 
 
     jump(){
         this.speedY = 30;
     }
+
+
 }

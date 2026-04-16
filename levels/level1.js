@@ -11,9 +11,11 @@ function createLevel1() {
             new ChickenSmall(),
         ],
 
+
         [
             new Cloud()
         ],
+
 
         [
             new BackgroundObject("img/5_background/layers/air.png", -720),
@@ -42,6 +44,7 @@ function createLevel1() {
             new BackgroundObject("img/5_background/layers/1_first_layer/2.png", 720 *3)
         ],
 
+
         [
             new Coin(), 
             new Coin(), 
@@ -55,6 +58,7 @@ function createLevel1() {
             new Coin()
         ],
 
+        
         [
             new Bottle(), 
             new Bottle(), 

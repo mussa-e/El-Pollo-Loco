@@ -5,32 +5,107 @@ let ctx;
 let gameStarted = false;
 let gameOver = false;
 let gameState = "menu"; 
-    
 
-function init(){ 
+
+// function init(){ 
+//     gameState = "playing";
+
+//     canvas = document.getElementById("canvas"); 
+//     canvas.classList.remove("d-none"); 
+
+//     canvas.addEventListener("contextmenu", (e) => e.preventDefault());
+
+//     startScreen = document.getElementById("start-screen"); 
+//     startScreen.classList.add("d-none"); 
+
+//     world = new World(canvas, keyboard); 
+
+    
+//     canvas.addEventListener("mousemove", (e) => { 
+//         const rect = canvas.getBoundingClientRect(), 
+//         x = (e.clientX - rect.left) * (canvas.width / rect.width), 
+//         y = (e.clientY - rect.top) * (canvas.height / rect.height); 
+//         canvas.style.cursor = (isMouseOver(world.speaker, x, y) 
+//         || isMouseOver(world.fullScreen, x, y)) ? "pointer" : "default"; 
+//     }); 
+    
+//     function isMouseOver(obj, x, y) { 
+//         return x >= obj.x && x <= obj.x + obj.width 
+//         && y >= obj.y && y <= obj.y + obj.height; } 
+//     }
+function init() {
     gameState = "playing";
 
-    canvas = document.getElementById("canvas"); 
-    canvas.classList.remove("d-none"); 
+    setupCanvas();
+    hideStartScreen();
+    createWorld();
+    registerCanvasEvents();
+}
 
-    startScreen = document.getElementById("start-screen"); 
-    startScreen.classList.add("d-none"); 
 
-    world = new World(canvas, keyboard); 
+function setupCanvas() {
+    canvas = document.getElementById("canvas");
+    canvas.classList.remove("d-none");
 
-    
-    canvas.addEventListener("mousemove", (e) => { 
-        const rect = canvas.getBoundingClientRect(), 
-        x = (e.clientX - rect.left) * (canvas.width / rect.width), 
-        y = (e.clientY - rect.top) * (canvas.height / rect.height); 
-        canvas.style.cursor = (isMouseOver(world.speaker, x, y) 
-        || isMouseOver(world.fullScreen, x, y)) ? "pointer" : "default"; 
-    }); 
-    
-    function isMouseOver(obj, x, y) { 
-        return x >= obj.x && x <= obj.x + obj.width 
-        && y >= obj.y && y <= obj.y + obj.height; } 
-    }
+    canvas.addEventListener("contextmenu", (e) => e.preventDefault());
+}
+
+
+function hideStartScreen() {
+    let startScreen = document.getElementById("start-screen");
+    startScreen.classList.add("d-none");
+}
+
+
+function createWorld() {
+    world = new World(canvas, keyboard);
+}
+
+
+function registerCanvasEvents() {
+    canvas.addEventListener("mousemove", handleMouseMove);
+}
+
+
+function handleMouseMove(e) {
+    const { x, y } = getMousePos(e);
+
+    canvas.style.cursor = isOverInteractive(x, y)
+        ? "pointer"
+        : "default";
+}
+
+
+function getMousePos(e) {
+    const rect = canvas.getBoundingClientRect();
+
+    return {
+        x: (e.clientX - rect.left) * (canvas.width / rect.width),
+        y: (e.clientY - rect.top) * (canvas.height / rect.height)
+    };
+}
+
+
+function isOverInteractive(x, y) {
+    return isMouseOver(world.speaker, x, y) ||
+           isMouseOver(world.fullScreen, x, y);
+}
+
+
+function isMouseOver(obj, x, y) {
+    return x >= obj.x &&
+           x <= obj.x + obj.width &&
+           y >= obj.y &&
+           y <= obj.y + obj.height;
+}
+
+
+
+
+
+
+
+
 
 
 function handleCanvasClick(event) {
@@ -105,67 +180,15 @@ function checkSpeakerClick(x, y) {
 }
 
 
-// window.addEventListener("keydown", (e) => {
-
-//     if (gameOver) return;
-
-//     if (e.keyCode == 39){
-//         keyboard.RIGHT = true;
-//     }
-
-//     if (e.keyCode == 37){
-//         keyboard.LEFT = true;
-//     }
-
-//     if (e.keyCode == 38){
-//         keyboard.UP = true;
-//     }
-
-//     if (e.keyCode == 40){
-//         keyboard.DOWN = true;
-//     }
-
-//     if (e.keyCode == 32){
-//         keyboard.SPACE = true;
-//     }
-
-//     if (e.keyCode == 68){
-//         keyboard.D = true;
-//     }
-    
-// });
-
-// window.addEventListener("keyup", (e) => {
-
-//     if (e.keyCode == 39){
-//         keyboard.RIGHT = false;
-//     }
-
-//     if (e.keyCode == 37){
-//         keyboard.LEFT = false;
-//     }
-
-//     if (e.keyCode == 38){
-//         keyboard.UP = false;
-//     }
-
-//     if (e.keyCode == 40){
-//         keyboard.DOWN = false;
-//     }
-
-//     if (e.keyCode == 32){
-//         keyboard.SPACE = false;
-//     }
-
-//     if (e.keyCode == 68){
-//         keyboard.D = false;
-//     }
-// });
+function backToMenu() {
+    resetGame();
+    showMenu();
+}
 
 
 function restartGame() {
     resetGame();
-    showMenu();
+    init();
 }
 
 

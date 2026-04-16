@@ -1,7 +1,6 @@
 class Speaker extends DrawableObject {
     IMAGES_ON = ["img/0_icons/volume_on.png"];
     IMAGES_OFF = ["img/0_icons/volume_off.png"];
-
     isMuted = true;
     audioBG = new Audio("audio/banjodoline.mp3");
 
@@ -12,7 +11,6 @@ class Speaker extends DrawableObject {
         this.y = 10;
         this.width = 35;
         this.height = 35;
-
         this.audioBG.loop = true;
     }
 

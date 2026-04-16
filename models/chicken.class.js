@@ -11,6 +11,7 @@ class Chicken extends MovableObject{
             "img/3_enemies_chicken/chicken_normal/1_walk/3_w.png"
     ];
 
+
     IMAGE_DEAD = "img/3_enemies_chicken/chicken_normal/2_dead/dead.png";
     
 
@@ -18,29 +19,26 @@ class Chicken extends MovableObject{
         super().loadImage("img/3_enemies_chicken/chicken_normal/1_walk/1_w.png");
         this.loadImages(this.IMAGES_WALKING);
         this.loadImage(this.IMAGE_DEAD);
-
         this.x = 600 + Math.random() * 800;
         this.speed = 0.15 + Math.random() * 0.5;
-
         this.isDead = false;
     }
     
 
     
     animate(){
-
-    this.moveInterval = setInterval(()=> {
-        if(!this.isDead){
-            this.moveLeft();
-        }
-    }, 1000/60);
-        
-    this.animationInterval = setInterval(()=> {
-        if(!this.isDead){
-            this.playAnimation(this.IMAGES_WALKING);
-        }
-    }, 150);
-}
+        this.moveInterval = setInterval(()=> {
+            if(!this.isDead){
+                this.moveLeft();
+            }
+        }, 1000/60);
+            
+        this.animationInterval = setInterval(()=> {
+            if(!this.isDead){
+                this.playAnimation(this.IMAGES_WALKING);
+            }
+        }, 150);
+    }
 
 
     takeHit(){
@@ -48,36 +46,33 @@ class Chicken extends MovableObject{
             this.audioBottleHit.play();
         }
     
-    this.die();
+        this.die();
     }
 
     
     die(){
-    this.isDead = true;
+        this.isDead = true;
 
-    clearInterval(this.moveInterval);
-    clearInterval(this.animationInterval);
+        clearInterval(this.moveInterval);
+        clearInterval(this.animationInterval);
 
-    // Neues Bild erstellen
-    let deadImg = new Image();
-    deadImg.src = this.IMAGE_DEAD;
+        let deadImg = new Image();
+        deadImg.src = this.IMAGE_DEAD;
 
-    // Sobald geladen, setzen
-    deadImg.onload = () => {
-        this.img = deadImg;
-    };
+        deadImg.onload = () => {
+            this.img = deadImg;
+        };
 
-    setTimeout(() => {
-        this.isDeadFlag = true; //entfernt das Objekt nach 1 Sekunde aus dem Spiel
-    }, 1000);
-}
+        setTimeout(() => {
+            this.isDeadFlag = true; 
+        }, 1000);
+    }
 
 
-stop() {
-    clearInterval(this.moveInterval);
-    clearInterval(this.animationInterval);
-}
-
+    stop() {
+        clearInterval(this.moveInterval);
+        clearInterval(this.animationInterval);
+    }
 
     
 } 

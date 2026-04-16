@@ -17,23 +17,17 @@ class World{
     lastThrowTime = 0;
     throwCooldown = 500;
     soundWanted = false;
-
     intervals = [];
     
     
-
-
     constructor(canvas, keyboard){
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
         this.keyboard = keyboard;
-
         this.level = createLevel1();
-
         this.draw();
         this.setWorld();
         this.run();
-
         this.startAnimations();
     }
 
@@ -77,9 +71,7 @@ class World{
 
     stop() {
         this.intervals.forEach(i => clearInterval(i));
-
         this.character.stop();
-
         this.level.enemies.forEach(enemy => {
             if (enemy.stop) {
                 enemy.stop();
@@ -88,81 +80,73 @@ class World{
     }
     
 
-
     checkEndbossActivation(){
-    this.level.enemies.forEach(enemy => {
-        if(enemy instanceof Endboss && !enemy.isActivated){
-            
-            if(this.character.x > enemy.x - 550){ 
+        this.level.enemies.forEach(enemy => {
+            if(enemy instanceof Endboss && !enemy.isActivated){
                 
-                enemy.isActivated = true;
-                enemy.playAnimationOnce(enemy.IMAGES_ALERT);
-                if(enemy.soundWanted == true){
-                    enemy.audioAlert.play();
-                    enemy.audioAlert.volume = 0.3;
+                if(this.character.x > enemy.x - 550){ 
+                    enemy.isActivated = true;
+                    enemy.playAnimationOnce(enemy.IMAGES_ALERT);
+                    if(enemy.soundWanted == true){
+                        enemy.audioAlert.play();
+                        enemy.audioAlert.volume = 0.3;
+                    }
+                    
+                    setTimeout(() => {
+                        enemy.animate();
+                    }, enemy.IMAGES_ALERT.length * 150);
                 }
-                
-
-                setTimeout(() => {
-                    enemy.animate();
-                }, enemy.IMAGES_ALERT.length * 150);
             }
+        });
+    }
+
+
+    checkThrowObjects(){
+        let now = new Date().getTime();
+
+        if(this.keyboard.D 
+            && this.statusBarBottle.percentage > 0
+            && now - this.lastThrowTime > this.throwCooldown
+            && this.character.otherDirection == false){
+
+            let bottle = new ThrowableObject(
+                this.character.x + 100, 
+                this.character.y + 100
+            );
+
+            this.throwableObjects.push(bottle);
+            this.lastThrowTime = now; 
+            this.statusBarBottle.setPercentage(
+                this.statusBarBottle.percentage - 20
+            );
+
+            this.character.lastActionTime = new Date().getTime();
+            this.character.playAnimation(this.character.IMAGES_STANDING);
         }
-    });
     }
-
-
-checkThrowObjects(){
-
-    let now = new Date().getTime();
-
-    if(this.keyboard.D 
-        && this.statusBarBottle.percentage > 0
-        && now - this.lastThrowTime > this.throwCooldown
-        && this.character.otherDirection == false){
-
-        let bottle = new ThrowableObject(
-            this.character.x + 100, 
-            this.character.y + 100
-        );
-
-        this.throwableObjects.push(bottle);
-
-        this.lastThrowTime = now; 
-
-        this.statusBarBottle.setPercentage(
-            this.statusBarBottle.percentage - 20
-        );
-
-        this.character.lastActionTime = new Date().getTime();
-        this.character.playAnimation(this.character.IMAGES_STANDING);
-    }
-}
 
 
     checkCollisions(){
+        let stompedEnemy = this.level.enemies.some(enemy => 
+            !enemy.isDead && this.character.isCollidingFromAbove(enemy)
+        );
 
-    let stompedEnemy = this.level.enemies.some(enemy => 
-        !enemy.isDead && this.character.isCollidingFromAbove(enemy)
-    );
+        this.level.enemies.forEach((enemy) => {
+            if (!enemy.isDead && this.character.isCollidingFromAbove(enemy)) {
+                enemy.takeHit();
+                enemy.isDeadFlag = true;
+                this.character.speedY = 15;
+            } 
+            else if (!stompedEnemy && this.character.isColliding(enemy)) {
+                this.character.hit();
+                this.statusBarHealth.setPercentage(this.character.energy);
 
-    this.level.enemies.forEach((enemy) => {
-
-        if (!enemy.isDead && this.character.isCollidingFromAbove(enemy)) {
-            enemy.takeHit();
-            enemy.isDeadFlag = true;
-            this.character.speedY = 15;
-        } 
-        else if (!stompedEnemy && this.character.isColliding(enemy)) {
-            this.character.hit();
-            this.statusBarHealth.setPercentage(this.character.energy);
-
-            if(this.soundWanted == true && !this.character.isDead()){
-                this.character.audioHurt.play();
+                if(this.soundWanted == true && !this.character.isDead()){
+                    this.character.audioHurt.play();
+                }
             }
-        }
-    });
-}
+        });
+    }
     
 
     checkCollisionsCoins(){
@@ -192,36 +176,36 @@ checkThrowObjects(){
 
 
 
-checkCollisionsThrownBottle(){
-    this.throwableObjects.forEach((bottle) => {
+    checkCollisionsThrownBottle(){
+        this.throwableObjects.forEach((bottle) => {
 
-        if (bottle.hasHit) return;
+            if (bottle.hasHit) return;
 
-        setTimeout(() => {
-            if (bottle.y >= 280) { 
-            bottle.stopThrow();
-            bottle.splash();
-            bottle.markedForDeletion = true;
-            return;
-        }
-        }, 600); 
-        
-
-        this.level.enemies.forEach((enemy) => {
-            if(bottle.isColliding(enemy)) {
-
-                bottle.hasHit = true;
-
+            setTimeout(() => {
+                if (bottle.y >= 280) { 
                 bottle.stopThrow();
                 bottle.splash();
-
-                enemy.takeHit();
-
                 bottle.markedForDeletion = true;
+                return;
             }
+            }, 600); 
+            
+
+            this.level.enemies.forEach((enemy) => {
+                if(bottle.isColliding(enemy)) {
+
+                    bottle.hasHit = true;
+
+                    bottle.stopThrow();
+                    bottle.splash();
+
+                    enemy.takeHit();
+
+                    bottle.markedForDeletion = true;
+                }
+            });
         });
-    });
-}
+    }
 
 
     draw(){
@@ -295,22 +279,22 @@ checkCollisionsThrownBottle(){
 
 
     drawControls() {
-    this.ctx.font = "16px Rye";
-    this.ctx.fillStyle = "black";
+        this.ctx.font = "16px Rye";
+        this.ctx.fillStyle = "black";
 
-    const lines = [
-        "Left / Right = Arrow keys",
-        "Jump = Space",
-        "Throw Salsa Bottle = D"
-    ];
+        const lines = [
+            "Left / Right = Arrow keys",
+            "Jump = Space",
+            "Throw Salsa Bottle = D"
+        ];
 
-    lines.forEach((line, index) => {
-        let x = 280;
-        let y = 30 + index * 30;
+        lines.forEach((line, index) => {
+            let x = 280;
+            let y = 30 + index * 30;
 
-        this.ctx.fillText(line, x, y);
-    });
-}
+            this.ctx.fillText(line, x, y);
+        });
+    }
 
 
 }

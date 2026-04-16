@@ -53,22 +53,35 @@
 <div id="lose-screen" class="lose-screen d-none">
     <img src="img/You won, you lost/Game Over.png" class="game-over-img">
 
-    <button id="restart-btn" class="restart-btn" onclick="restartGame()">
-        <img src="img/0_icons/replay2.png" class="restart-icon">
-        <p>Back to menu</p>
-    </button>
+    <div class="endscreen-btn-wrapper">
+        <button id="back-to-menu-btn" class="back-to-menu-btn" onclick="backToMenu()">
+                <img src="img/0_icons/arrow-back-orange.png" class="back-to-menu-icon">
+                <p>Back to menu</p>
+        </button>
+
+        <button id="restart-btn" class="restart-btn" onclick="restartGame()">
+                <img src="img/0_icons/replay2.png" class="restart-icon">
+                <p>Restart Game</p>
+        </button>
+    </div>
 
 </div>
 
 
-<div>
-    <div id="win-screen" class="win-screen d-none">
-        <img src="img/You won, you lost/You Win A.png" class="win-img">
+<div id="win-screen" class="win-screen d-none">
+    <img src="img/You won, you lost/You Win A.png" class="win-img">
+
+    <div class="endscreen-btn-wrapper">
+        <button id="back-to-menu-btn" class="back-to-menu-btn" onclick="backToMenu()">
+                <img src="img/0_icons/arrow-back-orange.png" class="back-to-menu-icon">
+                <p>Back to menu</p>
+        </button>
 
         <button id="restart-btn" class="restart-btn" onclick="restartGame()">
-            <img src="img/0_icons/replay2.png" class="restart-icon">
-            <p>Back to menu</p>
+                <img src="img/0_icons/replay2.png" class="restart-icon">
+                <p>Restart Game</p>
         </button>
+    </div>
 </div>
 
 

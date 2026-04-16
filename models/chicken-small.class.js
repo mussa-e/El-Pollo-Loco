@@ -11,24 +11,21 @@ class ChickenSmall extends MovableObject{
             "img/3_enemies_chicken/chicken_small/1_walk/3_w.png"
     ];
     
+
     IMAGE_DEAD = "img/3_enemies_chicken/chicken_small/2_dead/dead.png";
+
 
     constructor(){
         super().loadImage("img/3_enemies_chicken/chicken_small/1_walk/1_w.png");
         this.loadImage(this.IMAGE_DEAD);
         this.loadImages(this.IMAGES_WALKING);
-        
-
         this.x = 500 + Math.random() * 600;
         this.speed = 0.15 + Math.random() * 0.5;
-
         this.isDead = false;
     }
     
-
     
     animate(){
-
         this.moveInterval = setInterval(()=> {
             if(!this.isDead){
                 this.moveLeft();
@@ -52,32 +49,29 @@ class ChickenSmall extends MovableObject{
     }
 
     
+    die(){
+        this.isDead = true;
 
-die(){
-    this.isDead = true;
+        clearInterval(this.moveInterval);
+        clearInterval(this.animationInterval);
 
-    clearInterval(this.moveInterval);
-    clearInterval(this.animationInterval);
+        let deadImg = new Image();
+        deadImg.src = this.IMAGE_DEAD;
 
-    // Neues Bild erstellen
-    let deadImg = new Image();
-    deadImg.src = this.IMAGE_DEAD;
+        deadImg.onload = () => {
+            this.img = deadImg;
+        };
 
-    // Sobald geladen, setzen
-    deadImg.onload = () => {
-        this.img = deadImg;
-    };
-
-    setTimeout(() => {
-        this.isDeadFlag = true;
-    }, 1000);
-}
+        setTimeout(() => {
+            this.isDeadFlag = true;
+        }, 1000);
+    }
 
 
-stop() {
-    clearInterval(this.moveInterval);
-    clearInterval(this.animationInterval);
-}
+    stop() {
+        clearInterval(this.moveInterval);
+        clearInterval(this.animationInterval);
+    }
 
     
 } 

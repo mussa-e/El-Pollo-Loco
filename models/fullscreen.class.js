@@ -4,20 +4,14 @@ class Fullscreen extends DrawableObject{
     ];
 
 
-
-
-
     constructor(){
         super();
         this.loadImage(this.IMAGES);
         this.x = 670;
         this.y = 10;
         this.width = 35;
-        this.height = 35;
-        
+        this.height = 35;  
     }
-
-    
 
 
 }
