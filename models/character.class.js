@@ -103,85 +103,131 @@ class Character extends MovableObject {
     }
 
 
-    animate(){
-        let moveInterval = setInterval(()=> {
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x){
-                this.moveRight();
-                this.otherDirection = false;
-                this.lastActionTime = new Date().getTime();
-            }
-
-            if (this.world.keyboard.LEFT && this.x > 0){
-                this.moveLeft();
-                this.otherDirection = true;
-                this.lastActionTime = new Date().getTime();
-            }
-
-            if(this.world.keyboard.SPACE && !this.isAboveGround()){
-                this.jump();
-                if(this.soundWanted == true){
-                    this.audioJump.play();
-                }
-                
-                this.lastActionTime = new Date().getTime();
-                
-            }
+    animate() {
+    this.startMovementLoop();
+    this.startAnimationLoop();
+    }
 
 
+    startMovementLoop() {
+        let moveInterval = setInterval(() => {
+            this.handleMovement();
             this.world.camera_x = -this.x + 100;
-        }, 1000/60);
+        }, 1000 / 60);
+
         this.intervals.push(moveInterval);
+    }
 
 
+    handleMovement() {
+        if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+            this.moveRight();
+            this.otherDirection = false;
+            this.updateLastAction();
+        }
 
-        let animationInterval = setInterval(()=> {
-            let timepassed = (new Date().getTime() - this.lastActionTime) / 1000;
+        if (this.world.keyboard.LEFT && this.x > 0) {
+            this.moveLeft();
+            this.otherDirection = true;
+            this.updateLastAction();
+        }
 
-            if(this.isDead()){
-                this.playAnimation(this.IMAGES_DEAD);
-                this.audioSnoring.pause();
-                this.characterDied();
-            }
-            
-            else if(this.isHurt()){
-                this.playAnimation(this.IMAGES_HURT);
-                this.audioSnoring.pause();
-            }
-            
-            else if(this.isAboveGround()){
-                this.playAnimation(this.IMAGES_JUMPING);
-                this.audioSnoring.pause();
-            } 
-            
-            else 
-                if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT){
+        if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+            this.jump();
+            this.playJumpSound();
+            this.updateLastAction();
+        }
+    }
 
-                this.playAnimation(this.IMAGES_WALKING);
-                this.audioSnoring.pause();
-                
-            }
-            
 
-            else if (timepassed > 10){
-                this.playAnimation(this.IMAGES_LONG_IDLE);
-                if(this.soundWanted == true){
-                    this.audioSnoring.play();
-                    this.audioSnoring.volume = 0.3;
-                }
-                
-            }
+    playJumpSound() {
+        if (this.soundWanted) {
+            this.audioJump.play();
+        }
+    }
 
-            else if (timepassed > 3){
-                this.playAnimation(this.IMAGES_IDLE);
-                this.audioSnoring.pause();
-            }
 
-            else {
-                this.playAnimation(this.IMAGES_STANDING);
-                this.audioSnoring.pause();
-            }
+    updateLastAction() {
+        this.lastActionTime = new Date().getTime();
+    }
+
+
+    startAnimationLoop() {
+        let animationInterval = setInterval(() => {
+            this.updateAnimationState();
         }, 50);
+
         this.intervals.push(animationInterval);
+    }
+
+
+    updateAnimationState() {
+        let timepassed = this.getIdleTime();
+
+        if (this.isDead()) return this.handleDead();
+        if (this.isHurt()) return this.handleHurt();
+        if (this.isAboveGround()) return this.handleJumping();
+        if (this.isWalking()) return this.handleWalking();
+        if (timepassed > 10) return this.handleLongIdle();
+        if (timepassed > 3) return this.handleIdle();
+
+        this.handleStanding();
+    }
+
+
+    handleDead() {
+        this.playAnimation(this.IMAGES_DEAD);
+        this.audioSnoring.pause();
+        this.characterDied();
+    }
+
+
+    handleHurt() {
+        this.playAnimation(this.IMAGES_HURT);
+        this.audioSnoring.pause();
+    }
+
+
+    handleJumping() {
+        this.playAnimation(this.IMAGES_JUMPING);
+        this.audioSnoring.pause();
+    }
+
+
+    handleWalking() {
+        this.playAnimation(this.IMAGES_WALKING);
+        this.audioSnoring.pause();
+    }
+
+
+    handleLongIdle() {
+        this.playAnimation(this.IMAGES_LONG_IDLE);
+        if (this.soundWanted) {
+            this.audioSnoring.play();
+            this.audioSnoring.volume = 0.3;
+        }
+    }
+
+
+    handleIdle() {
+        this.playAnimation(this.IMAGES_IDLE);
+        this.audioSnoring.pause();
+    }
+
+
+    handleStanding() {
+        this.playAnimation(this.IMAGES_STANDING);
+        this.audioSnoring.pause();
+    }
+
+
+    isWalking() {
+        return this.world.keyboard.RIGHT || this.world.keyboard.LEFT;
+    }
+
+
+    getIdleTime() {
+        return (new Date().getTime() - this.lastActionTime) / 1000;
     }
 
 
@@ -191,44 +237,71 @@ class Character extends MovableObject {
     }
 
 
-    characterDied(){
+    characterDied() {
+    this.setGameOverState();
+
+    if (this.hasPlayedLoseSound) return;
+    this.hasPlayedLoseSound = true;
+
+    this.handleDeathSound();
+    this.scheduleGameOverScreen();
+    }
+
+
+    setGameOverState() {
         gameOver = true;
         gameState = "gameover";
+        this.exitFullscreenIfNeeded();
+    }
 
+
+    exitFullscreenIfNeeded() {
         if (document.fullscreenElement) {
             document.exitFullscreen();
         }
+    }
 
+
+    handleDeathSound() {
+        if (this.soundWanted) {
+            this.audioDied.play();
+            this.audioDied.volume = 0.3;
+        }
+    }
+
+
+    scheduleGameOverScreen() {
+        setTimeout(() => {
+            this.showGameOverUI();
+            this.cleanupAfterDeath();
+            this.playLoseSound();
+        }, 2000);
+    }
+
+
+    showGameOverUI() {
         let canvas = document.getElementById("canvas");
         let loseScreen = document.getElementById("lose-screen");
         let gameContainer = document.getElementById("game-container");
 
-        if (this.hasPlayedLoseSound) return; 
-
-        this.hasPlayedLoseSound = true; 
-
-        if(this.soundWanted == true){
-            this.audioDied.play();
-            this.audioDied.volume = 0.3;
-        }
-
-        setTimeout(() => {
         loseScreen.classList.remove("d-none");
         canvas.classList.add("d-none");
         gameContainer.classList.add("d-none");
-
-        this.y = 3000;
-
-        this.world.speaker.audioBG.pause();
-
-        if(this.soundWanted == true){
-            this.audioLose.play();
-            this.audioLose.volume = 0.3;
-            
-        }
-        }, 2000);
     }
 
+
+    cleanupAfterDeath() {
+        this.y = 3000;
+        this.world.speaker.audioBG.pause();
+    }
+
+
+    playLoseSound() {
+        if (this.soundWanted) {
+            this.audioLose.play();
+            this.audioLose.volume = 0.3;
+        }
+    }
 
 
 }

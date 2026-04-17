@@ -18,7 +18,15 @@ class Speaker extends DrawableObject {
         this.isMuted = !this.isMuted;
 
         if (this.isMuted) {
-            this.loadImage(this.IMAGES_OFF);
+            this.soundOff();
+        } else {
+            this.soundOn();
+        }
+    }
+
+
+    soundOff(){
+        this.loadImage(this.IMAGES_OFF);
             this.audioBG.pause();
             world.character.soundWanted = false;
             world.soundWanted = false;
@@ -27,8 +35,11 @@ class Speaker extends DrawableObject {
             world.level.enemies.forEach(enemy => {
                 enemy.soundWanted = false;
             });
-        } else {
-            this.loadImage(this.IMAGES_ON);
+    }
+
+
+    soundOn(){
+        this.loadImage(this.IMAGES_ON);
             this.audioBG.play().catch(() => {});
             this.audioBG.volume = 0.2;
             world.character.soundWanted = true;
@@ -37,6 +48,7 @@ class Speaker extends DrawableObject {
             world.level.enemies.forEach(enemy => {
                 enemy.soundWanted = true;
             });
-        }
     }
+
+    
 }

@@ -151,33 +151,45 @@ class Endboss extends MovableObject{
     }
 
 
-    showWinScreen(){
+    showWinScreen() {
         gameState = "win";
 
-        let canvas = document.getElementById("canvas");
-        let winScreen = document.getElementById("win-screen");
-        let gameContainer = document.getElementById("game-container");
+        const canvas = document.getElementById("canvas");
+        const winScreen = document.getElementById("win-screen");
+        const gameContainer = document.getElementById("game-container");
 
         this.world.character.soundWanted = false;
-        
+
         setTimeout(() => {
-            if (document.fullscreenElement) {
-                document.exitFullscreen();
-            }
-
-            winScreen.classList.remove("d-none");
-            canvas.classList.add("d-none");
-            gameContainer.classList.add("d-none");
-
-            this.world.speaker.audioBG.pause();
-            
-            if(this.soundWanted == true){
-                this.audioWin.play();
-                this.audioWin.volume = 0.3;
-            }
+            this.exitFullscreenIfNeeded();
+            this.toggleEndscreen(canvas, gameContainer, winScreen);
+            this.handleWinAudio();
         }, 2000);
     }
-        
+
+
+    exitFullscreenIfNeeded() {
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        }
+    }
+
+
+    toggleEndscreen(canvas, gameContainer, winScreen) {
+        winScreen.classList.remove("d-none");
+        canvas.classList.add("d-none");
+        gameContainer.classList.add("d-none");
+    }
+
+
+    handleWinAudio() {
+        this.world.speaker.audioBG.pause();
+
+        if (this.soundWanted) {
+            this.audioWin.volume = 0.3;
+            this.audioWin.play();
+        }
+    }
 
 
     stop() {
