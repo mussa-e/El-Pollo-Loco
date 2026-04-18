@@ -6,15 +6,19 @@ class ChickenSmall extends MovableObject{
     soundWanted = false;
 
     IMAGES_WALKING = [
-            "img/3_enemies_chicken/chicken_small/1_walk/1_w.png",
-            "img/3_enemies_chicken/chicken_small/1_walk/2_w.png",
-            "img/3_enemies_chicken/chicken_small/1_walk/3_w.png"
+        "img/3_enemies_chicken/chicken_small/1_walk/1_w.png",
+        "img/3_enemies_chicken/chicken_small/1_walk/2_w.png",
+        "img/3_enemies_chicken/chicken_small/1_walk/3_w.png"
     ];
     
 
     IMAGE_DEAD = "img/3_enemies_chicken/chicken_small/2_dead/dead.png";
 
 
+    /**
+     * Creates a new small chicken enemy and initializes its properties,
+     * including position, speed, images, and state.
+     */
     constructor(){
         super().loadImage("img/3_enemies_chicken/chicken_small/1_walk/1_w.png");
         this.loadImage(this.IMAGE_DEAD);
@@ -24,7 +28,12 @@ class ChickenSmall extends MovableObject{
         this.isDead = false;
     }
     
-    
+
+    /**
+     * Starts the movement and animation loops for the chicken.
+     * The chicken moves left and cycles through walking images
+     * while it is not dead.
+     */
     animate(){
         this.moveInterval = setInterval(()=> {
             if(!this.isDead){
@@ -40,6 +49,10 @@ class ChickenSmall extends MovableObject{
     }
 
 
+    /**
+     * Handles the event when the chicken takes a hit.
+     * Plays a sound effect if enabled and triggers the death sequence.
+     */
     takeHit(){
         if(this.soundWanted == true){
             this.audioBottleHit.play();
@@ -49,6 +62,11 @@ class ChickenSmall extends MovableObject{
     }
 
     
+    /**
+     * Marks the chicken as dead, stops all animations and movement,
+     * and switches the image to the dead state.
+     * Also sets a delayed flag indicating full removal.
+     */
     die(){
         this.isDead = true;
 
@@ -68,12 +86,12 @@ class ChickenSmall extends MovableObject{
     }
 
 
+    /**
+     * Stops all active intervals for movement and animation.
+     */
     stop() {
         clearInterval(this.moveInterval);
         clearInterval(this.animationInterval);
     }
-
-    
-} 
-
+}
 

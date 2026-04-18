@@ -1,4 +1,4 @@
-class Endboss extends MovableObject{
+class Endboss extends MovableObject {
     height = 400;
     width = 250;
     y = 60;
@@ -6,47 +6,42 @@ class Endboss extends MovableObject{
     maxHits = 10;
     audioBottleHit = new Audio("audio/chicken1.mp3");
     audioAlert = new Audio("audio/highnoon.mp3");
-    audioWin = new Audio("audio/orchestral-win.mp3")
+    audioWin = new Audio("audio/orchestral-win.mp3");
     soundWanted = false;
-    
+
     offset = {
-    top: 50,
-    left: 30,
-    right: 30,
-    bottom: 20
+        top: 50,
+        left: 30,
+        right: 30,
+        bottom: 20
     };
-    
-    
 
     IMAGES_WALKING = [
-            "img/4_enemie_boss_chicken/1_walk/G1.png",
-            "img/4_enemie_boss_chicken/1_walk/G2.png",
-            "img/4_enemie_boss_chicken/1_walk/G3.png",
-            "img/4_enemie_boss_chicken/1_walk/G4.png",
-            
-            "img/4_enemie_boss_chicken/3_attack/G13.png",
-            "img/4_enemie_boss_chicken/3_attack/G14.png",
-            "img/4_enemie_boss_chicken/3_attack/G15.png",
-            "img/4_enemie_boss_chicken/3_attack/G16.png",
-            "img/4_enemie_boss_chicken/3_attack/G17.png",
-            "img/4_enemie_boss_chicken/3_attack/G18.png",
-            "img/4_enemie_boss_chicken/3_attack/G19.png",
-            "img/4_enemie_boss_chicken/3_attack/G20.png",
-            
-    ];
+        "img/4_enemie_boss_chicken/1_walk/G1.png",
+        "img/4_enemie_boss_chicken/1_walk/G2.png",
+        "img/4_enemie_boss_chicken/1_walk/G3.png",
+        "img/4_enemie_boss_chicken/1_walk/G4.png",
 
+        "img/4_enemie_boss_chicken/3_attack/G13.png",
+        "img/4_enemie_boss_chicken/3_attack/G14.png",
+        "img/4_enemie_boss_chicken/3_attack/G15.png",
+        "img/4_enemie_boss_chicken/3_attack/G16.png",
+        "img/4_enemie_boss_chicken/3_attack/G17.png",
+        "img/4_enemie_boss_chicken/3_attack/G18.png",
+        "img/4_enemie_boss_chicken/3_attack/G19.png",
+        "img/4_enemie_boss_chicken/3_attack/G20.png",
+    ];
 
     IMAGES_ALERT = [
         "img/4_enemie_boss_chicken/2_alert/G5.png",
-            "img/4_enemie_boss_chicken/2_alert/G6.png",
-            "img/4_enemie_boss_chicken/2_alert/G7.png",
-            "img/4_enemie_boss_chicken/2_alert/G8.png",
-            "img/4_enemie_boss_chicken/2_alert/G9.png",
-            "img/4_enemie_boss_chicken/2_alert/G10.png",
-            "img/4_enemie_boss_chicken/2_alert/G11.png",
-            "img/4_enemie_boss_chicken/2_alert/G12.png",
+        "img/4_enemie_boss_chicken/2_alert/G6.png",
+        "img/4_enemie_boss_chicken/2_alert/G7.png",
+        "img/4_enemie_boss_chicken/2_alert/G8.png",
+        "img/4_enemie_boss_chicken/2_alert/G9.png",
+        "img/4_enemie_boss_chicken/2_alert/G10.png",
+        "img/4_enemie_boss_chicken/2_alert/G11.png",
+        "img/4_enemie_boss_chicken/2_alert/G12.png",
     ];
-
 
     IMAGES_HURT = [
         "img/4_enemie_boss_chicken/4_hurt/G21.png",
@@ -54,14 +49,13 @@ class Endboss extends MovableObject{
         "img/4_enemie_boss_chicken/4_hurt/G23.png",
     ];
 
-
     IMAGES_DEAD = [
-                "img/4_enemie_boss_chicken/5_dead/G24.png",
-                "img/4_enemie_boss_chicken/5_dead/G25.png",
-                "img/4_enemie_boss_chicken/5_dead/G26.png",
+        "img/4_enemie_boss_chicken/5_dead/G24.png",
+        "img/4_enemie_boss_chicken/5_dead/G25.png",
+        "img/4_enemie_boss_chicken/5_dead/G26.png",
     ];
 
-    constructor(){
+    constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_ALERT);
@@ -73,84 +67,98 @@ class Endboss extends MovableObject{
         this.isActivated = false;
     }
 
-    
-    animate(){
-        this.moveInterval = setInterval(()=> {
-            if(!this.isDead ){
+    /**
+     * Starts the main movement and animation loops of the endboss.
+     * Handles movement and walking animation while the boss is alive.
+     */
+    animate() {
+        this.moveInterval = setInterval(() => {
+            if (!this.isDead) {
                 this.moveLeft();
-                
-                
             }
-        }, 1000/60);
-  
-        this.animationInterval = setInterval(()=> {
-            if(!this.isDead){
+        }, 1000 / 60);
+
+        this.animationInterval = setInterval(() => {
+            if (!this.isDead) {
                 this.playAnimation(this.IMAGES_WALKING);
             }
-        }, 150); 
+        }, 150);
     }
 
-
-    takeHit(){
+    /**
+     * Applies damage to the endboss, plays hit sound if enabled,
+     * and triggers hurt animation. If enough hits are reached,
+     * the boss dies.
+     */
+    takeHit() {
         this.hits++;
-        if (this.soundWanted == true){
-                this.audioBottleHit.play();
-            }
+
+        if (this.soundWanted == true) {
+            this.audioBottleHit.play();
+        }
 
         let i = 0;
-            this.hurtInterval = setInterval(() => {
-                if(i < this.IMAGES_HURT.length){
-                    this.img = this.imageCache[this.IMAGES_HURT[i]];
-                    i++;
-                    
-                } else {
-                    clearInterval(this.hurtIntervalInterval);
-                }
-            }, 500); 
+        this.hurtInterval = setInterval(() => {
+            if (i < this.IMAGES_HURT.length) {
+                this.img = this.imageCache[this.IMAGES_HURT[i]];
+                i++;
+            } else {
+                clearInterval(this.hurtIntervalInterval);
+            }
+        }, 500);
 
-
-        if(this.hits >= 4){
+        if (this.hits >= 4) {
             this.die();
             this.world.character.audioSnoring.pause();
         }
     }
 
-    
-    die(){
+    /**
+     * Triggers the death sequence of the endboss including animation,
+     * stopping movement and showing the win screen.
+     */
+    die() {
         this.isDead = true;
-        
+
         clearInterval(this.animationInterval);
 
         let i = 0;
         this.deathInterval = setInterval(() => {
-            if(i < this.IMAGES_DEAD.length){
+            if (i < this.IMAGES_DEAD.length) {
                 this.img = this.imageCache[this.IMAGES_DEAD[i]];
                 i++;
-                this.y = 140; 
+                this.y = 140;
             } else {
                 clearInterval(this.deathInterval);
             }
-        }, 800); 
+        }, 800);
 
         this.showWinScreen();
     }
 
-
-    playAnimationOnce(images, intervalTime = 150){
-         let i = 0;
+    /**
+     * Plays a one-time animation sequence using the given images.
+     * @param {string[]} images - Array of image paths.
+     * @param {number} intervalTime - Time between frames in ms.
+     */
+    playAnimationOnce(images, intervalTime = 150) {
+        let i = 0;
 
         let interval = setInterval(() => {
-            if(i < images.length){
+            if (i < images.length) {
                 let path = images[i];
                 this.img = this.imageCache[path];
                 i++;
             } else {
-                clearInterval(interval); 
+                clearInterval(interval);
             }
         }, intervalTime);
     }
 
-
+    /**
+     * Displays the win screen after the boss is defeated.
+     * Handles UI changes, fullscreen exit, and win audio.
+     */
     showWinScreen() {
         gameState = "win";
 
@@ -167,21 +175,30 @@ class Endboss extends MovableObject{
         }, 2000);
     }
 
-
+    /**
+     * Exits fullscreen mode if the game is currently in fullscreen.
+     */
     exitFullscreenIfNeeded() {
         if (document.fullscreenElement) {
             document.exitFullscreen();
         }
     }
 
-
+    /**
+     * Toggles visibility of game and win screen elements.
+     * @param {HTMLElement} canvas - Game canvas element.
+     * @param {HTMLElement} gameContainer - Main game container.
+     * @param {HTMLElement} winScreen - Win screen overlay.
+     */
     toggleEndscreen(canvas, gameContainer, winScreen) {
         winScreen.classList.remove("d-none");
         canvas.classList.add("d-none");
         gameContainer.classList.add("d-none");
     }
 
-
+    /**
+     * Handles background music and win sound playback after victory.
+     */
     handleWinAudio() {
         this.world.speaker.audioBG.pause();
 
@@ -191,10 +208,11 @@ class Endboss extends MovableObject{
         }
     }
 
-
+    /**
+     * Stops all running intervals for movement and animation.
+     */
     stop() {
         clearInterval(this.moveInterval);
         clearInterval(this.animationInterval);
     }
-        
 }

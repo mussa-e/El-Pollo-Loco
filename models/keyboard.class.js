@@ -13,6 +13,10 @@ class Keyboard{
     }
 
 
+    /**
+     * Registers keyboard event listeners for controlling movement and actions.
+     * Handles keydown and keyup events and updates the corresponding state flags.
+     */
     addKeyboardListeners() {
         window.addEventListener("keydown", (e) => {
 
@@ -73,6 +77,10 @@ class Keyboard{
     }
 
 
+    /**
+     * Registers touch event listeners for on-screen control buttons.
+     * Updates movement and action states based on user touch input.
+     */
     addButtonListeners() {
         document.getElementById("btnLeft").addEventListener("touchstart", (e) => {
             e.preventDefault();

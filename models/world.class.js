@@ -20,6 +20,11 @@ class World{
     intervals = [];
     
     
+    /**
+     * Creates a new World instance and initializes the game.
+     * @param {HTMLCanvasElement} canvas - The game canvas.
+     * @param {Keyboard} keyboard - Keyboard input handler.
+     */
     constructor(canvas, keyboard){
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
@@ -31,8 +36,10 @@ class World{
         this.startAnimations();
     }
 
-
-     startAnimations(){
+    /**
+     * Starts animations for all enemies that support animation.
+     */
+    startAnimations(){
         this.level.enemies.forEach(enemy => {
             if (enemy.animate && !(enemy instanceof Endboss)){
                 enemy.animate();
@@ -40,7 +47,9 @@ class World{
         });
     }
 
-
+    /**
+     * Links world references between character, enemies, and throwable objects.
+     */
     setWorld(){
         this.character.world = this;
 
@@ -53,22 +62,26 @@ class World{
         });
     }
 
-
+    /**
+     * Starts the main game loop and repeatedly checks game logic.
+     */
     run(){
-    let runInterval = setInterval(() => {
-        this.checkCollisions();
-        this.checkThrowObjects();
-        this.checkCollisionsCoins();
-        this.checkCollisionsBottles();
-        this.checkCollisionsThrownBottle();
-        this.checkEndbossActivation();
-        this.level.enemies = this.level.enemies.filter(e => !e.isDeadFlag);
-    }, 50);
+        let runInterval = setInterval(() => {
+            this.checkCollisions();
+            this.checkThrowObjects();
+            this.checkCollisionsCoins();
+            this.checkCollisionsBottles();
+            this.checkCollisionsThrownBottle();
+            this.checkEndbossActivation();
+            this.level.enemies = this.level.enemies.filter(e => !e.isDeadFlag);
+        }, 50);
 
-    this.intervals.push(runInterval);
+        this.intervals.push(runInterval);
     }
 
-
+    /**
+     * Stops all running intervals and game-related processes.
+     */
     stop() {
         this.intervals.forEach(i => clearInterval(i));
         this.character.stop();
@@ -80,6 +93,9 @@ class World{
     }
     
 
+    /**
+     * Activates the endboss when the character reaches a certain distance.
+     */
     checkEndbossActivation(){
         this.level.enemies.forEach(enemy => {
             if(enemy instanceof Endboss && !enemy.isActivated){
@@ -100,7 +116,9 @@ class World{
         });
     }
 
-
+    /**
+     * Handles throwing objects when the player presses the throw key.
+     */
     checkThrowObjects(){
         let now = new Date().getTime();
 
@@ -125,7 +143,9 @@ class World{
         }
     }
 
-
+    /**
+     * Checks collisions between the character and enemies.
+     */
     checkCollisions(){
         let stompedEnemy = this.level.enemies.some(enemy => 
             !enemy.isDead && this.character.isCollidingFromAbove(enemy)
@@ -148,34 +168,39 @@ class World{
         });
     }
     
-
+    /**
+     * Checks collisions between the character and coins.
+     */
     checkCollisionsCoins(){
         this.level.coins.forEach((coin) => {
-                if(this.character.isColliding(coin)) {
-                    coin.x = -500; 
-                    if(this.soundWanted == true){
-                        this.audioCoin.play();
-                    }
-                    this.statusBarCoin.setPercentage(this.statusBarCoin.percentage + 10);
+            if(this.character.isColliding(coin)) {
+                coin.x = -500; 
+                if(this.soundWanted == true){
+                    this.audioCoin.play();
                 }
-            })
+                this.statusBarCoin.setPercentage(this.statusBarCoin.percentage + 10);
+            }
+        })
     }
 
-
+    /**
+     * Checks collisions between the character and bottles.
+     */
     checkCollisionsBottles(){
         this.level.bottles.forEach((bottle) => {
-                if(this.character.isColliding(bottle)&& this.statusBarBottle.percentage < 100) {
-                    bottle.x = -500; // Move the bottle off-screen
-                    if(this.soundWanted == true){
-                        this.audioBottle.play();
-                    }
-                    this.statusBarBottle.setPercentage(this.statusBarBottle.percentage + 20);
+            if(this.character.isColliding(bottle) && this.statusBarBottle.percentage < 100) {
+                bottle.x = -500;
+                if(this.soundWanted == true){
+                    this.audioBottle.play();
                 }
-            })
+                this.statusBarBottle.setPercentage(this.statusBarBottle.percentage + 20);
+            }
+        })
     }
 
-
-
+    /**
+     * Checks collisions between thrown bottles and enemies or ground.
+     */
     checkCollisionsThrownBottle(){
         this.throwableObjects.forEach((bottle) => {
 
@@ -183,14 +208,13 @@ class World{
 
             setTimeout(() => {
                 if (bottle.y >= 280) { 
-                bottle.stopThrow();
-                bottle.splash();
-                bottle.markedForDeletion = true;
-                return;
-            }
+                    bottle.stopThrow();
+                    bottle.splash();
+                    bottle.markedForDeletion = true;
+                    return;
+                }
             }, 600); 
             
-
             this.level.enemies.forEach((enemy) => {
                 if(bottle.isColliding(enemy)) {
 
@@ -207,7 +231,9 @@ class World{
         });
     }
 
-
+    /**
+     * Renders the game world and all visible objects.
+     */
     draw(){
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -216,7 +242,7 @@ class World{
         this.addObjectsToMap(this.level.backgroundObjects);
 
         this.ctx.translate(-this.camera_x, 0);
-        //space for fixed objects
+
         this.addToMap(this.statusBarHealth);
         this.addToMap(this.statusBarBottle);
         this.addToMap(this.statusBarCoin);
@@ -225,7 +251,6 @@ class World{
         
         this.ctx.translate(this.camera_x, 0);
 
-        
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.clouds);
@@ -243,14 +268,20 @@ class World{
         });
     }
 
-
+    /**
+     * Adds multiple objects to the canvas.
+     * @param {Array} objects - Array of drawable objects.
+     */
     addObjectsToMap(objects){
         objects.forEach(o => {
             this.addToMap(o);
         })
     }
 
-
+    /**
+     * Adds a single movable object to the canvas.
+     * @param {Object} mo - Movable object to render.
+     */
     addToMap(mo){
         if(mo.otherDirection){
             this.flipImage(mo);
@@ -260,11 +291,14 @@ class World{
         mo.drawFrame(this.ctx);
 
         if(mo.otherDirection){
-        this.flipImageBack(mo);
+            this.flipImageBack(mo);
         }
     }
 
-
+    /**
+     * Flips an image horizontally before rendering.
+     * @param {Object} mo - Movable object to flip.
+     */
     flipImage(mo){
         this.ctx.save();
         this.ctx.translate(mo.width, 0);
@@ -272,12 +306,18 @@ class World{
         mo.x = mo.x * -1;
     }
 
+    /**
+     * Restores image orientation after flipping.
+     * @param {Object} mo - Movable object to restore.
+     */
     flipImageBack(mo){
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
 
-
+    /**
+     * Draws control instructions on the canvas.
+     */
     drawControls() {
         this.ctx.font = "16px Rye";
         this.ctx.fillStyle = "black";
@@ -295,9 +335,5 @@ class World{
             this.ctx.fillText(line, x, y);
         });
     }
-
-
 }
-
-
 

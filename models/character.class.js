@@ -14,21 +14,18 @@ class Character extends MovableObject {
     world;
     speed = 10;
 
-
     IMAGES_STANDING = [
-    "img/2_character_pepe/2_walk/W-21.png"
+        "img/2_character_pepe/2_walk/W-21.png"
     ];
-
 
     IMAGES_WALKING = [
-            "img/2_character_pepe/2_walk/W-21.png",
-            "img/2_character_pepe/2_walk/W-22.png",
-            "img/2_character_pepe/2_walk/W-23.png",
-            "img/2_character_pepe/2_walk/W-24.png",
-            "img/2_character_pepe/2_walk/W-25.png",
-            "img/2_character_pepe/2_walk/W-26.png"
+        "img/2_character_pepe/2_walk/W-21.png",
+        "img/2_character_pepe/2_walk/W-22.png",
+        "img/2_character_pepe/2_walk/W-23.png",
+        "img/2_character_pepe/2_walk/W-24.png",
+        "img/2_character_pepe/2_walk/W-25.png",
+        "img/2_character_pepe/2_walk/W-26.png"
     ];
-
 
     IMAGES_JUMPING = [
         "img/2_character_pepe/3_jump/J-31.png",
@@ -42,7 +39,6 @@ class Character extends MovableObject {
         "img/2_character_pepe/3_jump/J-39.png"
     ];
 
-
     IMAGES_DEAD = [
         "img/2_character_pepe/5_dead/D-51.png",
         "img/2_character_pepe/5_dead/D-52.png",
@@ -53,13 +49,11 @@ class Character extends MovableObject {
         "img/2_character_pepe/5_dead/D-57.png"
     ];
 
-
     IMAGES_HURT = [
         "img/2_character_pepe/4_hurt/H-41.png",
         "img/2_character_pepe/4_hurt/H-42.png",
         "img/2_character_pepe/4_hurt/H-43.png",
     ];
-
 
     IMAGES_IDLE = [
         "img/2_character_pepe/1_idle/idle/I-1.png",
@@ -74,7 +68,6 @@ class Character extends MovableObject {
         "img/2_character_pepe/1_idle/idle/I-10.png",
     ];
 
-
     IMAGES_LONG_IDLE = [
         "img/2_character_pepe/1_idle/long_idle/I-11.png",
         "img/2_character_pepe/1_idle/long_idle/I-12.png",
@@ -88,8 +81,10 @@ class Character extends MovableObject {
         "img/2_character_pepe/1_idle/long_idle/I-20.png",
     ];  
 
-
-    constructor(){
+    /**
+     * Creates a new Character instance, initializes assets, physics, and animation loops.
+     */
+    constructor() {
         super().loadImage("img/2_character_pepe/2_walk/W-21.png");
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMPING);
@@ -102,13 +97,17 @@ class Character extends MovableObject {
         this.animate();   
     }
 
-
+    /**
+     * Starts movement and animation loops for the character.
+     */
     animate() {
-    this.startMovementLoop();
-    this.startAnimationLoop();
+        this.startMovementLoop();
+        this.startAnimationLoop();
     }
 
-
+    /**
+     * Starts the interval responsible for handling character movement and camera updates.
+     */
     startMovementLoop() {
         let moveInterval = setInterval(() => {
             this.handleMovement();
@@ -118,7 +117,9 @@ class Character extends MovableObject {
         this.intervals.push(moveInterval);
     }
 
-
+    /**
+     * Processes user input and applies movement, jumping, and direction changes.
+     */
     handleMovement() {
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
             this.moveRight();
@@ -139,19 +140,25 @@ class Character extends MovableObject {
         }
     }
 
-
+    /**
+     * Plays the jump sound effect if sound is enabled.
+     */
     playJumpSound() {
         if (this.soundWanted) {
             this.audioJump.play();
         }
     }
 
-
+    /**
+     * Updates the timestamp of the last player action.
+     */
     updateLastAction() {
         this.lastActionTime = new Date().getTime();
     }
 
-
+    /**
+     * Starts the interval responsible for updating animation states.
+     */
     startAnimationLoop() {
         let animationInterval = setInterval(() => {
             this.updateAnimationState();
@@ -160,7 +167,9 @@ class Character extends MovableObject {
         this.intervals.push(animationInterval);
     }
 
-
+    /**
+     * Determines and applies the correct animation based on the current character state.
+     */
     updateAnimationState() {
         let timepassed = this.getIdleTime();
 
@@ -174,32 +183,42 @@ class Character extends MovableObject {
         this.handleStanding();
     }
 
-
+    /**
+     * Handles the death animation and triggers game over logic.
+     */
     handleDead() {
         this.playAnimation(this.IMAGES_DEAD);
         this.audioSnoring.pause();
         this.characterDied();
     }
 
-
+    /**
+     * Handles the hurt animation state.
+     */
     handleHurt() {
         this.playAnimation(this.IMAGES_HURT);
         this.audioSnoring.pause();
     }
 
-
+    /**
+     * Handles the jumping animation state.
+     */
     handleJumping() {
         this.playAnimation(this.IMAGES_JUMPING);
         this.audioSnoring.pause();
     }
 
-
+    /**
+     * Handles the walking animation state.
+     */
     handleWalking() {
         this.playAnimation(this.IMAGES_WALKING);
         this.audioSnoring.pause();
     }
 
-
+    /**
+     * Handles the long idle animation and snoring sound.
+     */
     handleLongIdle() {
         this.playAnimation(this.IMAGES_LONG_IDLE);
         if (this.soundWanted) {
@@ -208,60 +227,80 @@ class Character extends MovableObject {
         }
     }
 
-
+    /**
+     * Handles the short idle animation state.
+     */
     handleIdle() {
         this.playAnimation(this.IMAGES_IDLE);
         this.audioSnoring.pause();
     }
 
-
+    /**
+     * Handles the standing animation state.
+     */
     handleStanding() {
         this.playAnimation(this.IMAGES_STANDING);
         this.audioSnoring.pause();
     }
 
-
+    /**
+     * Determines whether the character is currently walking.
+     * @returns {boolean} True if movement keys are active.
+     */
     isWalking() {
         return this.world.keyboard.RIGHT || this.world.keyboard.LEFT;
     }
 
-
+    /**
+     * Calculates how long the character has been idle in seconds.
+     * @returns {number} Idle time in seconds.
+     */
     getIdleTime() {
         return (new Date().getTime() - this.lastActionTime) / 1000;
     }
 
-
+    /**
+     * Stops all active intervals and gravity effects.
+     */
     stop() {
         this.intervals.forEach(i => clearInterval(i));
         clearInterval(this.gravityInterval);
     }
 
-
+    /**
+     * Triggers the full game-over sequence for the character.
+     */
     characterDied() {
-    this.setGameOverState();
+        this.setGameOverState();
 
-    if (this.hasPlayedLoseSound) return;
-    this.hasPlayedLoseSound = true;
+        if (this.hasPlayedLoseSound) return;
+        this.hasPlayedLoseSound = true;
 
-    this.handleDeathSound();
-    this.scheduleGameOverScreen();
+        this.handleDeathSound();
+        this.scheduleGameOverScreen();
     }
 
-
+    /**
+     * Sets global game state to game over and exits fullscreen if active.
+     */
     setGameOverState() {
         gameOver = true;
         gameState = "gameover";
         this.exitFullscreenIfNeeded();
     }
 
-
+    /**
+     * Exits fullscreen mode if the game is currently in fullscreen.
+     */
     exitFullscreenIfNeeded() {
         if (document.fullscreenElement) {
             document.exitFullscreen();
         }
     }
 
-
+    /**
+     * Plays the character death sound effect if enabled.
+     */
     handleDeathSound() {
         if (this.soundWanted) {
             this.audioDied.play();
@@ -269,7 +308,9 @@ class Character extends MovableObject {
         }
     }
 
-
+    /**
+     * Schedules the game over screen display and cleanup after a delay.
+     */
     scheduleGameOverScreen() {
         setTimeout(() => {
             this.showGameOverUI();
@@ -278,7 +319,9 @@ class Character extends MovableObject {
         }, 2000);
     }
 
-
+    /**
+     * Displays the game over UI and hides gameplay elements.
+     */
     showGameOverUI() {
         let canvas = document.getElementById("canvas");
         let loseScreen = document.getElementById("lose-screen");
@@ -289,19 +332,21 @@ class Character extends MovableObject {
         gameContainer.classList.add("d-none");
     }
 
-
+    /**
+     * Performs cleanup tasks after the character dies.
+     */
     cleanupAfterDeath() {
         this.y = 3000;
         this.world.speaker.audioBG.pause();
     }
 
-
+    /**
+     * Plays the lose sound effect if enabled.
+     */
     playLoseSound() {
         if (this.soundWanted) {
             this.audioLose.play();
             this.audioLose.volume = 0.3;
         }
     }
-
-
 }

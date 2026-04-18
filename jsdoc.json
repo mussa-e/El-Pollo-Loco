@@ -1,0 +1,13 @@
+{
+  "source": {
+    "include": [
+      "./js",
+      "./levels",
+      "./models"
+    ],
+    "includePattern": ".js$"
+  },
+  "opts": {
+    "destination": "./out"
+  }
+}

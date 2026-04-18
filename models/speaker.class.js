@@ -14,6 +14,10 @@ class Speaker extends DrawableObject {
         this.audioBG.loop = true;
     }
 
+    /**
+     * Toggles the sound state between muted and unmuted.
+     * Calls the appropriate method to enable or disable audio.
+     */
     toggleSound() {
         this.isMuted = !this.isMuted;
 
@@ -24,31 +28,35 @@ class Speaker extends DrawableObject {
         }
     }
 
-
-    soundOff(){
+    /**
+     * Disables all game sounds and switches the speaker icon to "off".
+     * Pauses background music and disables sound flags for world entities.
+     */
+    soundOff() {
         this.loadImage(this.IMAGES_OFF);
-            this.audioBG.pause();
-            world.character.soundWanted = false;
-            world.soundWanted = false;
-            world.character.audioSnoring.pause();
-            
-            world.level.enemies.forEach(enemy => {
-                enemy.soundWanted = false;
-            });
+        this.audioBG.pause();
+        world.character.soundWanted = false;
+        world.soundWanted = false;
+        world.character.audioSnoring.pause();
+
+        world.level.enemies.forEach(enemy => {
+            enemy.soundWanted = false;
+        });
     }
 
-
-    soundOn(){
+    /**
+     * Enables all game sounds and switches the speaker icon to "on".
+     * Starts background music and enables sound flags for world entities.
+     */
+    soundOn() {
         this.loadImage(this.IMAGES_ON);
-            this.audioBG.play().catch(() => {});
-            this.audioBG.volume = 0.2;
-            world.character.soundWanted = true;
-            world.soundWanted = true;
+        this.audioBG.play().catch(() => {});
+        this.audioBG.volume = 0.2;
+        world.character.soundWanted = true;
+        world.soundWanted = true;
 
-            world.level.enemies.forEach(enemy => {
-                enemy.soundWanted = true;
-            });
+        world.level.enemies.forEach(enemy => {
+            enemy.soundWanted = true;
+        });
     }
-
-    
 }

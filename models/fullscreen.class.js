@@ -4,6 +4,9 @@ class Fullscreen extends DrawableObject{
     ];
 
 
+    /**
+     * Creates an instance of Fullscreen and initializes its image and position.
+     */
     constructor(){
         super();
         this.loadImage(this.IMAGES);

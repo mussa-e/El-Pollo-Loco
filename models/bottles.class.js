@@ -5,6 +5,11 @@ class Bottle extends DrawableObject{
         "img/6_salsa_bottle/2_salsa_bottle_on_ground.png"
     ];
 
+    /**
+     * Selects a random bottle image from the available images.
+     * 
+     * @returns {string} The file path of the selected bottle image.
+     */
     chooseRandomBottle(){
         let randomNumber = Math.random();
         if(randomNumber < 0.5){
@@ -14,6 +19,12 @@ class Bottle extends DrawableObject{
         }
     }
 
+    /**
+     * Creates a new Bottle instance with a random image and default position and size.
+     * The horizontal position is randomized within a defined range.
+     * 
+     * @constructor
+     */
     constructor(){
         super().loadImage(this.chooseRandomBottle());
         
