@@ -81,6 +81,17 @@ canvas {
 }
 
 
+.start-wrapper {
+    position: relative;
+    width: 95%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+
 .start-img {
     object-fit: contain;
     width: 95%;
@@ -93,12 +104,12 @@ canvas {
     background-color: rgb(160,34,10); 
     color: rgb(253,229,142); 
     border: 3px double rgb(253,229,142);
-    padding: 16px;
+    padding: 10px;
     font-size: 18px;
     border-radius: 12px;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
-    margin-bottom: 30px;
+    margin-bottom: 8px;
     position: absolute;
     top: 50px;
 }
@@ -215,7 +226,7 @@ canvas {
     display: flex;
     gap: 8px;
     padding: 8px;
-    height: 30px;
+    height: auto;
 }
 
 
@@ -223,15 +234,18 @@ canvas {
     border: none;
     border-radius: 50px;
     display: flex;
-    background-color: rgb(71 60 31);
+    background-color: rgba(71, 60, 31, 0.5);
     align-items: center;
+    justify-content: center;
     pointer-events: auto;
+    width: 50px;
+    height: 50px;
 }
 
 
 .btn-wrapper button img{
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
 }
 
 
@@ -239,7 +253,7 @@ canvas {
     position: absolute;
     top: 0;
     left: 0;
-    background-color: rgba(28, 25, 25, 0.9);
+    background-color: rgb(70, 70, 70);
     height: 100dvh;
     width: 100%;
     text-align: center;
@@ -269,6 +283,12 @@ canvas {
 }
 
 
+.fs-mesure{
+    width: 100%;
+    height: 100%;
+}
+
+
 @media only screen and (max-width: 1024px) and (orientation: portrait) {
     .mobile-advice {
         display: flex !important;
@@ -287,6 +307,14 @@ canvas {
 
     .panel-wrapper {
         display: flex;
+    }
+}
+
+
+@media only screen and (orientation: landscape) {
+    .canvas {
+        width: 100% !important;
+        height: 100% !important;
     }
 }
  

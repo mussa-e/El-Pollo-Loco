@@ -55,6 +55,7 @@ class Endboss extends MovableObject {
         "img/4_enemie_boss_chicken/5_dead/G26.png",
     ];
 
+
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
@@ -66,6 +67,7 @@ class Endboss extends MovableObject {
         this.isDead = false;
         this.isActivated = false;
     }
+
 
     /**
      * Starts the main movement and animation loops of the endboss.
@@ -84,6 +86,7 @@ class Endboss extends MovableObject {
             }
         }, 150);
     }
+
 
     /**
      * Applies damage to the endboss, plays hit sound if enabled,
@@ -113,6 +116,7 @@ class Endboss extends MovableObject {
         }
     }
 
+
     /**
      * Triggers the death sequence of the endboss including animation,
      * stopping movement and showing the win screen.
@@ -136,6 +140,7 @@ class Endboss extends MovableObject {
         this.showWinScreen();
     }
 
+
     /**
      * Plays a one-time animation sequence using the given images.
      * @param {string[]} images - Array of image paths.
@@ -154,6 +159,7 @@ class Endboss extends MovableObject {
             }
         }, intervalTime);
     }
+
 
     /**
      * Displays the win screen after the boss is defeated.
@@ -175,6 +181,7 @@ class Endboss extends MovableObject {
         }, 2000);
     }
 
+
     /**
      * Exits fullscreen mode if the game is currently in fullscreen.
      */
@@ -183,6 +190,7 @@ class Endboss extends MovableObject {
             document.exitFullscreen();
         }
     }
+
 
     /**
      * Toggles visibility of game and win screen elements.
@@ -196,6 +204,7 @@ class Endboss extends MovableObject {
         gameContainer.classList.add("d-none");
     }
 
+
     /**
      * Handles background music and win sound playback after victory.
      */
@@ -208,6 +217,7 @@ class Endboss extends MovableObject {
         }
     }
 
+    
     /**
      * Stops all running intervals for movement and animation.
      */

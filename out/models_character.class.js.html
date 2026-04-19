@@ -109,6 +109,7 @@
         "img/2_character_pepe/1_idle/long_idle/I-20.png",
     ];  
 
+
     /**
      * Creates a new Character instance, initializes assets, physics, and animation loops.
      */
@@ -125,6 +126,7 @@
         this.animate();   
     }
 
+
     /**
      * Starts movement and animation loops for the character.
      */
@@ -132,6 +134,7 @@
         this.startMovementLoop();
         this.startAnimationLoop();
     }
+
 
     /**
      * Starts the interval responsible for handling character movement and camera updates.
@@ -144,6 +147,7 @@
 
         this.intervals.push(moveInterval);
     }
+
 
     /**
      * Processes user input and applies movement, jumping, and direction changes.
@@ -168,6 +172,7 @@
         }
     }
 
+
     /**
      * Plays the jump sound effect if sound is enabled.
      */
@@ -177,12 +182,14 @@
         }
     }
 
+
     /**
      * Updates the timestamp of the last player action.
      */
     updateLastAction() {
         this.lastActionTime = new Date().getTime();
     }
+
 
     /**
      * Starts the interval responsible for updating animation states.
@@ -194,6 +201,7 @@
 
         this.intervals.push(animationInterval);
     }
+
 
     /**
      * Determines and applies the correct animation based on the current character state.
@@ -211,6 +219,7 @@
         this.handleStanding();
     }
 
+
     /**
      * Handles the death animation and triggers game over logic.
      */
@@ -220,6 +229,7 @@
         this.characterDied();
     }
 
+
     /**
      * Handles the hurt animation state.
      */
@@ -227,6 +237,7 @@
         this.playAnimation(this.IMAGES_HURT);
         this.audioSnoring.pause();
     }
+
 
     /**
      * Handles the jumping animation state.
@@ -236,6 +247,7 @@
         this.audioSnoring.pause();
     }
 
+
     /**
      * Handles the walking animation state.
      */
@@ -243,6 +255,7 @@
         this.playAnimation(this.IMAGES_WALKING);
         this.audioSnoring.pause();
     }
+
 
     /**
      * Handles the long idle animation and snoring sound.
@@ -255,6 +268,7 @@
         }
     }
 
+
     /**
      * Handles the short idle animation state.
      */
@@ -262,6 +276,7 @@
         this.playAnimation(this.IMAGES_IDLE);
         this.audioSnoring.pause();
     }
+
 
     /**
      * Handles the standing animation state.
@@ -271,6 +286,7 @@
         this.audioSnoring.pause();
     }
 
+
     /**
      * Determines whether the character is currently walking.
      * @returns {boolean} True if movement keys are active.
@@ -278,6 +294,7 @@
     isWalking() {
         return this.world.keyboard.RIGHT || this.world.keyboard.LEFT;
     }
+
 
     /**
      * Calculates how long the character has been idle in seconds.
@@ -287,6 +304,7 @@
         return (new Date().getTime() - this.lastActionTime) / 1000;
     }
 
+
     /**
      * Stops all active intervals and gravity effects.
      */
@@ -294,6 +312,7 @@
         this.intervals.forEach(i => clearInterval(i));
         clearInterval(this.gravityInterval);
     }
+
 
     /**
      * Triggers the full game-over sequence for the character.
@@ -308,6 +327,7 @@
         this.scheduleGameOverScreen();
     }
 
+
     /**
      * Sets global game state to game over and exits fullscreen if active.
      */
@@ -317,6 +337,7 @@
         this.exitFullscreenIfNeeded();
     }
 
+
     /**
      * Exits fullscreen mode if the game is currently in fullscreen.
      */
@@ -325,6 +346,7 @@
             document.exitFullscreen();
         }
     }
+
 
     /**
      * Plays the character death sound effect if enabled.
@@ -336,6 +358,7 @@
         }
     }
 
+
     /**
      * Schedules the game over screen display and cleanup after a delay.
      */
@@ -346,6 +369,7 @@
             this.playLoseSound();
         }, 2000);
     }
+
 
     /**
      * Displays the game over UI and hides gameplay elements.
@@ -360,6 +384,7 @@
         gameContainer.classList.add("d-none");
     }
 
+
     /**
      * Performs cleanup tasks after the character dies.
      */
@@ -368,6 +393,7 @@
         this.world.speaker.audioBG.pause();
     }
 
+    
     /**
      * Plays the lose sound effect if enabled.
      */
@@ -387,13 +413,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BackgroundObject.html">BackgroundObject</a></li><li><a href="Bottle.html">Bottle</a></li><li><a href="Character.html">Character</a></li><li><a href="Chicken.html">Chicken</a></li><li><a href="ChickenSmall.html">ChickenSmall</a></li><li><a href="Cloud.html">Cloud</a></li><li><a href="Coin.html">Coin</a></li><li><a href="Fullscreen.html">Fullscreen</a></li><li><a href="Level.html">Level</a></li><li><a href="World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#backToMenu">backToMenu</a></li><li><a href="global.html#checkFullscreenClick">checkFullscreenClick</a></li><li><a href="global.html#checkSpeakerClick">checkSpeakerClick</a></li><li><a href="global.html#createLevel1">createLevel1</a></li><li><a href="global.html#createWorld">createWorld</a></li><li><a href="global.html#findFullscreenOnCanvas">findFullscreenOnCanvas</a></li><li><a href="global.html#findSpeakerOnCanvas">findSpeakerOnCanvas</a></li><li><a href="global.html#getMousePos">getMousePos</a></li><li><a href="global.html#handleCanvasClick">handleCanvasClick</a></li><li><a href="global.html#handleMouseMove">handleMouseMove</a></li><li><a href="global.html#hideStartScreen">hideStartScreen</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#isMouseOver">isMouseOver</a></li><li><a href="global.html#isOverInteractive">isOverInteractive</a></li><li><a href="global.html#registerCanvasEvents">registerCanvasEvents</a></li><li><a href="global.html#resetGame">resetGame</a></li><li><a href="global.html#restartGame">restartGame</a></li><li><a href="global.html#setupCanvas">setupCanvas</a></li><li><a href="global.html#showMenu">showMenu</a></li><li><a href="global.html#toggleFullscreen">toggleFullscreen</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BackgroundObject.html">BackgroundObject</a></li><li><a href="Bottle.html">Bottle</a></li><li><a href="Character.html">Character</a></li><li><a href="Chicken.html">Chicken</a></li><li><a href="ChickenSmall.html">ChickenSmall</a></li><li><a href="Cloud.html">Cloud</a></li><li><a href="Coin.html">Coin</a></li><li><a href="Fullscreen.html">Fullscreen</a></li><li><a href="Level.html">Level</a></li><li><a href="World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#backToMenu">backToMenu</a></li><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#checkFullscreenClick">checkFullscreenClick</a></li><li><a href="global.html#checkFullscreenState">checkFullscreenState</a></li><li><a href="global.html#checkSpeakerClick">checkSpeakerClick</a></li><li><a href="global.html#createLevel1">createLevel1</a></li><li><a href="global.html#createWorld">createWorld</a></li><li><a href="global.html#findFullscreenOnCanvas">findFullscreenOnCanvas</a></li><li><a href="global.html#findSpeakerOnCanvas">findSpeakerOnCanvas</a></li><li><a href="global.html#getMousePos">getMousePos</a></li><li><a href="global.html#handleCanvasClick">handleCanvasClick</a></li><li><a href="global.html#handleMouseMove">handleMouseMove</a></li><li><a href="global.html#hideStartScreen">hideStartScreen</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#isMouseOver">isMouseOver</a></li><li><a href="global.html#isOverInteractive">isOverInteractive</a></li><li><a href="global.html#registerCanvasEvents">registerCanvasEvents</a></li><li><a href="global.html#resetGame">resetGame</a></li><li><a href="global.html#restartGame">restartGame</a></li><li><a href="global.html#setupCanvas">setupCanvas</a></li><li><a href="global.html#showMenu">showMenu</a></li><li><a href="global.html#toggleFullscreen">toggleFullscreen</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sat Apr 18 2026 23:00:58 GMT+0200 (Mitteleuropäische Sommerzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sun Apr 19 2026 19:08:00 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -7,6 +7,7 @@ class MovableObject extends DrawableObject {
     lastHit = 0;
     lastY = 0;
 
+
     /**
      * Starts the gravity simulation for the object.
      * Continuously updates the vertical position and applies acceleration
@@ -23,12 +24,14 @@ class MovableObject extends DrawableObject {
         }, 1000 / 25);
     }
 
+
     /**
      * Stops the gravity interval and freezes vertical movement updates.
      */
     stop() {
         clearInterval(this.gravityInterval);
     }
+
 
     /**
      * Determines whether the object is above the ground.
@@ -43,6 +46,7 @@ class MovableObject extends DrawableObject {
         }
     }
 
+
     /**
      * Checks whether this object is colliding with another movable object
      * using bounding box collision detection with offsets.
@@ -56,6 +60,7 @@ class MovableObject extends DrawableObject {
             this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
     }
 
+
     /**
      * Checks if this object is colliding with another object from above.
      * Used to detect stomping or top-down collisions.
@@ -67,6 +72,7 @@ class MovableObject extends DrawableObject {
             this.speedY < 0 &&
             this.lastY + this.height <= mo.y + 10;
     }
+
 
     /**
      * Reduces the object's energy when it is hit.
@@ -82,6 +88,7 @@ class MovableObject extends DrawableObject {
         this.lastActionTime = new Date().getTime();
     }
 
+
     /**
      * Checks whether the object is currently in a hurt state.
      * @returns {boolean} True if the object was hit within the last second.
@@ -92,6 +99,7 @@ class MovableObject extends DrawableObject {
         return timepassed < 1;
     }
 
+
     /**
      * Checks whether the object is dead (energy depleted).
      * @returns {boolean} True if energy is zero.
@@ -99,6 +107,7 @@ class MovableObject extends DrawableObject {
     isDead() {
         return this.energy == 0;
     }
+
 
     /**
      * Plays an animation by cycling through an array of image paths.
@@ -111,12 +120,14 @@ class MovableObject extends DrawableObject {
         this.currentImage++;
     }
 
+
     /**
      * Moves the object to the right based on its speed.
      */
     moveRight() {
         this.x += this.speed;
     }
+
 
     /**
      * Moves the object to the left based on its speed.
@@ -125,6 +136,7 @@ class MovableObject extends DrawableObject {
         this.x -= this.speed;
     }
 
+    
     /**
      * Makes the object jump by setting an upward speed.
      */

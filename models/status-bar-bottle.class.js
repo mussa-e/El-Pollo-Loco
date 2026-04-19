@@ -22,6 +22,7 @@ class StatusBarBottle extends DrawableObject {
         this.setPercentage(0);
     }
 
+
     /**
      * Updates the status bar image based on the given percentage value.
      * Selects the appropriate image representing the current bottle status.
@@ -33,6 +34,7 @@ class StatusBarBottle extends DrawableObject {
         this.img = this.imageCache[path];
     }
 
+    
     /**
      * Determines the correct image index based on the current percentage value.
      * @returns {number} Index of the image in the IMAGES array.

@@ -14,6 +14,7 @@ class DrawableObject {
         bottom: 0
     };
 
+
     /**
      * Loads a single image and assigns it to the object.
      * @param {string} path - Path to the image file.
@@ -23,6 +24,7 @@ class DrawableObject {
         this.img.src = path;
     }
 
+
     /**
      * Draws the current image on the provided canvas context.
      * @param {CanvasRenderingContext2D} ctx - The rendering context of the canvas.
@@ -30,6 +32,7 @@ class DrawableObject {
     draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
+
 
     /**
      * Draws a blue frame around the object if it is an instance of
@@ -52,6 +55,7 @@ class DrawableObject {
         }
     }
 
+    
     /**
      * Preloads multiple images and stores them in the image cache.
      * @param {string[]} arr - Array of image paths to load.

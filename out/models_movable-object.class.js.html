@@ -35,6 +35,7 @@
     lastHit = 0;
     lastY = 0;
 
+
     /**
      * Starts the gravity simulation for the object.
      * Continuously updates the vertical position and applies acceleration
@@ -51,12 +52,14 @@
         }, 1000 / 25);
     }
 
+
     /**
      * Stops the gravity interval and freezes vertical movement updates.
      */
     stop() {
         clearInterval(this.gravityInterval);
     }
+
 
     /**
      * Determines whether the object is above the ground.
@@ -71,6 +74,7 @@
         }
     }
 
+
     /**
      * Checks whether this object is colliding with another movable object
      * using bounding box collision detection with offsets.
@@ -84,6 +88,7 @@
             this.y + this.offset.top &lt; mo.y + mo.height - mo.offset.bottom;
     }
 
+
     /**
      * Checks if this object is colliding with another object from above.
      * Used to detect stomping or top-down collisions.
@@ -95,6 +100,7 @@
             this.speedY &lt; 0 &amp;&amp;
             this.lastY + this.height &lt;= mo.y + 10;
     }
+
 
     /**
      * Reduces the object's energy when it is hit.
@@ -110,6 +116,7 @@
         this.lastActionTime = new Date().getTime();
     }
 
+
     /**
      * Checks whether the object is currently in a hurt state.
      * @returns {boolean} True if the object was hit within the last second.
@@ -120,6 +127,7 @@
         return timepassed &lt; 1;
     }
 
+
     /**
      * Checks whether the object is dead (energy depleted).
      * @returns {boolean} True if energy is zero.
@@ -127,6 +135,7 @@
     isDead() {
         return this.energy == 0;
     }
+
 
     /**
      * Plays an animation by cycling through an array of image paths.
@@ -139,12 +148,14 @@
         this.currentImage++;
     }
 
+
     /**
      * Moves the object to the right based on its speed.
      */
     moveRight() {
         this.x += this.speed;
     }
+
 
     /**
      * Moves the object to the left based on its speed.
@@ -153,6 +164,7 @@
         this.x -= this.speed;
     }
 
+    
     /**
      * Makes the object jump by setting an upward speed.
      */
@@ -169,13 +181,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BackgroundObject.html">BackgroundObject</a></li><li><a href="Bottle.html">Bottle</a></li><li><a href="Character.html">Character</a></li><li><a href="Chicken.html">Chicken</a></li><li><a href="ChickenSmall.html">ChickenSmall</a></li><li><a href="Cloud.html">Cloud</a></li><li><a href="Coin.html">Coin</a></li><li><a href="Fullscreen.html">Fullscreen</a></li><li><a href="Level.html">Level</a></li><li><a href="World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#backToMenu">backToMenu</a></li><li><a href="global.html#checkFullscreenClick">checkFullscreenClick</a></li><li><a href="global.html#checkSpeakerClick">checkSpeakerClick</a></li><li><a href="global.html#createLevel1">createLevel1</a></li><li><a href="global.html#createWorld">createWorld</a></li><li><a href="global.html#findFullscreenOnCanvas">findFullscreenOnCanvas</a></li><li><a href="global.html#findSpeakerOnCanvas">findSpeakerOnCanvas</a></li><li><a href="global.html#getMousePos">getMousePos</a></li><li><a href="global.html#handleCanvasClick">handleCanvasClick</a></li><li><a href="global.html#handleMouseMove">handleMouseMove</a></li><li><a href="global.html#hideStartScreen">hideStartScreen</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#isMouseOver">isMouseOver</a></li><li><a href="global.html#isOverInteractive">isOverInteractive</a></li><li><a href="global.html#registerCanvasEvents">registerCanvasEvents</a></li><li><a href="global.html#resetGame">resetGame</a></li><li><a href="global.html#restartGame">restartGame</a></li><li><a href="global.html#setupCanvas">setupCanvas</a></li><li><a href="global.html#showMenu">showMenu</a></li><li><a href="global.html#toggleFullscreen">toggleFullscreen</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BackgroundObject.html">BackgroundObject</a></li><li><a href="Bottle.html">Bottle</a></li><li><a href="Character.html">Character</a></li><li><a href="Chicken.html">Chicken</a></li><li><a href="ChickenSmall.html">ChickenSmall</a></li><li><a href="Cloud.html">Cloud</a></li><li><a href="Coin.html">Coin</a></li><li><a href="Fullscreen.html">Fullscreen</a></li><li><a href="Level.html">Level</a></li><li><a href="World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#backToMenu">backToMenu</a></li><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#checkFullscreenClick">checkFullscreenClick</a></li><li><a href="global.html#checkFullscreenState">checkFullscreenState</a></li><li><a href="global.html#checkSpeakerClick">checkSpeakerClick</a></li><li><a href="global.html#createLevel1">createLevel1</a></li><li><a href="global.html#createWorld">createWorld</a></li><li><a href="global.html#findFullscreenOnCanvas">findFullscreenOnCanvas</a></li><li><a href="global.html#findSpeakerOnCanvas">findSpeakerOnCanvas</a></li><li><a href="global.html#getMousePos">getMousePos</a></li><li><a href="global.html#handleCanvasClick">handleCanvasClick</a></li><li><a href="global.html#handleMouseMove">handleMouseMove</a></li><li><a href="global.html#hideStartScreen">hideStartScreen</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#isMouseOver">isMouseOver</a></li><li><a href="global.html#isOverInteractive">isOverInteractive</a></li><li><a href="global.html#registerCanvasEvents">registerCanvasEvents</a></li><li><a href="global.html#resetGame">resetGame</a></li><li><a href="global.html#restartGame">restartGame</a></li><li><a href="global.html#setupCanvas">setupCanvas</a></li><li><a href="global.html#showMenu">showMenu</a></li><li><a href="global.html#toggleFullscreen">toggleFullscreen</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sat Apr 18 2026 23:00:58 GMT+0200 (Mitteleuropäische Sommerzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sun Apr 19 2026 19:08:00 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>

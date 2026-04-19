@@ -21,6 +21,7 @@ class StatusBarCoin extends DrawableObject {
         this.setPercentage(0);
     }
 
+
     /**
      * Updates the coin status bar according to the given percentage.
      * Selects and applies the appropriate image based on progress.
@@ -32,6 +33,7 @@ class StatusBarCoin extends DrawableObject {
         this.img = this.imageCache[path];
     }
 
+    
     /**
      * Resolves the correct image index based on the current percentage.
      * @returns {number} Index of the image representing the coin status.

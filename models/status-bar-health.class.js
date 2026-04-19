@@ -21,6 +21,7 @@ class StatusBarHealth extends DrawableObject {
         this.setPercentage(100);
     }
 
+
     /**
      * Updates the health status bar based on the given percentage.
      * Selects the appropriate image that represents the current health level.
@@ -32,6 +33,7 @@ class StatusBarHealth extends DrawableObject {
         this.img = this.imageCache[path];
     }
 
+    
     /**
      * Determines the correct image index based on the current health percentage.
      * @returns {number} Index of the image representing the health state.

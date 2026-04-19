@@ -81,6 +81,7 @@ class Character extends MovableObject {
         "img/2_character_pepe/1_idle/long_idle/I-20.png",
     ];  
 
+
     /**
      * Creates a new Character instance, initializes assets, physics, and animation loops.
      */
@@ -97,6 +98,7 @@ class Character extends MovableObject {
         this.animate();   
     }
 
+
     /**
      * Starts movement and animation loops for the character.
      */
@@ -104,6 +106,7 @@ class Character extends MovableObject {
         this.startMovementLoop();
         this.startAnimationLoop();
     }
+
 
     /**
      * Starts the interval responsible for handling character movement and camera updates.
@@ -116,6 +119,7 @@ class Character extends MovableObject {
 
         this.intervals.push(moveInterval);
     }
+
 
     /**
      * Processes user input and applies movement, jumping, and direction changes.
@@ -140,6 +144,7 @@ class Character extends MovableObject {
         }
     }
 
+
     /**
      * Plays the jump sound effect if sound is enabled.
      */
@@ -149,12 +154,14 @@ class Character extends MovableObject {
         }
     }
 
+
     /**
      * Updates the timestamp of the last player action.
      */
     updateLastAction() {
         this.lastActionTime = new Date().getTime();
     }
+
 
     /**
      * Starts the interval responsible for updating animation states.
@@ -166,6 +173,7 @@ class Character extends MovableObject {
 
         this.intervals.push(animationInterval);
     }
+
 
     /**
      * Determines and applies the correct animation based on the current character state.
@@ -183,6 +191,7 @@ class Character extends MovableObject {
         this.handleStanding();
     }
 
+
     /**
      * Handles the death animation and triggers game over logic.
      */
@@ -192,6 +201,7 @@ class Character extends MovableObject {
         this.characterDied();
     }
 
+
     /**
      * Handles the hurt animation state.
      */
@@ -199,6 +209,7 @@ class Character extends MovableObject {
         this.playAnimation(this.IMAGES_HURT);
         this.audioSnoring.pause();
     }
+
 
     /**
      * Handles the jumping animation state.
@@ -208,6 +219,7 @@ class Character extends MovableObject {
         this.audioSnoring.pause();
     }
 
+
     /**
      * Handles the walking animation state.
      */
@@ -215,6 +227,7 @@ class Character extends MovableObject {
         this.playAnimation(this.IMAGES_WALKING);
         this.audioSnoring.pause();
     }
+
 
     /**
      * Handles the long idle animation and snoring sound.
@@ -227,6 +240,7 @@ class Character extends MovableObject {
         }
     }
 
+
     /**
      * Handles the short idle animation state.
      */
@@ -234,6 +248,7 @@ class Character extends MovableObject {
         this.playAnimation(this.IMAGES_IDLE);
         this.audioSnoring.pause();
     }
+
 
     /**
      * Handles the standing animation state.
@@ -243,6 +258,7 @@ class Character extends MovableObject {
         this.audioSnoring.pause();
     }
 
+
     /**
      * Determines whether the character is currently walking.
      * @returns {boolean} True if movement keys are active.
@@ -250,6 +266,7 @@ class Character extends MovableObject {
     isWalking() {
         return this.world.keyboard.RIGHT || this.world.keyboard.LEFT;
     }
+
 
     /**
      * Calculates how long the character has been idle in seconds.
@@ -259,6 +276,7 @@ class Character extends MovableObject {
         return (new Date().getTime() - this.lastActionTime) / 1000;
     }
 
+
     /**
      * Stops all active intervals and gravity effects.
      */
@@ -266,6 +284,7 @@ class Character extends MovableObject {
         this.intervals.forEach(i => clearInterval(i));
         clearInterval(this.gravityInterval);
     }
+
 
     /**
      * Triggers the full game-over sequence for the character.
@@ -280,6 +299,7 @@ class Character extends MovableObject {
         this.scheduleGameOverScreen();
     }
 
+
     /**
      * Sets global game state to game over and exits fullscreen if active.
      */
@@ -289,6 +309,7 @@ class Character extends MovableObject {
         this.exitFullscreenIfNeeded();
     }
 
+
     /**
      * Exits fullscreen mode if the game is currently in fullscreen.
      */
@@ -297,6 +318,7 @@ class Character extends MovableObject {
             document.exitFullscreen();
         }
     }
+
 
     /**
      * Plays the character death sound effect if enabled.
@@ -308,6 +330,7 @@ class Character extends MovableObject {
         }
     }
 
+
     /**
      * Schedules the game over screen display and cleanup after a delay.
      */
@@ -318,6 +341,7 @@ class Character extends MovableObject {
             this.playLoseSound();
         }, 2000);
     }
+
 
     /**
      * Displays the game over UI and hides gameplay elements.
@@ -332,6 +356,7 @@ class Character extends MovableObject {
         gameContainer.classList.add("d-none");
     }
 
+
     /**
      * Performs cleanup tasks after the character dies.
      */
@@ -340,6 +365,7 @@ class Character extends MovableObject {
         this.world.speaker.audioBG.pause();
     }
 
+    
     /**
      * Plays the lose sound effect if enabled.
      */

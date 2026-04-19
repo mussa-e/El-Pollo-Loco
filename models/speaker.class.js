@@ -14,6 +14,7 @@ class Speaker extends DrawableObject {
         this.audioBG.loop = true;
     }
 
+
     /**
      * Toggles the sound state between muted and unmuted.
      * Calls the appropriate method to enable or disable audio.
@@ -27,6 +28,7 @@ class Speaker extends DrawableObject {
             this.soundOn();
         }
     }
+
 
     /**
      * Disables all game sounds and switches the speaker icon to "off".
@@ -44,6 +46,7 @@ class Speaker extends DrawableObject {
         });
     }
 
+    
     /**
      * Enables all game sounds and switches the speaker icon to "on".
      * Starts background music and enables sound flags for world entities.

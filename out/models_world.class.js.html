@@ -64,6 +64,7 @@
         this.startAnimations();
     }
 
+
     /**
      * Starts animations for all enemies that support animation.
      */
@@ -74,6 +75,7 @@
             }
         });
     }
+
 
     /**
      * Links world references between character, enemies, and throwable objects.
@@ -89,6 +91,7 @@
             object.world = this;
         });
     }
+
 
     /**
      * Starts the main game loop and repeatedly checks game logic.
@@ -107,6 +110,7 @@
         this.intervals.push(runInterval);
     }
 
+
     /**
      * Stops all running intervals and game-related processes.
      */
@@ -119,7 +123,7 @@
             }
         });
     }
-    
+
 
     /**
      * Activates the endboss when the character reaches a certain distance.
@@ -143,6 +147,7 @@
             }
         });
     }
+
 
     /**
      * Handles throwing objects when the player presses the throw key.
@@ -171,6 +176,7 @@
         }
     }
 
+
     /**
      * Checks collisions between the character and enemies.
      */
@@ -196,6 +202,7 @@
         });
     }
     
+
     /**
      * Checks collisions between the character and coins.
      */
@@ -211,6 +218,7 @@
         })
     }
 
+
     /**
      * Checks collisions between the character and bottles.
      */
@@ -225,6 +233,7 @@
             }
         })
     }
+
 
     /**
      * Checks collisions between thrown bottles and enemies or ground.
@@ -245,19 +254,16 @@
             
             this.level.enemies.forEach((enemy) => {
                 if(bottle.isColliding(enemy)) {
-
                     bottle.hasHit = true;
-
                     bottle.stopThrow();
                     bottle.splash();
-
                     enemy.takeHit();
-
                     bottle.markedForDeletion = true;
                 }
             });
         });
     }
+
 
     /**
      * Renders the game world and all visible objects.
@@ -296,6 +302,7 @@
         });
     }
 
+
     /**
      * Adds multiple objects to the canvas.
      * @param {Array} objects - Array of drawable objects.
@@ -305,6 +312,7 @@
             this.addToMap(o);
         })
     }
+
 
     /**
      * Adds a single movable object to the canvas.
@@ -316,12 +324,13 @@
         }
 
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
+        // mo.drawFrame(this.ctx);
 
         if(mo.otherDirection){
             this.flipImageBack(mo);
         }
     }
+
 
     /**
      * Flips an image horizontally before rendering.
@@ -334,6 +343,7 @@
         mo.x = mo.x * -1;
     }
 
+
     /**
      * Restores image orientation after flipping.
      * @param {Object} mo - Movable object to restore.
@@ -343,6 +353,7 @@
         this.ctx.restore();
     }
 
+    
     /**
      * Draws control instructions on the canvas.
      */
@@ -375,13 +386,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BackgroundObject.html">BackgroundObject</a></li><li><a href="Bottle.html">Bottle</a></li><li><a href="Character.html">Character</a></li><li><a href="Chicken.html">Chicken</a></li><li><a href="ChickenSmall.html">ChickenSmall</a></li><li><a href="Cloud.html">Cloud</a></li><li><a href="Coin.html">Coin</a></li><li><a href="Fullscreen.html">Fullscreen</a></li><li><a href="Level.html">Level</a></li><li><a href="World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#backToMenu">backToMenu</a></li><li><a href="global.html#checkFullscreenClick">checkFullscreenClick</a></li><li><a href="global.html#checkSpeakerClick">checkSpeakerClick</a></li><li><a href="global.html#createLevel1">createLevel1</a></li><li><a href="global.html#createWorld">createWorld</a></li><li><a href="global.html#findFullscreenOnCanvas">findFullscreenOnCanvas</a></li><li><a href="global.html#findSpeakerOnCanvas">findSpeakerOnCanvas</a></li><li><a href="global.html#getMousePos">getMousePos</a></li><li><a href="global.html#handleCanvasClick">handleCanvasClick</a></li><li><a href="global.html#handleMouseMove">handleMouseMove</a></li><li><a href="global.html#hideStartScreen">hideStartScreen</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#isMouseOver">isMouseOver</a></li><li><a href="global.html#isOverInteractive">isOverInteractive</a></li><li><a href="global.html#registerCanvasEvents">registerCanvasEvents</a></li><li><a href="global.html#resetGame">resetGame</a></li><li><a href="global.html#restartGame">restartGame</a></li><li><a href="global.html#setupCanvas">setupCanvas</a></li><li><a href="global.html#showMenu">showMenu</a></li><li><a href="global.html#toggleFullscreen">toggleFullscreen</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BackgroundObject.html">BackgroundObject</a></li><li><a href="Bottle.html">Bottle</a></li><li><a href="Character.html">Character</a></li><li><a href="Chicken.html">Chicken</a></li><li><a href="ChickenSmall.html">ChickenSmall</a></li><li><a href="Cloud.html">Cloud</a></li><li><a href="Coin.html">Coin</a></li><li><a href="Fullscreen.html">Fullscreen</a></li><li><a href="Level.html">Level</a></li><li><a href="World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#backToMenu">backToMenu</a></li><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#checkFullscreenClick">checkFullscreenClick</a></li><li><a href="global.html#checkFullscreenState">checkFullscreenState</a></li><li><a href="global.html#checkSpeakerClick">checkSpeakerClick</a></li><li><a href="global.html#createLevel1">createLevel1</a></li><li><a href="global.html#createWorld">createWorld</a></li><li><a href="global.html#findFullscreenOnCanvas">findFullscreenOnCanvas</a></li><li><a href="global.html#findSpeakerOnCanvas">findSpeakerOnCanvas</a></li><li><a href="global.html#getMousePos">getMousePos</a></li><li><a href="global.html#handleCanvasClick">handleCanvasClick</a></li><li><a href="global.html#handleMouseMove">handleMouseMove</a></li><li><a href="global.html#hideStartScreen">hideStartScreen</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#isMouseOver">isMouseOver</a></li><li><a href="global.html#isOverInteractive">isOverInteractive</a></li><li><a href="global.html#registerCanvasEvents">registerCanvasEvents</a></li><li><a href="global.html#resetGame">resetGame</a></li><li><a href="global.html#restartGame">restartGame</a></li><li><a href="global.html#setupCanvas">setupCanvas</a></li><li><a href="global.html#showMenu">showMenu</a></li><li><a href="global.html#toggleFullscreen">toggleFullscreen</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sat Apr 18 2026 23:00:58 GMT+0200 (Mitteleuropäische Sommerzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sun Apr 19 2026 19:08:00 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>

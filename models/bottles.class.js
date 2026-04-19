@@ -5,6 +5,7 @@ class Bottle extends DrawableObject{
         "img/6_salsa_bottle/2_salsa_bottle_on_ground.png"
     ];
 
+
     /**
      * Selects a random bottle image from the available images.
      * 
@@ -19,6 +20,7 @@ class Bottle extends DrawableObject{
         }
     }
 
+    
     /**
      * Creates a new Bottle instance with a random image and default position and size.
      * The horizontal position is randomized within a defined range.

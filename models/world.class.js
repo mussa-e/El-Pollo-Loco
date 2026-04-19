@@ -36,6 +36,7 @@ class World{
         this.startAnimations();
     }
 
+
     /**
      * Starts animations for all enemies that support animation.
      */
@@ -46,6 +47,7 @@ class World{
             }
         });
     }
+
 
     /**
      * Links world references between character, enemies, and throwable objects.
@@ -61,6 +63,7 @@ class World{
             object.world = this;
         });
     }
+
 
     /**
      * Starts the main game loop and repeatedly checks game logic.
@@ -79,6 +82,7 @@ class World{
         this.intervals.push(runInterval);
     }
 
+
     /**
      * Stops all running intervals and game-related processes.
      */
@@ -91,7 +95,7 @@ class World{
             }
         });
     }
-    
+
 
     /**
      * Activates the endboss when the character reaches a certain distance.
@@ -115,6 +119,7 @@ class World{
             }
         });
     }
+
 
     /**
      * Handles throwing objects when the player presses the throw key.
@@ -143,6 +148,7 @@ class World{
         }
     }
 
+
     /**
      * Checks collisions between the character and enemies.
      */
@@ -168,6 +174,7 @@ class World{
         });
     }
     
+
     /**
      * Checks collisions between the character and coins.
      */
@@ -183,6 +190,7 @@ class World{
         })
     }
 
+
     /**
      * Checks collisions between the character and bottles.
      */
@@ -197,6 +205,7 @@ class World{
             }
         })
     }
+
 
     /**
      * Checks collisions between thrown bottles and enemies or ground.
@@ -217,19 +226,16 @@ class World{
             
             this.level.enemies.forEach((enemy) => {
                 if(bottle.isColliding(enemy)) {
-
                     bottle.hasHit = true;
-
                     bottle.stopThrow();
                     bottle.splash();
-
                     enemy.takeHit();
-
                     bottle.markedForDeletion = true;
                 }
             });
         });
     }
+
 
     /**
      * Renders the game world and all visible objects.
@@ -268,6 +274,7 @@ class World{
         });
     }
 
+
     /**
      * Adds multiple objects to the canvas.
      * @param {Array} objects - Array of drawable objects.
@@ -277,6 +284,7 @@ class World{
             this.addToMap(o);
         })
     }
+
 
     /**
      * Adds a single movable object to the canvas.
@@ -288,12 +296,13 @@ class World{
         }
 
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
+        // mo.drawFrame(this.ctx);
 
         if(mo.otherDirection){
             this.flipImageBack(mo);
         }
     }
+
 
     /**
      * Flips an image horizontally before rendering.
@@ -306,6 +315,7 @@ class World{
         mo.x = mo.x * -1;
     }
 
+
     /**
      * Restores image orientation after flipping.
      * @param {Object} mo - Movable object to restore.
@@ -315,6 +325,7 @@ class World{
         this.ctx.restore();
     }
 
+    
     /**
      * Draws control instructions on the canvas.
      */

@@ -4,7 +4,8 @@ let keyboard = new Keyboard();
 let ctx;
 let gameStarted = false;
 let gameOver = false;
-let gameState = "menu"; 
+let gameState = "menu";
+let fullscreenState;
 
 
 /**
@@ -140,13 +141,17 @@ function handleCanvasClick(event) {
     const y = (event.clientY - rect.top) * (canvas.height / rect.height);
     let fs = world.fullScreen;
     let sp = world.speaker;
+    let container = document.getElementById("game-container")
 
     if (this.findFullscreenOnCanvas(x,y,fs)) {
         if (!document.fullscreenElement) {
-            canvas.requestFullscreen().catch(err => console.log(err));
+            container.requestFullscreen().catch(err => console.log(err));
+            fullscreenState = true;
         } else {
             document.exitFullscreen();
+            fullscreenState = false;
         }
+        checkFullscreenState();
         return; 
     }
 
@@ -213,10 +218,29 @@ function checkFullscreenClick(x, y) {
  * @returns {void}
  */
 function toggleFullscreen() {
+    let container = document.getElementById("game-container");
+
     if (!document.fullscreenElement) {
-        canvas.requestFullscreen();
+        container.requestFullscreen();
+        fullscreenState = true;
     } else {
         document.exitFullscreen();
+        fullscreenState = false;
+    }
+
+    checkFullscreenState();
+}
+
+
+/**
+ * checks the state of fullscreen and changes css property of canvas.
+ */
+function checkFullscreenState(){
+    if (fullscreenState == true){
+        canvas.classList.add("fs-mesure");
+    }
+    if (fullscreenState == false){
+        canvas.classList.remove("fs-mesure");
     }
 }
 
@@ -296,11 +320,10 @@ function showMenu() {
 }
 
 
-canvas = document.getElementById("canvas");
-
 /**
  * Global click listener for the canvas.
  */
+canvas = document.getElementById("canvas");
 canvas.addEventListener("click", (event) => {
     handleCanvasClick(event);
 });

@@ -15,6 +15,4 @@ class Fullscreen extends DrawableObject{
         this.width = 35;
         this.height = 35;  
     }
-
-
 }

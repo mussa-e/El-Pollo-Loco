@@ -83,6 +83,7 @@
         "img/4_enemie_boss_chicken/5_dead/G26.png",
     ];
 
+
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
@@ -94,6 +95,7 @@
         this.isDead = false;
         this.isActivated = false;
     }
+
 
     /**
      * Starts the main movement and animation loops of the endboss.
@@ -112,6 +114,7 @@
             }
         }, 150);
     }
+
 
     /**
      * Applies damage to the endboss, plays hit sound if enabled,
@@ -141,6 +144,7 @@
         }
     }
 
+
     /**
      * Triggers the death sequence of the endboss including animation,
      * stopping movement and showing the win screen.
@@ -164,6 +168,7 @@
         this.showWinScreen();
     }
 
+
     /**
      * Plays a one-time animation sequence using the given images.
      * @param {string[]} images - Array of image paths.
@@ -182,6 +187,7 @@
             }
         }, intervalTime);
     }
+
 
     /**
      * Displays the win screen after the boss is defeated.
@@ -203,6 +209,7 @@
         }, 2000);
     }
 
+
     /**
      * Exits fullscreen mode if the game is currently in fullscreen.
      */
@@ -211,6 +218,7 @@
             document.exitFullscreen();
         }
     }
+
 
     /**
      * Toggles visibility of game and win screen elements.
@@ -224,6 +232,7 @@
         gameContainer.classList.add("d-none");
     }
 
+
     /**
      * Handles background music and win sound playback after victory.
      */
@@ -236,6 +245,7 @@
         }
     }
 
+    
     /**
      * Stops all running intervals for movement and animation.
      */
@@ -254,13 +264,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BackgroundObject.html">BackgroundObject</a></li><li><a href="Bottle.html">Bottle</a></li><li><a href="Character.html">Character</a></li><li><a href="Chicken.html">Chicken</a></li><li><a href="ChickenSmall.html">ChickenSmall</a></li><li><a href="Cloud.html">Cloud</a></li><li><a href="Coin.html">Coin</a></li><li><a href="Fullscreen.html">Fullscreen</a></li><li><a href="Level.html">Level</a></li><li><a href="World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#backToMenu">backToMenu</a></li><li><a href="global.html#checkFullscreenClick">checkFullscreenClick</a></li><li><a href="global.html#checkSpeakerClick">checkSpeakerClick</a></li><li><a href="global.html#createLevel1">createLevel1</a></li><li><a href="global.html#createWorld">createWorld</a></li><li><a href="global.html#findFullscreenOnCanvas">findFullscreenOnCanvas</a></li><li><a href="global.html#findSpeakerOnCanvas">findSpeakerOnCanvas</a></li><li><a href="global.html#getMousePos">getMousePos</a></li><li><a href="global.html#handleCanvasClick">handleCanvasClick</a></li><li><a href="global.html#handleMouseMove">handleMouseMove</a></li><li><a href="global.html#hideStartScreen">hideStartScreen</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#isMouseOver">isMouseOver</a></li><li><a href="global.html#isOverInteractive">isOverInteractive</a></li><li><a href="global.html#registerCanvasEvents">registerCanvasEvents</a></li><li><a href="global.html#resetGame">resetGame</a></li><li><a href="global.html#restartGame">restartGame</a></li><li><a href="global.html#setupCanvas">setupCanvas</a></li><li><a href="global.html#showMenu">showMenu</a></li><li><a href="global.html#toggleFullscreen">toggleFullscreen</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BackgroundObject.html">BackgroundObject</a></li><li><a href="Bottle.html">Bottle</a></li><li><a href="Character.html">Character</a></li><li><a href="Chicken.html">Chicken</a></li><li><a href="ChickenSmall.html">ChickenSmall</a></li><li><a href="Cloud.html">Cloud</a></li><li><a href="Coin.html">Coin</a></li><li><a href="Fullscreen.html">Fullscreen</a></li><li><a href="Level.html">Level</a></li><li><a href="World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#backToMenu">backToMenu</a></li><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#checkFullscreenClick">checkFullscreenClick</a></li><li><a href="global.html#checkFullscreenState">checkFullscreenState</a></li><li><a href="global.html#checkSpeakerClick">checkSpeakerClick</a></li><li><a href="global.html#createLevel1">createLevel1</a></li><li><a href="global.html#createWorld">createWorld</a></li><li><a href="global.html#findFullscreenOnCanvas">findFullscreenOnCanvas</a></li><li><a href="global.html#findSpeakerOnCanvas">findSpeakerOnCanvas</a></li><li><a href="global.html#getMousePos">getMousePos</a></li><li><a href="global.html#handleCanvasClick">handleCanvasClick</a></li><li><a href="global.html#handleMouseMove">handleMouseMove</a></li><li><a href="global.html#hideStartScreen">hideStartScreen</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#isMouseOver">isMouseOver</a></li><li><a href="global.html#isOverInteractive">isOverInteractive</a></li><li><a href="global.html#registerCanvasEvents">registerCanvasEvents</a></li><li><a href="global.html#resetGame">resetGame</a></li><li><a href="global.html#restartGame">restartGame</a></li><li><a href="global.html#setupCanvas">setupCanvas</a></li><li><a href="global.html#showMenu">showMenu</a></li><li><a href="global.html#toggleFullscreen">toggleFullscreen</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sat Apr 18 2026 23:00:58 GMT+0200 (Mitteleuropäische Sommerzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sun Apr 19 2026 19:08:00 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>

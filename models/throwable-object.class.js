@@ -19,6 +19,7 @@ class ThrowableObject extends MovableObject {
         "img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png",
     ];
 
+
     constructor(x, y) {
         super().loadImage("img/6_salsa_bottle/salsa_bottle.png");
         this.loadImages(this.IMAGES_THROW);
@@ -29,6 +30,7 @@ class ThrowableObject extends MovableObject {
         this.width = 50;
         this.throw();
     }
+
 
     /**
      * Initiates the throwing behavior of the object.
@@ -49,6 +51,7 @@ class ThrowableObject extends MovableObject {
         }, 25);
     }
 
+
     /**
      * Stops all intervals related to the throwing motion and animation.
      */
@@ -57,6 +60,7 @@ class ThrowableObject extends MovableObject {
         clearInterval(this.moveInterval);
     }
 
+    
     /**
      * Plays the splash animation and triggers the bottle breaking sound effect.
      * Sound is played only once per throw based on sound settings.

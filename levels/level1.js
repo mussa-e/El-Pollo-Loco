@@ -24,6 +24,7 @@ function createLevel1() {
             new ChickenSmall(),
         ],
 
+
         /**
          * Cloud objects for background animation
          * @type {Cloud[]}
@@ -31,6 +32,7 @@ function createLevel1() {
         [
             new Cloud()
         ],
+
 
         /**
          * Background layers (parallax scrolling)
@@ -63,6 +65,7 @@ function createLevel1() {
             new BackgroundObject("img/5_background/layers/1_first_layer/2.png", 720 * 3)
         ],
 
+
         /**
          * Collectible coins
          * @type {Coin[]}
@@ -80,6 +83,7 @@ function createLevel1() {
             new Coin()
         ],
 
+        
         /**
          * Throwable bottles
          * @type {Bottle[]}

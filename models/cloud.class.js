@@ -3,6 +3,7 @@ class Cloud extends MovableObject {
     width = 500;
     height = 250;
 
+    
     /**
      * Creates a new Cloud instance, initializes its image and random position,
      * and starts its movement animation.
@@ -12,6 +13,7 @@ class Cloud extends MovableObject {
         this.x = Math.random() * 500;
         this.animate();
     }
+
 
     /**
      * Starts the cloud movement by moving it to the left.
