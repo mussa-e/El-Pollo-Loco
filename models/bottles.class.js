@@ -1,4 +1,10 @@
 class Bottle extends DrawableObject{
+    offset = {
+        top: 45,
+        left: 45,
+        right: 45,
+        bottom: 45
+    };
     
     bottlesImages = [
         "img/6_salsa_bottle/1_salsa_bottle_on_ground.png",
@@ -20,7 +26,7 @@ class Bottle extends DrawableObject{
         }
     }
 
-    
+
     /**
      * Creates a new Bottle instance with a random image and default position and size.
      * The horizontal position is randomized within a defined range.

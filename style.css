@@ -119,6 +119,15 @@ canvas {
     transform: scale(1.1);
 }
 
+.back-to-index-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: rgb(0 0 0 / 0%);
+    border-radius: 50px;
+}
+
 
 .legal {
     position: absolute;

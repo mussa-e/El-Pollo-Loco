@@ -107,6 +107,7 @@ class World{
                 if(this.character.x > enemy.x - 550){ 
                     enemy.isActivated = true;
                     enemy.playAnimationOnce(enemy.IMAGES_ALERT);
+                    this.statusBarEndboss = new StatusBarEndboss();
                     if(enemy.soundWanted == true){
                         enemy.audioAlert.play();
                         enemy.audioAlert.volume = 0.3;
@@ -246,12 +247,18 @@ class World{
         this.ctx.translate(this.camera_x, 0);
         
         this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.clouds);
 
         this.ctx.translate(-this.camera_x, 0);
 
         this.addToMap(this.statusBarHealth);
         this.addToMap(this.statusBarBottle);
         this.addToMap(this.statusBarCoin);
+
+        if(this.statusBarEndboss){
+            this.addToMap(this.statusBarEndboss);
+        }
+        
         this.addToMap(this.fullScreen);
         this.addToMap(this.speaker);
         
@@ -259,7 +266,6 @@ class World{
 
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.throwableObjects);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);
@@ -325,7 +331,7 @@ class World{
         this.ctx.restore();
     }
 
-    
+
     /**
      * Draws control instructions on the canvas.
      */

@@ -14,8 +14,15 @@ class Character extends MovableObject {
     world;
     speed = 10;
 
+    offset = {
+    top: 100,
+    left: 30,
+    right: 30,
+    bottom: 10
+};
+
     IMAGES_STANDING = [
-        "img/2_character_pepe/2_walk/W-21.png"
+        "img/2_character_pepe/1_idle/idle/I-1.png"
     ];
 
     IMAGES_WALKING = [
@@ -186,7 +193,7 @@ class Character extends MovableObject {
         if (this.isAboveGround()) return this.handleJumping();
         if (this.isWalking()) return this.handleWalking();
         if (timepassed > 10) return this.handleLongIdle();
-        if (timepassed > 3) return this.handleIdle();
+        if (timepassed > 1) return this.handleIdle();
 
         this.handleStanding();
     }
@@ -365,7 +372,7 @@ class Character extends MovableObject {
         this.world.speaker.audioBG.pause();
     }
 
-    
+
     /**
      * Plays the lose sound effect if enabled.
      */

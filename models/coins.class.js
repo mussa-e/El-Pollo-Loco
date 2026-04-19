@@ -1,5 +1,12 @@
 class Coin extends DrawableObject{
-    
+    offset = {
+        top: 50,
+        left: 50,
+        right: 50,
+        bottom: 50
+    };
+
+
     /**
      * Creates a new Coin instance with a random position on the map.
      * Initializes image, size, and coordinates.

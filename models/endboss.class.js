@@ -8,6 +8,7 @@ class Endboss extends MovableObject {
     audioAlert = new Audio("audio/highnoon.mp3");
     audioWin = new Audio("audio/orchestral-win.mp3");
     soundWanted = false;
+    energy = 100;
 
     offset = {
         top: 50,
@@ -95,6 +96,7 @@ class Endboss extends MovableObject {
      */
     takeHit() {
         this.hits++;
+        this.world.statusBarEndboss.setPercentage(this.energy -= 20);
 
         if (this.soundWanted == true) {
             this.audioBottleHit.play();
@@ -110,7 +112,7 @@ class Endboss extends MovableObject {
             }
         }, 500);
 
-        if (this.hits >= 4) {
+        if (this.hits >= 5) {
             this.die();
             this.world.character.audioSnoring.pause();
         }
@@ -217,7 +219,7 @@ class Endboss extends MovableObject {
         }
     }
 
-    
+
     /**
      * Stops all running intervals for movement and animation.
      */
