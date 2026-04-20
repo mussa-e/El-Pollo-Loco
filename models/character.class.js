@@ -19,7 +19,7 @@ class Character extends MovableObject {
     left: 30,
     right: 30,
     bottom: 10
-};
+    };
 
     IMAGES_STANDING = [
         "img/2_character_pepe/1_idle/idle/I-1.png"
@@ -176,7 +176,7 @@ class Character extends MovableObject {
     startAnimationLoop() {
         let animationInterval = setInterval(() => {
             this.updateAnimationState();
-        }, 50);
+        }, 70);
 
         this.intervals.push(animationInterval);
     }
