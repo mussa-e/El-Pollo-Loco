@@ -79,13 +79,19 @@ class MovableObject extends DrawableObject {
      * Also records the time of the hit for hurt-state tracking.
      */
     hit() {
-        this.energy -= 5;
+        if(this.isHurt()){
+            return;
+        }
+        else{
+            this.energy -= 5;
         if (this.energy < 0) {
             this.energy = 0;
         } else {
             this.lastHit = new Date().getTime();
         }
         this.lastActionTime = new Date().getTime();
+        }
+        
     }
 
 

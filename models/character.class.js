@@ -176,7 +176,7 @@ class Character extends MovableObject {
     startAnimationLoop() {
         let animationInterval = setInterval(() => {
             this.updateAnimationState();
-        }, 70);
+        }, 150);
 
         this.intervals.push(animationInterval);
     }

@@ -77,7 +77,7 @@ class World{
             this.checkCollisionsThrownBottle();
             this.checkEndbossActivation();
             this.level.enemies = this.level.enemies.filter(e => !e.isDeadFlag);
-        }, 50);
+        }, 20);//old 50
 
         this.intervals.push(runInterval);
     }

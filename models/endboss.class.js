@@ -7,6 +7,7 @@ class Endboss extends MovableObject {
     audioBottleHit = new Audio("audio/chicken1.mp3");
     audioAlert = new Audio("audio/highnoon.mp3");
     audioWin = new Audio("audio/orchestral-win.mp3");
+    audioEndbossBoost = new Audio("audio/endboss-alarm-1.mp3");
     soundWanted = false;
     energy = 100;
 
@@ -86,9 +87,25 @@ class Endboss extends MovableObject {
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 150);
+
+        this.boostInterval = setInterval(() => {
+            this.endbossBoost();
+        }, 4000);
     }
 
 
+    /**
+     * Activates a boost for the endboss.
+     */
+    endbossBoost(){
+        console.log("endbossBoost()")
+        this.x -= 70;
+        if (this.soundWanted == true && this.x >= 100) {
+            this.audioEndbossBoost.play();
+        }
+    }
+
+    
     /**
      * Applies damage to the endboss, plays hit sound if enabled,
      * and triggers hurt animation. If enough hits are reached,
@@ -226,5 +243,6 @@ class Endboss extends MovableObject {
     stop() {
         clearInterval(this.moveInterval);
         clearInterval(this.animationInterval);
+        clearInterval(this.boostInterval);
     }
 }

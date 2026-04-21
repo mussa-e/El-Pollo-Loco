@@ -4,15 +4,7 @@ class Speaker extends DrawableObject {
     isMuted = true;
     audioBG = new Audio("audio/banjodoline.mp3");
 
-    // constructor() {
-    //     super();
-    //     this.loadImage(this.IMAGES_OFF);
-    //     this.x = 620;
-    //     this.y = 10;
-    //     this.width = 35;
-    //     this.height = 35;
-    //     this.audioBG.loop = true;
-    // }
+    
     constructor() {
         super();
         this.loadImage(this.IMAGES_OFF);
@@ -20,14 +12,11 @@ class Speaker extends DrawableObject {
         const savedState = localStorage.getItem("isMuted");
         this.isMuted = savedState === null ? true : JSON.parse(savedState);
 
-
         this.x = 620;
         this.y = 10;
         this.width = 35;
         this.height = 35;
         this.audioBG.loop = true;
-
-        
     }
     
 
@@ -46,9 +35,7 @@ class Speaker extends DrawableObject {
      */
     toggleSound() {
         this.isMuted = !this.isMuted;
-
         localStorage.setItem("isMuted", JSON.stringify(this.isMuted));
-
         this.applySoundState();
     }
     
