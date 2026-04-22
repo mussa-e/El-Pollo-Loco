@@ -153,28 +153,51 @@ class World{
     /**
      * Checks collisions between the character and enemies.
      */
-    checkCollisions(){
-        let stompedEnemy = this.level.enemies.some(enemy => 
-            !enemy.isDead && this.character.isCollidingFromAbove(enemy)
-        );
+    // checkCollisions(){
+    //     let stompedEnemy = this.level.enemies.some(enemy => 
+    //         !enemy.isDead && this.character.isCollidingFromAbove(enemy)
+    //     );
 
+    //     this.level.enemies.forEach((enemy) => {
+    //         if (!enemy.isDead && this.character.isCollidingFromAbove(enemy)) {
+    //             enemy.takeHit();
+    //             enemy.isDeadFlag = true;
+    //             this.character.speedY = 15;
+    //         } 
+    //         else if (!stompedEnemy && this.character.isColliding(enemy)) {
+    //             this.character.hit();
+    //             this.statusBarHealth.setPercentage(this.character.energy);
+
+    //             if(this.soundWanted == true && !this.character.isDead()){
+    //                 this.character.audioHurt.play();
+    //             }
+    //         }
+    //     });
+    // }
+    checkCollisions() {
+        let isFalling = this.character.speedY < 0;
         this.level.enemies.forEach((enemy) => {
-            if (!enemy.isDead && this.character.isCollidingFromAbove(enemy)) {
-                enemy.takeHit();
-                enemy.isDeadFlag = true;
-                this.character.speedY = 15;
-            } 
-            else if (!stompedEnemy && this.character.isColliding(enemy)) {
-                this.character.hit();
-                this.statusBarHealth.setPercentage(this.character.energy);
+            if (!enemy.isDead && this.character.isColliding(enemy)) {
 
-                if(this.soundWanted == true && !this.character.isDead()){
-                    this.character.audioHurt.play();
+                if (isFalling && !(enemy instanceof Endboss)) {
+                    enemy.takeHit();
+                    enemy.isDead = true;
+                    enemy.isDeadFlag = true;
+                    this.character.speedY = 15;
+
+                } else {
+                    this.character.hit();
+                    this.statusBarHealth.setPercentage(this.character.energy);
+
+                    if (this.soundWanted && !this.character.isDead()) {
+                        this.character.audioHurt.play();
+                    }
                 }
             }
         });
     }
     
+
 
     /**
      * Checks collisions between the character and coins.
@@ -264,7 +287,6 @@ class World{
         
         this.ctx.translate(this.camera_x, 0);
 
-        // this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
         this.addObjectsToMap(this.level.coins);

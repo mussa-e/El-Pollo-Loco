@@ -132,6 +132,8 @@ class Endboss extends MovableObject {
      * Activates a boost for the endboss based on his direction.
      */
     endbossBoost(){
+        if(this.isDead){return};
+        
         if(this.world.character.x < this.x){
             this.x -= 70;
         }
@@ -181,6 +183,7 @@ class Endboss extends MovableObject {
      */
     die() {
         this.isDead = true;
+        this.audioEndbossBoost.pause();
 
         clearInterval(this.animationInterval);
 
@@ -230,7 +233,7 @@ class Endboss extends MovableObject {
         const winScreen = document.getElementById("win-screen");
         const gameContainer = document.getElementById("game-container");
 
-        this.world.soundWanted = false;
+        this.audioEndbossBoost.pause();
 
         setTimeout(() => {
             this.exitFullscreenIfNeeded();
