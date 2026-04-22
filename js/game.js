@@ -16,10 +16,10 @@ let fullscreenState;
  */
 function init() {
     gameState = "playing";
-
     setupCanvas();
     hideStartScreen();
     createWorld();
+    world.speaker.applySoundState();
     registerCanvasEvents();
 }
 

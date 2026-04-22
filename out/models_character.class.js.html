@@ -36,14 +36,20 @@
     audioLose = new Audio("audio/losing-horn.mp3");
     audioHurt = new Audio("audio/manhurt1.mp3");
     audioDied = new Audio("audio/manhurt3.mp3");
-    soundWanted = false;
     hasPlayedLoseSound = false;
     intervals = [];
     world;
     speed = 10;
 
+    offset = {
+    top: 100,
+    left: 30,
+    right: 30,
+    bottom: 10
+    };
+
     IMAGES_STANDING = [
-        "img/2_character_pepe/2_walk/W-21.png"
+        "img/2_character_pepe/1_idle/idle/I-1.png"
     ];
 
     IMAGES_WALKING = [
@@ -177,7 +183,7 @@
      * Plays the jump sound effect if sound is enabled.
      */
     playJumpSound() {
-        if (this.soundWanted) {
+        if (this.world.soundWanted) {
             this.audioJump.play();
         }
     }
@@ -197,7 +203,7 @@
     startAnimationLoop() {
         let animationInterval = setInterval(() => {
             this.updateAnimationState();
-        }, 50);
+        }, 150);
 
         this.intervals.push(animationInterval);
     }
@@ -214,7 +220,7 @@
         if (this.isAboveGround()) return this.handleJumping();
         if (this.isWalking()) return this.handleWalking();
         if (timepassed > 10) return this.handleLongIdle();
-        if (timepassed > 3) return this.handleIdle();
+        if (timepassed > 1) return this.handleIdle();
 
         this.handleStanding();
     }
@@ -262,7 +268,7 @@
      */
     handleLongIdle() {
         this.playAnimation(this.IMAGES_LONG_IDLE);
-        if (this.soundWanted) {
+        if (this.world.soundWanted) {
             this.audioSnoring.play();
             this.audioSnoring.volume = 0.3;
         }
@@ -319,12 +325,26 @@
      */
     characterDied() {
         this.setGameOverState();
+        this.stopEndbossSounds();
 
         if (this.hasPlayedLoseSound) return;
         this.hasPlayedLoseSound = true;
 
         this.handleDeathSound();
         this.scheduleGameOverScreen();
+    }
+
+
+    /**
+     * stops audioEndbossBoost when character loses.
+     */
+    stopEndbossSounds() {
+        this.world.level.enemies.forEach(enemy => {
+            if (enemy instanceof Endboss) {
+                enemy.audioEndbossBoost.pause();
+                enemy.audioEndbossBoost.currentTime = 0;
+            }
+        });
     }
 
 
@@ -352,7 +372,7 @@
      * Plays the character death sound effect if enabled.
      */
     handleDeathSound() {
-        if (this.soundWanted) {
+        if (this.world.soundWanted) {
             this.audioDied.play();
             this.audioDied.volume = 0.3;
         }
@@ -393,12 +413,12 @@
         this.world.speaker.audioBG.pause();
     }
 
-    
+
     /**
      * Plays the lose sound effect if enabled.
      */
     playLoseSound() {
-        if (this.soundWanted) {
+        if (this.world.soundWanted) {
             this.audioLose.play();
             this.audioLose.volume = 0.3;
         }
@@ -413,13 +433,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BackgroundObject.html">BackgroundObject</a></li><li><a href="Bottle.html">Bottle</a></li><li><a href="Character.html">Character</a></li><li><a href="Chicken.html">Chicken</a></li><li><a href="ChickenSmall.html">ChickenSmall</a></li><li><a href="Cloud.html">Cloud</a></li><li><a href="Coin.html">Coin</a></li><li><a href="Fullscreen.html">Fullscreen</a></li><li><a href="Level.html">Level</a></li><li><a href="World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#backToMenu">backToMenu</a></li><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#checkFullscreenClick">checkFullscreenClick</a></li><li><a href="global.html#checkFullscreenState">checkFullscreenState</a></li><li><a href="global.html#checkSpeakerClick">checkSpeakerClick</a></li><li><a href="global.html#createLevel1">createLevel1</a></li><li><a href="global.html#createWorld">createWorld</a></li><li><a href="global.html#findFullscreenOnCanvas">findFullscreenOnCanvas</a></li><li><a href="global.html#findSpeakerOnCanvas">findSpeakerOnCanvas</a></li><li><a href="global.html#getMousePos">getMousePos</a></li><li><a href="global.html#handleCanvasClick">handleCanvasClick</a></li><li><a href="global.html#handleMouseMove">handleMouseMove</a></li><li><a href="global.html#hideStartScreen">hideStartScreen</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#isMouseOver">isMouseOver</a></li><li><a href="global.html#isOverInteractive">isOverInteractive</a></li><li><a href="global.html#registerCanvasEvents">registerCanvasEvents</a></li><li><a href="global.html#resetGame">resetGame</a></li><li><a href="global.html#restartGame">restartGame</a></li><li><a href="global.html#setupCanvas">setupCanvas</a></li><li><a href="global.html#showMenu">showMenu</a></li><li><a href="global.html#toggleFullscreen">toggleFullscreen</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BackgroundObject.html">BackgroundObject</a></li><li><a href="Bottle.html">Bottle</a></li><li><a href="Character.html">Character</a></li><li><a href="Chicken.html">Chicken</a></li><li><a href="ChickenSmall.html">ChickenSmall</a></li><li><a href="Cloud.html">Cloud</a></li><li><a href="Coin.html">Coin</a></li><li><a href="Fullscreen.html">Fullscreen</a></li><li><a href="Level.html">Level</a></li><li><a href="World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#backToMenu">backToMenu</a></li><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#checkFullscreenClick">checkFullscreenClick</a></li><li><a href="global.html#checkFullscreenState">checkFullscreenState</a></li><li><a href="global.html#checkSpeakerClick">checkSpeakerClick</a></li><li><a href="global.html#createLevel1">createLevel1</a></li><li><a href="global.html#createWorld">createWorld</a></li><li><a href="global.html#findFullscreenOnCanvas">findFullscreenOnCanvas</a></li><li><a href="global.html#findSpeakerOnCanvas">findSpeakerOnCanvas</a></li><li><a href="global.html#getMousePos">getMousePos</a></li><li><a href="global.html#handleCanvasClick">handleCanvasClick</a></li><li><a href="global.html#handleMouseMove">handleMouseMove</a></li><li><a href="global.html#hideStartScreen">hideStartScreen</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#isMouseOver">isMouseOver</a></li><li><a href="global.html#isOverInteractive">isOverInteractive</a></li><li><a href="global.html#registerCanvasEvents">registerCanvasEvents</a></li><li><a href="global.html#resetGame">resetGame</a></li><li><a href="global.html#resolveImageIndex">resolveImageIndex</a></li><li><a href="global.html#restartGame">restartGame</a></li><li><a href="global.html#setupCanvas">setupCanvas</a></li><li><a href="global.html#showMenu">showMenu</a></li><li><a href="global.html#toggleFullscreen">toggleFullscreen</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sun Apr 19 2026 19:08:00 GMT+0200 (Mitteleuropäische Sommerzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Wed Apr 22 2026 19:11:12 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>

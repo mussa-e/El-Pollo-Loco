@@ -35,7 +35,8 @@
     audioBottleHit = new Audio("audio/chicken1.mp3");
     audioAlert = new Audio("audio/highnoon.mp3");
     audioWin = new Audio("audio/orchestral-win.mp3");
-    soundWanted = false;
+    audioEndbossBoost = new Audio("audio/endboss-alarm-1.mp3");
+    energy = 100;
 
     offset = {
         top: 50,
@@ -101,10 +102,27 @@
      * Starts the main movement and animation loops of the endboss.
      * Handles movement and walking animation while the boss is alive.
      */
+    // animate() {
+    //     this.moveInterval = setInterval(() => {
+    //         if (!this.isDead) {
+    //             this.moveLeft();
+    //         }
+    //     }, 1000 / 60);
+
+    //     this.animationInterval = setInterval(() => {
+    //         if (!this.isDead) {
+    //             this.playAnimation(this.IMAGES_WALKING);
+    //         }
+    //     }, 150);
+
+    //     this.boostInterval = setInterval(() => {
+    //         this.endbossBoost();
+    //     }, 4000);
+    // }
     animate() {
         this.moveInterval = setInterval(() => {
-            if (!this.isDead) {
-                this.moveLeft();
+            if (!this.isDead &amp;&amp; this.isActivated) {
+                this.followCharacter();
             }
         }, 1000 / 60);
 
@@ -113,9 +131,48 @@
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 150);
+
+        this.boostInterval = setInterval(() => {
+            this.endbossBoost();
+        }, 4000);
     }
 
 
+        followCharacter() {
+        let character = this.world.character;
+        let distance = character.x - this.x;
+
+        let stopDistance = 100;
+
+        if (Math.abs(distance) > stopDistance) {
+            if (distance &lt; 0) {
+                this.moveLeft();
+                this.otherDirection = false;
+            } else {
+                this.moveRight();
+                this.otherDirection = true;
+            }
+        }
+    }
+
+
+    /**
+     * Activates a boost for the endboss based on his direction.
+     */
+    endbossBoost(){
+        if(this.world.character.x &lt; this.x){
+            this.x -= 70;
+        }
+        else{
+            this.x += 70;
+        }
+        
+        if (this.world.soundWanted == true &amp;&amp; this.x >= 100) {
+            this.audioEndbossBoost.play();
+        }
+    }
+
+    
     /**
      * Applies damage to the endboss, plays hit sound if enabled,
      * and triggers hurt animation. If enough hits are reached,
@@ -123,8 +180,9 @@
      */
     takeHit() {
         this.hits++;
+        this.world.statusBarEndboss.setPercentage(this.energy -= 20);
 
-        if (this.soundWanted == true) {
+        if (this.world.soundWanted == true) {
             this.audioBottleHit.play();
         }
 
@@ -134,11 +192,11 @@
                 this.img = this.imageCache[this.IMAGES_HURT[i]];
                 i++;
             } else {
-                clearInterval(this.hurtIntervalInterval);
+                clearInterval(this.hurtInterval);
             }
         }, 500);
 
-        if (this.hits >= 4) {
+        if (this.hits >= 5) {
             this.die();
             this.world.character.audioSnoring.pause();
         }
@@ -200,7 +258,7 @@
         const winScreen = document.getElementById("win-screen");
         const gameContainer = document.getElementById("game-container");
 
-        this.world.character.soundWanted = false;
+        this.world.soundWanted = false;
 
         setTimeout(() => {
             this.exitFullscreenIfNeeded();
@@ -239,19 +297,20 @@
     handleWinAudio() {
         this.world.speaker.audioBG.pause();
 
-        if (this.soundWanted) {
+        if (this.world.soundWanted) {
             this.audioWin.volume = 0.3;
             this.audioWin.play();
         }
     }
 
-    
+
     /**
      * Stops all running intervals for movement and animation.
      */
     stop() {
         clearInterval(this.moveInterval);
         clearInterval(this.animationInterval);
+        clearInterval(this.boostInterval);
     }
 }
 </code></pre>
@@ -264,13 +323,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BackgroundObject.html">BackgroundObject</a></li><li><a href="Bottle.html">Bottle</a></li><li><a href="Character.html">Character</a></li><li><a href="Chicken.html">Chicken</a></li><li><a href="ChickenSmall.html">ChickenSmall</a></li><li><a href="Cloud.html">Cloud</a></li><li><a href="Coin.html">Coin</a></li><li><a href="Fullscreen.html">Fullscreen</a></li><li><a href="Level.html">Level</a></li><li><a href="World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#backToMenu">backToMenu</a></li><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#checkFullscreenClick">checkFullscreenClick</a></li><li><a href="global.html#checkFullscreenState">checkFullscreenState</a></li><li><a href="global.html#checkSpeakerClick">checkSpeakerClick</a></li><li><a href="global.html#createLevel1">createLevel1</a></li><li><a href="global.html#createWorld">createWorld</a></li><li><a href="global.html#findFullscreenOnCanvas">findFullscreenOnCanvas</a></li><li><a href="global.html#findSpeakerOnCanvas">findSpeakerOnCanvas</a></li><li><a href="global.html#getMousePos">getMousePos</a></li><li><a href="global.html#handleCanvasClick">handleCanvasClick</a></li><li><a href="global.html#handleMouseMove">handleMouseMove</a></li><li><a href="global.html#hideStartScreen">hideStartScreen</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#isMouseOver">isMouseOver</a></li><li><a href="global.html#isOverInteractive">isOverInteractive</a></li><li><a href="global.html#registerCanvasEvents">registerCanvasEvents</a></li><li><a href="global.html#resetGame">resetGame</a></li><li><a href="global.html#restartGame">restartGame</a></li><li><a href="global.html#setupCanvas">setupCanvas</a></li><li><a href="global.html#showMenu">showMenu</a></li><li><a href="global.html#toggleFullscreen">toggleFullscreen</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BackgroundObject.html">BackgroundObject</a></li><li><a href="Bottle.html">Bottle</a></li><li><a href="Character.html">Character</a></li><li><a href="Chicken.html">Chicken</a></li><li><a href="ChickenSmall.html">ChickenSmall</a></li><li><a href="Cloud.html">Cloud</a></li><li><a href="Coin.html">Coin</a></li><li><a href="Fullscreen.html">Fullscreen</a></li><li><a href="Level.html">Level</a></li><li><a href="World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#backToMenu">backToMenu</a></li><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#checkFullscreenClick">checkFullscreenClick</a></li><li><a href="global.html#checkFullscreenState">checkFullscreenState</a></li><li><a href="global.html#checkSpeakerClick">checkSpeakerClick</a></li><li><a href="global.html#createLevel1">createLevel1</a></li><li><a href="global.html#createWorld">createWorld</a></li><li><a href="global.html#findFullscreenOnCanvas">findFullscreenOnCanvas</a></li><li><a href="global.html#findSpeakerOnCanvas">findSpeakerOnCanvas</a></li><li><a href="global.html#getMousePos">getMousePos</a></li><li><a href="global.html#handleCanvasClick">handleCanvasClick</a></li><li><a href="global.html#handleMouseMove">handleMouseMove</a></li><li><a href="global.html#hideStartScreen">hideStartScreen</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#isMouseOver">isMouseOver</a></li><li><a href="global.html#isOverInteractive">isOverInteractive</a></li><li><a href="global.html#registerCanvasEvents">registerCanvasEvents</a></li><li><a href="global.html#resetGame">resetGame</a></li><li><a href="global.html#resolveImageIndex">resolveImageIndex</a></li><li><a href="global.html#restartGame">restartGame</a></li><li><a href="global.html#setupCanvas">setupCanvas</a></li><li><a href="global.html#showMenu">showMenu</a></li><li><a href="global.html#toggleFullscreen">toggleFullscreen</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sun Apr 19 2026 19:08:00 GMT+0200 (Mitteleuropäische Sommerzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Wed Apr 22 2026 19:11:12 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -1,16 +1,21 @@
 class Speaker extends DrawableObject {
     IMAGES_ON = ["img/0_icons/volume_on.png"];
     IMAGES_OFF = ["img/0_icons/volume_off.png"];
-    isMuted = true;
+    isMuted = false;
     audioBG = new Audio("audio/banjodoline.mp3");
 
     
     constructor() {
         super();
-        this.loadImage(this.IMAGES_OFF);
+        // this.loadImage(this.IMAGES_ON);
+        if (this.isMuted) {
+            this.loadImage(this.IMAGES_OFF);
+        } else {
+            this.loadImage(this.IMAGES_ON);
+        }
 
         const savedState = localStorage.getItem("isMuted");
-        this.isMuted = savedState === null ? true : JSON.parse(savedState);
+        this.isMuted = savedState === null ? false : JSON.parse(savedState);
 
         this.x = 620;
         this.y = 10;
@@ -20,6 +25,9 @@ class Speaker extends DrawableObject {
     }
     
 
+    /**
+     * Toggles the sound state between soundOn and soundOff.
+     */
     applySoundState() {
         if (this.isMuted) {
             this.soundOff();
@@ -47,7 +55,6 @@ class Speaker extends DrawableObject {
     soundOff() {
         this.loadImage(this.IMAGES_OFF);
         this.audioBG.pause();
-        world.character.soundWanted = false;
         world.soundWanted = false;
         world.character.audioSnoring.pause();
 

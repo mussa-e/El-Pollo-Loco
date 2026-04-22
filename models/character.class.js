@@ -8,7 +8,6 @@ class Character extends MovableObject {
     audioLose = new Audio("audio/losing-horn.mp3");
     audioHurt = new Audio("audio/manhurt1.mp3");
     audioDied = new Audio("audio/manhurt3.mp3");
-    soundWanted = false;
     hasPlayedLoseSound = false;
     intervals = [];
     world;
@@ -156,7 +155,7 @@ class Character extends MovableObject {
      * Plays the jump sound effect if sound is enabled.
      */
     playJumpSound() {
-        if (this.soundWanted) {
+        if (this.world.soundWanted) {
             this.audioJump.play();
         }
     }
@@ -241,7 +240,7 @@ class Character extends MovableObject {
      */
     handleLongIdle() {
         this.playAnimation(this.IMAGES_LONG_IDLE);
-        if (this.soundWanted) {
+        if (this.world.soundWanted) {
             this.audioSnoring.play();
             this.audioSnoring.volume = 0.3;
         }
@@ -298,12 +297,26 @@ class Character extends MovableObject {
      */
     characterDied() {
         this.setGameOverState();
+        this.stopEndbossSounds();
 
         if (this.hasPlayedLoseSound) return;
         this.hasPlayedLoseSound = true;
 
         this.handleDeathSound();
         this.scheduleGameOverScreen();
+    }
+
+
+    /**
+     * stops audioEndbossBoost when character loses.
+     */
+    stopEndbossSounds() {
+        this.world.level.enemies.forEach(enemy => {
+            if (enemy instanceof Endboss) {
+                enemy.audioEndbossBoost.pause();
+                enemy.audioEndbossBoost.currentTime = 0;
+            }
+        });
     }
 
 
@@ -331,7 +344,7 @@ class Character extends MovableObject {
      * Plays the character death sound effect if enabled.
      */
     handleDeathSound() {
-        if (this.soundWanted) {
+        if (this.world.soundWanted) {
             this.audioDied.play();
             this.audioDied.volume = 0.3;
         }
@@ -377,7 +390,7 @@ class Character extends MovableObject {
      * Plays the lose sound effect if enabled.
      */
     playLoseSound() {
-        if (this.soundWanted) {
+        if (this.world.soundWanted) {
             this.audioLose.play();
             this.audioLose.volume = 0.3;
         }

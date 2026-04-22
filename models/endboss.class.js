@@ -8,7 +8,6 @@ class Endboss extends MovableObject {
     audioAlert = new Audio("audio/highnoon.mp3");
     audioWin = new Audio("audio/orchestral-win.mp3");
     audioEndbossBoost = new Audio("audio/endboss-alarm-1.mp3");
-    soundWanted = false;
     energy = 100;
 
     offset = {
@@ -75,10 +74,27 @@ class Endboss extends MovableObject {
      * Starts the main movement and animation loops of the endboss.
      * Handles movement and walking animation while the boss is alive.
      */
+    // animate() {
+    //     this.moveInterval = setInterval(() => {
+    //         if (!this.isDead) {
+    //             this.moveLeft();
+    //         }
+    //     }, 1000 / 60);
+
+    //     this.animationInterval = setInterval(() => {
+    //         if (!this.isDead) {
+    //             this.playAnimation(this.IMAGES_WALKING);
+    //         }
+    //     }, 150);
+
+    //     this.boostInterval = setInterval(() => {
+    //         this.endbossBoost();
+    //     }, 4000);
+    // }
     animate() {
         this.moveInterval = setInterval(() => {
-            if (!this.isDead) {
-                this.moveLeft();
+            if (!this.isDead && this.isActivated) {
+                this.followCharacter();
             }
         }, 1000 / 60);
 
@@ -94,13 +110,36 @@ class Endboss extends MovableObject {
     }
 
 
+        followCharacter() {
+        let character = this.world.character;
+        let distance = character.x - this.x;
+
+        let stopDistance = 100;
+
+        if (Math.abs(distance) > stopDistance) {
+            if (distance < 0) {
+                this.moveLeft();
+                this.otherDirection = false;
+            } else {
+                this.moveRight();
+                this.otherDirection = true;
+            }
+        }
+    }
+
+
     /**
-     * Activates a boost for the endboss.
+     * Activates a boost for the endboss based on his direction.
      */
     endbossBoost(){
-        console.log("endbossBoost()")
-        this.x -= 70;
-        if (this.soundWanted == true && this.x >= 100) {
+        if(this.world.character.x < this.x){
+            this.x -= 70;
+        }
+        else{
+            this.x += 70;
+        }
+        
+        if (this.world.soundWanted == true && this.x >= 100) {
             this.audioEndbossBoost.play();
         }
     }
@@ -115,7 +154,7 @@ class Endboss extends MovableObject {
         this.hits++;
         this.world.statusBarEndboss.setPercentage(this.energy -= 20);
 
-        if (this.soundWanted == true) {
+        if (this.world.soundWanted == true) {
             this.audioBottleHit.play();
         }
 
@@ -125,7 +164,7 @@ class Endboss extends MovableObject {
                 this.img = this.imageCache[this.IMAGES_HURT[i]];
                 i++;
             } else {
-                clearInterval(this.hurtIntervalInterval);
+                clearInterval(this.hurtInterval);
             }
         }, 500);
 
@@ -191,7 +230,7 @@ class Endboss extends MovableObject {
         const winScreen = document.getElementById("win-screen");
         const gameContainer = document.getElementById("game-container");
 
-        this.world.character.soundWanted = false;
+        this.world.soundWanted = false;
 
         setTimeout(() => {
             this.exitFullscreenIfNeeded();
@@ -230,7 +269,7 @@ class Endboss extends MovableObject {
     handleWinAudio() {
         this.world.speaker.audioBG.pause();
 
-        if (this.soundWanted) {
+        if (this.world.soundWanted) {
             this.audioWin.volume = 0.3;
             this.audioWin.play();
         }

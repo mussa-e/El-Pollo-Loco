@@ -16,7 +16,7 @@ class World{
     thrownBottle;
     lastThrowTime = 0;
     throwCooldown = 500;
-    soundWanted = false;
+    soundWanted = true;
     intervals = [];
     
     

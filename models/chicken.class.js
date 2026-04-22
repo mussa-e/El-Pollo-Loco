@@ -3,7 +3,6 @@ class Chicken extends MovableObject{
     width = 70;
     y = 335;
     audioBottleHit = new Audio("audio/chicken3.mp3");
-    soundWanted = false;
 
     IMAGES_WALKING = [
         "img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",
@@ -54,7 +53,7 @@ class Chicken extends MovableObject{
      * Plays a sound effect if enabled and triggers the death sequence.
      */
     takeHit(){
-        if (this.soundWanted == true){
+        if (this.world.soundWanted == true){
             this.audioBottleHit.play();
         }
     
