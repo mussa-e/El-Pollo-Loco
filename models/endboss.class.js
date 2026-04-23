@@ -8,7 +8,7 @@ class Endboss extends MovableObject {
     audioAlert = new Audio("audio/highnoon.mp3");
     audioWin = new Audio("audio/orchestral-win.mp3");
     audioEndbossBoost = new Audio("audio/endboss-alarm-1.mp3");
-    energy = 100;
+    energy = 160;
 
     offset = {
         top: 50,
@@ -64,33 +64,12 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
         this.x = 2200;
-        this.speed = 1.8;
+        this.speed = 4;
         this.isDead = false;
         this.isActivated = false;
     }
 
 
-    /**
-     * Starts the main movement and animation loops of the endboss.
-     * Handles movement and walking animation while the boss is alive.
-     */
-    // animate() {
-    //     this.moveInterval = setInterval(() => {
-    //         if (!this.isDead) {
-    //             this.moveLeft();
-    //         }
-    //     }, 1000 / 60);
-
-    //     this.animationInterval = setInterval(() => {
-    //         if (!this.isDead) {
-    //             this.playAnimation(this.IMAGES_WALKING);
-    //         }
-    //     }, 150);
-
-    //     this.boostInterval = setInterval(() => {
-    //         this.endbossBoost();
-    //     }, 4000);
-    // }
     animate() {
         this.moveInterval = setInterval(() => {
             if (!this.isDead && this.isActivated) {
@@ -106,7 +85,7 @@ class Endboss extends MovableObject {
 
         this.boostInterval = setInterval(() => {
             this.endbossBoost();
-        }, 4000);
+        }, 3000);
     }
 
 
@@ -135,10 +114,10 @@ class Endboss extends MovableObject {
         if(this.isDead){return};
         
         if(this.world.character.x < this.x){
-            this.x -= 70;
+            this.x -= 80;
         }
         else{
-            this.x += 70;
+            this.x += 80;
         }
         
         if (this.world.soundWanted == true && this.x >= 100) {
@@ -154,7 +133,7 @@ class Endboss extends MovableObject {
      */
     takeHit() {
         this.hits++;
-        this.world.statusBarEndboss.setPercentage(this.energy -= 20);
+        this.world.statusBarEndboss.setPercentage(this.energy -= 10);
 
         if (this.world.soundWanted == true) {
             this.audioBottleHit.play();
@@ -170,7 +149,7 @@ class Endboss extends MovableObject {
             }
         }, 500);
 
-        if (this.hits >= 5) {
+        if (this.hits >= 15) {
             this.die();
             this.world.character.audioSnoring.pause();
         }

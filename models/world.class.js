@@ -15,7 +15,7 @@ class World{
     audioBottle = new Audio("audio/pick.mp3");
     thrownBottle;
     lastThrowTime = 0;
-    throwCooldown = 500;
+    throwCooldown = 1200;
     soundWanted = true;
     intervals = [];
     
@@ -153,27 +153,6 @@ class World{
     /**
      * Checks collisions between the character and enemies.
      */
-    // checkCollisions(){
-    //     let stompedEnemy = this.level.enemies.some(enemy => 
-    //         !enemy.isDead && this.character.isCollidingFromAbove(enemy)
-    //     );
-
-    //     this.level.enemies.forEach((enemy) => {
-    //         if (!enemy.isDead && this.character.isCollidingFromAbove(enemy)) {
-    //             enemy.takeHit();
-    //             enemy.isDeadFlag = true;
-    //             this.character.speedY = 15;
-    //         } 
-    //         else if (!stompedEnemy && this.character.isColliding(enemy)) {
-    //             this.character.hit();
-    //             this.statusBarHealth.setPercentage(this.character.energy);
-
-    //             if(this.soundWanted == true && !this.character.isDead()){
-    //                 this.character.audioHurt.play();
-    //             }
-    //         }
-    //     });
-    // }
     checkCollisions() {
         let isFalling = this.character.speedY < 0;
         this.level.enemies.forEach((enemy) => {

@@ -89,7 +89,7 @@ class MovableObject extends DrawableObject {
             return;
         }
         else{
-            this.energy -= 5;
+            this.energy -= 20;
         if (this.energy < 0) {
             this.energy = 0;
         } else {
@@ -97,7 +97,6 @@ class MovableObject extends DrawableObject {
         }
         this.lastActionTime = new Date().getTime();
         }
-        
     }
 
 
