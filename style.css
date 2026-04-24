@@ -340,7 +340,10 @@ canvas {
     .mobile-advice {
         display: none !important;
     }
+}
 
+
+@media (any-pointer: coarse) {
     .panel-wrapper {
         display: flex;
     }
