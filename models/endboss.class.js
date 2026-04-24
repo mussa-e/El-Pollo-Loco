@@ -8,7 +8,7 @@ class Endboss extends MovableObject {
     audioAlert = new Audio("audio/highnoon.mp3");
     audioWin = new Audio("audio/orchestral-win.mp3");
     audioEndbossBoost = new Audio("audio/endboss-alarm-1.mp3");
-    energy = 160;
+    energy = 100;
 
     offset = {
         top: 50,
@@ -64,7 +64,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
         this.x = 2200;
-        this.speed = 4;
+        this.speed = 3.5;
         this.isDead = false;
         this.isActivated = false;
     }
@@ -149,7 +149,7 @@ class Endboss extends MovableObject {
             }
         }, 500);
 
-        if (this.hits >= 15) {
+        if (this.hits >= 9) {
             this.die();
             this.world.character.audioSnoring.pause();
         }
@@ -213,6 +213,8 @@ class Endboss extends MovableObject {
         const gameContainer = document.getElementById("game-container");
 
         this.audioEndbossBoost.pause();
+        world.character.audioSnoring.pause();
+        world.character.stop();
 
         setTimeout(() => {
             this.exitFullscreenIfNeeded();
